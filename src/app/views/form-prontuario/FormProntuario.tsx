@@ -5,6 +5,7 @@ import Layouts from "../../layouts/Layouts";
 import SinaisVitais from "./components/forms/SinaisVitais";
 
 import "./form-prontuario.scss";
+import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -16,7 +17,8 @@ export default function FormProntuario() {
             modal: <SinaisVitais closeModal={closeModal}/>
         },
         {
-            title: "Manifestações Clínicas"
+            title: "Manifestações Clínicas",
+            modal: <ManifestacoesClinicas closeModal={closeModal}/>
         },
         {
             title: "Histórico Clinico"

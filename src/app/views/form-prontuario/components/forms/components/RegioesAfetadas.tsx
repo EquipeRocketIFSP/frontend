@@ -11,6 +11,24 @@ export default function RegioesAfetadas(props: Props) {
             <legend>{props.title}</legend>
 
             <Row>
+                <Form.Group className="mb-3 col-lg-6">
+                    <Form.Label>Cabeça</Form.Label>
+
+                    <div className="d-flex flex-column flex-md-row">
+                        <Form.Check type="radio" name="cabeca" value="Sim" label="Sim" className="me-2"/>
+                        <Form.Check type="radio" name="cabeca" value="Não" label="Não"/>
+                    </div>
+                </Form.Group>
+
+                <Form.Group className="mb-3 col-lg-6">
+                    <Form.Label>Torax</Form.Label>
+
+                    <div className="d-flex flex-column flex-md-row">
+                        <Form.Check type="radio" name="torax" value="Sim" label="Sim" className="me-2"/>
+                        <Form.Check type="radio" name="torax" value="Não" label="Não"/>
+                    </div>
+                </Form.Group>
+
                 <Form.Group className="mb-3 col-lg-3">
                     <Form.Label>Coluna</Form.Label>
                     <Form.Check type="radio" name="cervical" value="Cervical" label="Cervical"/>

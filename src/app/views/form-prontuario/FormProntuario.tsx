@@ -6,6 +6,7 @@ import SinaisVitais from "./components/forms/SinaisVitais";
 
 import "./form-prontuario.scss";
 import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
+import {Link} from "react-router-dom";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -21,7 +22,8 @@ export default function FormProntuario() {
             modal: <ManifestacoesClinicas closeModal={closeModal}/>
         },
         {
-            title: "Histórico Clinico"
+            title: "Histórico Clinico",
+            link: "/painel/prontuario/historico-clinico/cadastrar"
         },
         {
             title: "Medicações Utilizadas"
@@ -56,7 +58,19 @@ export default function FormProntuario() {
                     <Row className="justify-content-between">
 
                         {
-                            forms.map(({title, modal}) => {
+                            forms.map(({title, modal, link}) => {
+                                if (link?.length) {
+                                    return (
+                                        <div className="col-xs-12 col-md-6 p-2" key={title}>
+                                            <Link to={link} style={{textDecoration: "none", color: "black"}}>
+                                                <Card className="d-flex justify-content-center">
+                                                    <Card.Title>{title}</Card.Title>
+                                                </Card>
+                                            </Link>
+                                        </div>
+                                    );
+                                }
+
                                 return (
                                     <div className="col-xs-12 col-md-6 p-2" key={title}>
                                         <Card className="d-flex justify-content-center"

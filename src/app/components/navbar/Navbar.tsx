@@ -4,12 +4,17 @@ import BootstrapNavbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {Link} from "react-router-dom";
 
+// @ts-ignore
+import Logo from "../../resources/logo.png";
+
 export default function Navbar() {
     return (
         <BootstrapNavbar collapseOnSelect expand="lg" className="bg-light shadow sticky-top">
             <Container>
 
-                <Link className="navbar-brand" to="/">CertVet</Link>
+                <Link className="navbar-brand" to="/">
+                    <img src={Logo} title="Logo" alt="Logo" style={{maxWidth:"150px"}}/>
+                </Link>
 
                 <BootstrapNavbar.Toggle aria-controls="responsive-navbar-nav"/>
 
@@ -20,7 +25,6 @@ export default function Navbar() {
                         <Link to="/painel/agenda" className="nav-link">Agenda</Link>
                         <Link to="/painel/tutores" className="nav-link">Tutores</Link>
                         <Link to="/painel/animais" className="nav-link">Animais</Link>
-
                     </Nav>
 
                 </BootstrapNavbar.Collapse>

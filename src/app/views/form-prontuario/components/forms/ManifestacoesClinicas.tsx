@@ -2,11 +2,23 @@ import React, {useState} from "react";
 import {Button, Form, Modal, Row} from "react-bootstrap";
 
 import Contracts from "../../../../contracts/Contracts";
+import RegioesAfetadas from "./components/RegioesAfetadas";
 
 export default function ManifestacoesClinicas(props: Contracts.CloseModal) {
     const {closeModal} = props;
 
     const [showOthersLinfonodos, setShowOthersLinfonodos] = useState<boolean>(false);
+    const [showDor, setShowDor] = useState<boolean>(false);
+    const [showLesoes, setShowLesoes] = useState<boolean>(false);
+
+    let titleRegioes = "";
+
+    if (showDor && showLesoes)
+        titleRegioes = "Regiões Afetadas";
+    else if (showDor)
+        titleRegioes = "Regiões com Sensibilidade/Dor";
+    else if (showLesoes)
+        titleRegioes = "Regiões com Lesões/Nódulos";
 
     return (
         <Modal show={true} onHide={() => closeModal()} size="lg" centered>
@@ -88,8 +100,10 @@ export default function ManifestacoesClinicas(props: Contracts.CloseModal) {
                                 <div className="d-flex">
                                     <Form.Check type="radio" name="sensibilidade_dor" value="Sim" label="Sim"
                                                 className="me-2"
+                                                onInput={() => setShowDor(true)}
                                                 required/>
                                     <Form.Check type="radio" name="sensibilidade_dor" value="Não" label="Não"
+                                                onInput={() => setShowDor(false)}
                                                 defaultChecked/>
                                 </div>
                             </Form.Group>
@@ -100,11 +114,18 @@ export default function ManifestacoesClinicas(props: Contracts.CloseModal) {
                                 <div className="d-flex">
                                     <Form.Check type="radio" name="lesoes_nodulos" value="Sim" label="Sim"
                                                 className="me-2"
+                                                onInput={() => setShowLesoes(true)}
                                                 required/>
                                     <Form.Check type="radio" name="lesoes_nodulos" value="Não" label="Não"
+                                                onInput={() => setShowLesoes(false)}
                                                 defaultChecked/>
                                 </div>
                             </Form.Group>
+
+                            {
+                                showDor || showLesoes ?
+                                    <RegioesAfetadas title={titleRegioes}/> : <></>
+                            }
 
                             <Form.Group className="mb-3 col-lg-12">
                                 <Form.Label>Apetite</Form.Label>
@@ -141,49 +162,6 @@ export default function ManifestacoesClinicas(props: Contracts.CloseModal) {
                                 {showOthersLinfonodos ?
                                     <Form.Control as="textarea" name="linfonodos_obs" rows={3}
                                                   placeholder="Observações"/> : <></>}
-                            </Form.Group>
-                        </Row>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend>Regiões</legend>
-
-                        <Row>
-                            <Form.Group className="mb-3 col-lg-3">
-                                <Form.Label>Coluna</Form.Label>
-                                <Form.Check type="radio" name="cervical" value="Cervical" label="Cervical"/>
-                                <Form.Check type="radio" name="cervical" value="Torácica" label="Torácica"/>
-                                <Form.Check type="radio" name="cervical" value="Lombar" label="Lombar"/>
-                                <Form.Check type="radio" name="cervical" value="Sacral" label="Sacral"/>
-                                <Form.Check type="radio" name="cervical" value="Caudal" label="Caudal"/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-lg-3">
-                                <Form.Label>Abdômen</Form.Label>
-                                <Form.Check type="radio" name="abdomen" value="Epigástrica" label="Epigástrica"/>
-                                <Form.Check type="radio" name="abdomen" value="Mesogástrica" label="Mesogástrica"/>
-                                <Form.Check type="radio" name="abdomen" value="Hipogástrica" label="Hipogástrica"/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-lg-3">
-                                <Form.Label>M. Torácicos</Form.Label>
-                                <Form.Check type="radio" name="m_toracicos" value="Direito" label="Direito"/>
-                                <Form.Check type="radio" name="m_toracicos" value="Esquerdo" label="Esquerdo"/>
-                                <Form.Check type="radio" name="m_toracicos" value="Proximal" label="Proximal"/>
-                                <Form.Check type="radio" name="m_toracicos" value="Distrital" label="Distrital"/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-lg-3">
-                                <Form.Label>M. Pélvicos</Form.Label>
-                                <Form.Check type="radio" name="m_pelvicos" value="Direito" label="Direito"/>
-                                <Form.Check type="radio" name="m_pelvicos" value="Esquerdo" label="Esquerdo"/>
-                                <Form.Check type="radio" name="m_pelvicos" value="Proximal" label="Proximal"/>
-                                <Form.Check type="radio" name="m_pelvicos" value="Distrital" label="Distrital"/>
-                            </Form.Group>
-
-                            <Form.Group>
-                                <Form.Label>Outros</Form.Label>
-                                <Form.Control as="textarea" name="regioes_obs" placeholder="Descreva Aqui" rows={3}/>
                             </Form.Group>
                         </Row>
                     </fieldset>

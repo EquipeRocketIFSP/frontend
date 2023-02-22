@@ -5,6 +5,7 @@ import React, {useState} from "react";
 import Observations from "./components/forms/Observations";
 import Vacinas from "./components/forms/Vacinas";
 import Cirurgias from "./components/forms/Cirurgias";
+import UltimasDoencas from "./components/forms/UltimasDoencas";
 
 export default function FormHistoricoClinico() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -16,9 +17,8 @@ export default function FormHistoricoClinico() {
             modal: <Vacinas closeModal={closeModal}/>
         },
         {
-            title: "Ultimas Doenças",
-            modal: <Observations closeModal={closeModal} name="ultimas_doencas" title="Ultimas Doenças"
-                                 maxLength={255}/>
+            title: "Últimas Doenças",
+            modal: <UltimasDoencas closeModal={closeModal}/>
         },
         {
             title: "Cirurgias",

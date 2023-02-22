@@ -4,6 +4,7 @@ import React, {useState} from "react";
 
 import Observations from "./components/forms/Observations";
 import Vacinas from "./components/forms/Vacinas";
+import Cirurgias from "./components/forms/Cirurgias";
 
 export default function FormHistoricoClinico() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -16,11 +17,12 @@ export default function FormHistoricoClinico() {
         },
         {
             title: "Ultimas Doenças",
-            modal: <Observations closeModal={closeModal} name="ultimas_doencas" title="Ultimas Doenças" maxLength={255}/>
+            modal: <Observations closeModal={closeModal} name="ultimas_doencas" title="Ultimas Doenças"
+                                 maxLength={255}/>
         },
         {
             title: "Cirurgias",
-            modal: <Observations closeModal={closeModal} name="cirurgias" title="Cirurgias" maxLength={255}/>
+            modal: <Cirurgias closeModal={closeModal}/>
         },
         {
             title: "Medicações",

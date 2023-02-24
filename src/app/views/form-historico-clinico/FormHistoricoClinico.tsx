@@ -6,6 +6,7 @@ import Observations from "./components/forms/Observations";
 import Vacinas from "./components/forms/Vacinas";
 import Cirurgias from "./components/forms/Cirurgias";
 import UltimasDoencas from "./components/forms/UltimasDoencas";
+import Medicacoes from "./components/forms/Medicacoes";
 
 export default function FormHistoricoClinico() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -25,8 +26,8 @@ export default function FormHistoricoClinico() {
             modal: <Cirurgias closeModal={closeModal}/>
         },
         {
-            title: "Medicações",
-            modal: <Observations closeModal={closeModal} name="medicacoes" title="Medicações" maxLength={255}/>
+            title: "Historico de Medicações",
+            modal: <Medicacoes closeModal={closeModal}/>
         },
     ];
 

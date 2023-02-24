@@ -8,7 +8,7 @@ class RestrictedLayout extends React.Component<React.PropsWithChildren> {
     render(): React.ReactNode {
         const userData = Storages.userStorage.get();
 
-        if (!userData?.token.length)
+        if (userData?.token.length)
             return <Navigate to="/" />;
 
         return (

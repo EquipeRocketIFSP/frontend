@@ -14,7 +14,16 @@ export default function MultiGroups(props: React.PropsWithChildren) {
 
     return (
         <>
-            {childrens}
+            {
+                childrens.map((child,i)=>{
+                    return(
+                        <div>
+                            <div>{i+1}</div>
+                            <div>{child}</div>
+                        </div>
+                    );
+                })
+            }
 
             <div className="d-flex justify-content-lg-center">
                 <Button onClick={addChild} variant="outline-primary">

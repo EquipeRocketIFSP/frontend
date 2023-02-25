@@ -43,7 +43,7 @@ export default function FormProntuario() {
     ];
 
     return (
-        <Layouts.RestrictedLayout>
+        <Layouts.Layout>
             <main id="form-prontuario">
                 <h1>Prontuário</h1>
 
@@ -88,6 +88,6 @@ export default function FormProntuario() {
 
                 <div>{modal}</div>
             </main>
-        </Layouts.RestrictedLayout>
+        </Layouts.Layout>
     );
 }

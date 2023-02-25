@@ -10,7 +10,7 @@ export default function Cirurgias(props: Contracts.CloseModal) {
     return (
         <Modal show={true} onHide={() => closeModal()} size="lg" centered>
             <Modal.Header closeButton>
-                <Modal.Title>Cirurgias</Modal.Title>
+                <Modal.Title>Histórico de Cirurgias</Modal.Title>
             </Modal.Header>
 
             <Modal.Body>

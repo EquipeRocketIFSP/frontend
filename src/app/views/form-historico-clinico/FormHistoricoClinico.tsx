@@ -2,7 +2,6 @@ import Layouts from "../../layouts/Layouts";
 import {Card, Container, Row} from "react-bootstrap";
 import React, {useState} from "react";
 
-import Observations from "./components/forms/Observations";
 import Vacinas from "./components/forms/Vacinas";
 import Cirurgias from "./components/forms/Cirurgias";
 import UltimasDoencas from "./components/forms/UltimasDoencas";
@@ -22,19 +21,19 @@ export default function FormHistoricoClinico() {
             modal: <UltimasDoencas closeModal={closeModal}/>
         },
         {
-            title: "Cirurgias",
+            title: "Histórico de Cirurgias",
             modal: <Cirurgias closeModal={closeModal}/>
         },
         {
-            title: "Historico de Medicações",
+            title: "Histórico de Medicações",
             modal: <Medicacoes closeModal={closeModal}/>
         },
     ];
 
     return (
-        <Layouts.RestrictedLayout>
+        <Layouts.Layout>
             <main id="form-hisorico-clinico">
-                <h1>Histórico Clinico</h1>
+                <h1>Histórico Clínico</h1>
 
                 <Container>
                     <Row className="justify-content-between">
@@ -58,6 +57,6 @@ export default function FormHistoricoClinico() {
 
                 <div>{modal}</div>
             </main>
-        </Layouts.RestrictedLayout>
+        </Layouts.Layout>
     );
 }

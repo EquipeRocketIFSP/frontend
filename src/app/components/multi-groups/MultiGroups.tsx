@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button} from "react-bootstrap";
+import {Badge, Button} from "react-bootstrap";
 
 export default function MultiGroups(props: React.PropsWithChildren) {
     const [childrens, setChildrens] = useState<React.ReactNode[]>([props.children]);
@@ -15,10 +15,10 @@ export default function MultiGroups(props: React.PropsWithChildren) {
     return (
         <>
             {
-                childrens.map((child,i)=>{
-                    return(
-                        <div>
-                            <div>{i+1}</div>
+                childrens.map((child, i) => {
+                    return (
+                        <div key={i}>
+                            <Badge bg="primary">{i + 1}</Badge>
                             <div>{child}</div>
                         </div>
                     );

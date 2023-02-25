@@ -8,6 +8,7 @@ import "./form-prontuario.scss";
 import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import {Link} from "react-router-dom";
 import Observations from "./components/forms/Observations";
+import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -35,7 +36,8 @@ export default function FormProntuario() {
                                  closeModal={closeModal}/>
         },
         {
-            title: "Medicações Prescritas"
+            title: "Medicações Prescritas",
+            modal: <MedicacoesPrescritas closeModal={closeModal}/>
         },
         {
             title: "Exames"

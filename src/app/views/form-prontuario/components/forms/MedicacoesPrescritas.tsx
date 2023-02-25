@@ -95,6 +95,11 @@ function FormComponent() {
                 }
             </Form.Group>
 
+            <Form.Group className="mb-3 col-lg-12">
+                <Form.Label>Observações</Form.Label>
+                <Form.Control type="text" as="textarea" name="observacoes[]" rows={3}/>
+            </Form.Group>
+
             <input type="hidden" name="quando_aplicar[]" defaultValue={whenToApply}/>
         </Row>
     );

@@ -7,6 +7,7 @@ import SinaisVitais from "./components/forms/SinaisVitais";
 import "./form-prontuario.scss";
 import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import {Link} from "react-router-dom";
+import Observations from "./components/forms/Observations";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -22,14 +23,16 @@ export default function FormProntuario() {
             modal: <ManifestacoesClinicas closeModal={closeModal}/>
         },
         {
-            title: "Histórico Clinico",
+            title: "Histórico Clínico",
             link: "/painel/prontuario/historico-clinico/cadastrar"
         },
         {
             title: "Medicações Utilizadas"
         },
         {
-            title: "Suspeita Diagnóstica"
+            title: "Suspeita Diagnóstica",
+            modal: <Observations title="Suspeita Diagnóstica" name="supeita_diagnostica" maxLength={20000}
+                                 closeModal={closeModal}/>
         },
         {
             title: "Medicações Prescritas"

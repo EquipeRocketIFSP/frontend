@@ -14,7 +14,7 @@ export default function Vacinas(props: Contracts.CloseModal) {
 
             <Modal.Body>
                 <MultiGroups>
-                    <Row style={{borderBottom:"1px solid #cdd4d9"}} className="mb-2">
+                    <Row style={{borderBottom: "1px solid #cdd4d9"}} className="mb-2">
                         <Form.Group className="mb-3 col-lg-4">
                             <Form.Label>Laboratório*</Form.Label>
                             <Form.Control type="text" name="laboratorio[]"/>

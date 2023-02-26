@@ -9,6 +9,7 @@ import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import {Link} from "react-router-dom";
 import Observations from "./components/forms/Observations";
 import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
+import MedicacoesUtilizadas from "./components/forms/MedicacoesUtilizadas";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -28,7 +29,8 @@ export default function FormProntuario() {
             link: "/painel/prontuario/historico-clinico/cadastrar"
         },
         {
-            title: "Medicações Utilizadas"
+            title: "Medicações Utilizadas",
+            modal: <MedicacoesUtilizadas closeModal={closeModal}/>
         },
         {
             title: "Suspeita Diagnóstica",

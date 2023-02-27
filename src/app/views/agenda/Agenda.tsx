@@ -1,7 +1,7 @@
 import { EventContentArg } from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
 import FullCalendar from "@fullcalendar/react";
-import { Button } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 
 import Layouts from "../../layouts/Layouts";
 
@@ -64,6 +64,25 @@ export default function Agenda() {
                             eventColor={"green"}
                             eventContent={renderEventContent}
                         />
+                    </div>
+
+                    <div className="col-3 p-2">
+                        <Card className="d-flex justify-content-center h-100">
+
+                            <Card.Title>Eventos</Card.Title>
+
+                            <Card.Body>
+                                <ul>
+                                    {
+                                        events.map((event, i) => {
+                                            return (
+                                                <li key={i}>{event.title}</li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </Card.Body>
+                        </Card>
                     </div>
                 </div>
             </main>

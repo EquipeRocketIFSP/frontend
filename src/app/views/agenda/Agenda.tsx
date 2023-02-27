@@ -1,7 +1,6 @@
 import { EventContentArg } from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
 import FullCalendar from "@fullcalendar/react";
-import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 
 import Layouts from "../../layouts/Layouts";
@@ -9,8 +8,39 @@ import Layouts from "../../layouts/Layouts";
 export default function Agenda() {
 
     const events = [
-        { title: 'event 1', date: '2023-04-01' },
-        { title: 'event 2', date: '2023-04-02' }
+        {
+            title: 'Evento de dia todo',
+            start: '2023-02-01'
+        },
+        {
+            title: 'Evento longo',
+            start: '2023-02-07',
+            end: '2023-02-10',
+            color: 'purple' // pode mudar a cor!
+        },
+        {
+            groupId: '999',
+            title: 'Evento que se repete',
+            start: '2023-02-09T16:00:00'
+        },
+        {
+            groupId: '999',
+            title: 'Evento que se repete',
+            start: '2023-02-16T16:00:00'
+        }, {
+            title: 'Evento com nome longo para mostrar que quebra layout',
+            description: 'Todos os eventos podem ter descrição', // não funciona ainda
+            start: '2023-02-22T16:00:00'
+        },
+        {
+            title: 'Evento com hora',
+            start: '2023-02-13T07:00:00'
+        },
+        {
+            title: 'Evento com link',
+            url: 'http://google.com/',
+            start: '2023-02-28'
+        }
     ]
 
     return (
@@ -31,6 +61,7 @@ export default function Agenda() {
                             initialView="dayGridMonth"
                             weekends={false}
                             events={events}
+                            eventColor={"green"}
                             eventContent={renderEventContent}
                         />
                     </div>

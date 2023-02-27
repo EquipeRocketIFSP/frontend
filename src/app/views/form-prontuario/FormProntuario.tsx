@@ -10,6 +10,7 @@ import {Link} from "react-router-dom";
 import Observations from "./components/forms/Observations";
 import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
 import MedicacoesUtilizadas from "./components/forms/MedicacoesUtilizadas";
+import Exames from "./components/forms/Exames";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -42,7 +43,8 @@ export default function FormProntuario() {
             modal: <MedicacoesPrescritas closeModal={closeModal}/>
         },
         {
-            title: "Exames"
+            title: "Exames",
+            modal: <Exames closeModal={closeModal}/>
         },
         {
             title: "Procedimentos"

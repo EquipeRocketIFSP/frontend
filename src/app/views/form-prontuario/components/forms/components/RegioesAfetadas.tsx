@@ -31,34 +31,34 @@ export default function RegioesAfetadas(props: Props) {
 
                 <Form.Group className="mb-3 col-lg-3">
                     <Form.Label>Coluna</Form.Label>
-                    <Form.Check type="radio" name="cervical" value="Cervical" label="Cervical"/>
-                    <Form.Check type="radio" name="cervical" value="Torácica" label="Torácica"/>
-                    <Form.Check type="radio" name="cervical" value="Lombar" label="Lombar"/>
-                    <Form.Check type="radio" name="cervical" value="Sacral" label="Sacral"/>
-                    <Form.Check type="radio" name="cervical" value="Caudal" label="Caudal"/>
+                    <Form.Check type="checkbox" name="cervical[]" value="Cervical" label="Cervical"/>
+                    <Form.Check type="checkbox" name="cervical[]" value="Torácica" label="Torácica"/>
+                    <Form.Check type="checkbox" name="cervical[]" value="Lombar" label="Lombar"/>
+                    <Form.Check type="checkbox" name="cervical[]" value="Sacral" label="Sacral"/>
+                    <Form.Check type="checkbox" name="cervical[]" value="Caudal" label="Caudal"/>
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-3">
                     <Form.Label>Abdômen</Form.Label>
-                    <Form.Check type="radio" name="abdomen" value="Epigástrica" label="Epigástrica"/>
-                    <Form.Check type="radio" name="abdomen" value="Mesogástrica" label="Mesogástrica"/>
-                    <Form.Check type="radio" name="abdomen" value="Hipogástrica" label="Hipogástrica"/>
+                    <Form.Check type="checkbox" name="abdomen[]" value="Epigástrica" label="Epigástrica"/>
+                    <Form.Check type="checkbox" name="abdomen[]" value="Mesogástrica" label="Mesogástrica"/>
+                    <Form.Check type="checkbox" name="abdomen[]" value="Hipogástrica" label="Hipogástrica"/>
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-3">
                     <Form.Label>M. Torácicos</Form.Label>
-                    <Form.Check type="radio" name="m_toracicos_y" value="Direito" label="Direito"/>
-                    <Form.Check type="radio" name="m_toracicos_y" value="Esquerdo" label="Esquerdo"/>
-                    <Form.Check type="radio" name="m_toracicos_x" value="Proximal" label="Proximal"/>
-                    <Form.Check type="radio" name="m_toracicos_x" value="Distrital" label="Distrital"/>
+                    <Form.Check type="checkbox" name="m_toracicos_y[]" value="Direito" label="Direito"/>
+                    <Form.Check type="checkbox" name="m_toracicos_y[]" value="Esquerdo" label="Esquerdo"/>
+                    <Form.Check type="checkbox" name="m_toracicos_x[]" value="Proximal" label="Proximal"/>
+                    <Form.Check type="checkbox" name="m_toracicos_x[]" value="Distrital" label="Distrital"/>
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-3">
                     <Form.Label>M. Pélvicos</Form.Label>
-                    <Form.Check type="radio" name="m_pelvicos_y" value="Direito" label="Direito"/>
-                    <Form.Check type="radio" name="m_pelvicos_y" value="Esquerdo" label="Esquerdo"/>
-                    <Form.Check type="radio" name="m_pelvicos_x" value="Proximal" label="Proximal"/>
-                    <Form.Check type="radio" name="m_pelvicos_x" value="Distrital" label="Distrital"/>
+                    <Form.Check type="checkbox" name="m_pelvicos_y[]" value="Direito" label="Direito"/>
+                    <Form.Check type="checkbox" name="m_pelvicos_y[]" value="Esquerdo" label="Esquerdo"/>
+                    <Form.Check type="checkbox" name="m_pelvicos_x[]" value="Proximal" label="Proximal"/>
+                    <Form.Check type="checkbox" name="m_pelvicos_x[]" value="Distrital" label="Distrital"/>
                 </Form.Group>
 
                 <Form.Group>

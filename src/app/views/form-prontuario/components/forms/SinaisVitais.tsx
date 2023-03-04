@@ -21,12 +21,26 @@ export default function SinaisVitais(props: Contracts.CloseModal) {
 
                         <Form.Group className="mb-3 col-lg-4">
                             <Form.Label htmlFor="frequencia_respiratoria">Frequência Repiratória (MPN)*</Form.Label>
-                            <Form.Control type="number" name="frequencia_respiratoria" id="frequencia_respiratoria" required/>
+                            <Form.Control type="number" name="frequencia_respiratoria" id="frequencia_respiratoria"
+                                          required/>
                         </Form.Group>
 
                         <Form.Group className="mb-3 col-lg-4">
                             <Form.Label htmlFor="temperatura">Temperatura (°C)*</Form.Label>
                             <Form.Control type="number" name="temperatura" id="temperatura" required/>
+                        </Form.Group>
+                    </Row>
+
+                    <Row>
+                        <Form.Group className="mb-3 col-10">
+                            <Form.Label htmlFor="peso">Peso*</Form.Label>
+                            <Form.Control type="number" name="peso" id="peso" required/>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3 col-2 pt-4">
+                            <Form.Check type="radio" name="unidade_medida_peso" value="kg" label="kg"
+                                        className="me-2" required/>
+                            <Form.Check type="radio" name="unidade_medida_peso" value="g" label="g"/>
                         </Form.Group>
                     </Row>
 

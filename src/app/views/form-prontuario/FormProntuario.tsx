@@ -11,6 +11,7 @@ import Observations from "./components/forms/Observations";
 import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
 import MedicacoesUtilizadas from "./components/forms/MedicacoesUtilizadas";
 import Exames from "./components/forms/Exames";
+import Procedimentos from "./components/forms/Procedimentos";
 
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
@@ -47,7 +48,8 @@ export default function FormProntuario() {
             modal: <Exames closeModal={closeModal}/>
         },
         {
-            title: "Procedimentos"
+            title: "Procedimentos",
+            modal: <Procedimentos closeModal={closeModal}/>
         },
     ];
 

@@ -31,6 +31,9 @@ export default function CadastroClinicaDono(): JSX.Element {
             return;
         }
 
+        if (!formData.get("dono_telefone")?.toString().trim().length)
+            formData.delete("dono_telefone");
+
         setPasswordMatched(true);
         formData.forEach((value, key) => data[key] = value.toString());
 

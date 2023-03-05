@@ -19,10 +19,12 @@ export default function CadastroClinica(): JSX.Element {
         evt.preventDefault();
 
         let data: DynamicObject<any> = {};
+        const formData = new FormData(evt.currentTarget);
 
-        new FormData(evt.currentTarget)
-            .forEach((value, key) => data[key] = value.toString());
+        if (!formData.get("clinica_telefone")?.toString().trim().length)
+            formData.delete("clinica_telefone");
 
+        formData.forEach((value, key) => data[key] = value.toString());
         Storages.signInStorage.set(data as Contracts.SignInClinicFormData);
 
         setNavigateToNextSection(true);

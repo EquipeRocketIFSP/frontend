@@ -8,20 +8,22 @@ import CEP from "../../components/cep/CEP";
 import Contracts from "../../contracts/Contracts";
 import UF from "../../components/uf/UF";
 import Storages from "../../Storages";
+import DynamicObject = Contracts.DynamicObject;
 
 export default function CadastroClinica(): JSX.Element {
     const [addressDetails, setAddressDetails] = useState<Contracts.ViaCEPAddress | null>(null);
     const [navigateToNextSection, setNavigateToNextSection] = useState<boolean>(false);
+    const storedData = Storages.signInStorage.get();
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
 
-        let data: Contracts.DynamicObject<string> = {};
+        let data: DynamicObject<any> = {};
 
         new FormData(evt.currentTarget)
             .forEach((value, key) => data[key] = value.toString());
 
-        Storages.signInStorage.set({clinic: data, owner: {}});
+        Storages.signInStorage.set(data as Contracts.SignInClinicFormData);
 
         setNavigateToNextSection(true);
     }
@@ -39,79 +41,94 @@ export default function CadastroClinica(): JSX.Element {
                         <Row className="rounded shadow mb-3 pt-3">
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="clinica_nome_fantasia">Nome Fantasia*</Form.Label>
-                                <Form.Control name="clinica_nome_fantasia" maxLength={255} id="clinica_nome_fantasia"
+                                <Form.Control name="clinica_nome_fantasia" maxLength={255}
+                                              defaultValue={storedData?.clinica_nome_fantasia}
+                                              id="clinica_nome_fantasia"
                                               required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="clinica_razao_social">Razão Social*</Form.Label>
-                                <Form.Control name="clinica_razao_social" maxLength={255} id="clinica_razao_social"
+                                <Form.Control name="clinica_razao_social" maxLength={255}
+                                              defaultValue={storedData?.clinica_razao_social} id="clinica_razao_social"
                                               required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="clinica_cnpj">CNPJ*</Form.Label>
-                                <Form.Control name="clinica_cnpj" maxLength={255} id="clinica_cnpj"
+                                <Form.Control name="clinica_cnpj" maxLength={255}
+                                              defaultValue={storedData?.clinica_cnpj} id="clinica_cnpj"
                                               onInput={Helpers.Masks.cnpj} required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="clinica_cnae">CNAE*</Form.Label>
-                                <Form.Control name="clinica_cnae" maxLength={255} id="clinica_cnae" required/>
+                                <Form.Control name="clinica_cnae" maxLength={255}
+                                              defaultValue={storedData?.clinica_cnpj} id="clinica_cnpj"
+                                              required/>
                             </Form.Group>
                         </Row>
 
                         <Row className="rounded shadow mb-3 pt-3">
                             <Form.Group className="mb-3 col-lg-2">
-                                <CEP name="clinica_cep" setAddressDetails={setAddressDetails}/>
+                                <CEP name="clinica_cep" defaultValue={storedData?.clinica_cep}
+                                     setAddressDetails={setAddressDetails}/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-2">
                                 <Form.Label htmlFor="clinica_numero">Número*</Form.Label>
                                 <Form.Control name="clinica_numero" maxLength={6} id="clinica_numero"
+                                              defaultValue={storedData?.clinica_numero}
                                               onInput={Helpers.Masks.number} required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label htmlFor="clinica_logradouro">Logradouro*</Form.Label>
                                 <Form.Control name="clinica_logradouro" maxLength={255}
-                                              defaultValue={addressDetails?.logradouro} id="clinica_logradouro"
+                                              defaultValue={addressDetails?.logradouro ?? storedData?.clinica_logradouro}
+                                              id="clinica_logradouro"
                                               required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label htmlFor="clinica_bairro">Bairro*</Form.Label>
                                 <Form.Control name="clinica_bairro" maxLength={255}
-                                              defaultValue={addressDetails?.bairro} id="clinica_bairro" required/>
+                                              defaultValue={addressDetails?.bairro ?? storedData?.clinica_bairro}
+                                              id="clinica_bairro" required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="clinica_cidade">Cidade*</Form.Label>
                                 <Form.Control name="clinica_cidade" maxLength={255}
-                                              defaultValue={addressDetails?.localidade} id="clinica_cidade" required/>
+                                              defaultValue={addressDetails?.localidade ?? storedData?.clinica_cidade}
+                                              id="clinica_cidade" required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6">
-                                <UF name="clinica_estado" defaultValue={addressDetails?.uf}/>
+                                <UF name="clinica_estado"
+                                    defaultValue={addressDetails?.uf ?? storedData?.clinica_estado}/>
                             </Form.Group>
                         </Row>
 
                         <Row className="rounded shadow mb-3 pt-3">
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label htmlFor="clinica_email">E-mail*</Form.Label>
-                                <Form.Control name="clinica_email" maxLength={255} id="clinica_email" type="email"
+                                <Form.Control name="clinica_email" maxLength={255} id="clinica_email"
+                                              defaultValue={storedData?.clinica_email} type="email"
                                               required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label htmlFor="clinica_celular">Celular*</Form.Label>
                                 <Form.Control name="clinica_celular" maxLength={15} id="clinica_celular"
+                                              defaultValue={storedData?.clinica_celular}
                                               onInput={Helpers.Masks.celphone} required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label htmlFor="clinica_telefone">Telefone</Form.Label>
                                 <Form.Control name="clinica_telefone" maxLength={14} id="clinica_telefone"
+                                              defaultValue={storedData?.clinica_telefone ?? undefined}
                                               onInput={Helpers.Masks.phone}/>
                             </Form.Group>
                         </Row>

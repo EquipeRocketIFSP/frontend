@@ -119,9 +119,20 @@ namespace Contracts {
         closeModal: Function
     }
 
-    export interface SignInFormData {
-        clinic: DynamicObject<string>,
-        owner: DynamicObject<string>
+    export interface SignInClinicFormData {
+        clinica_nome_fantasia: string
+        clinica_razao_social: string
+        clinica_cnpj: string
+        clinica_cnae: string
+        clinica_cep: string
+        clinica_numero: string,
+        clinica_logradouro: string
+        clinica_bairro: string
+        clinica_cidade: string
+        clinica_estado: string
+        clinica_email: string
+        clinica_celular: string
+        clinica_telefone: string | null
     }
 }
 

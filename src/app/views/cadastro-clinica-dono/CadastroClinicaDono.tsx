@@ -14,7 +14,7 @@ export default function CadastroClinicaDono(): JSX.Element {
     const [navigateToLogin, setNavigateToLogin] = useState<boolean>(false);
     const [passwordMatched, setPasswordMatched] = useState<boolean>(true);
     const [showCRMVField, setShowCRMVField] = useState<boolean>(false);
-    const [apiConnectionError, setApiConnectionError] = useState<boolean>(false);
+    const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
 
     if (!Storages.signInStorage.get())
@@ -49,8 +49,12 @@ export default function CadastroClinicaDono(): JSX.Element {
                 case 400:
                     setValidationErrors(response?.data as Contracts.DynamicObject<string> ?? {});
                     break;
+
+                case 409:
+                    setApiConnectionError("Já existe uma clínica com esse CNPJ cadastrada");
+                    break;
                 default:
-                    setApiConnectionError(true);
+                    setApiConnectionError("Não foi possivel concluir o cadastro. Por favor tente mais tarde.");
                     break;
             }
         }
@@ -69,10 +73,7 @@ export default function CadastroClinicaDono(): JSX.Element {
 
                         {
                             apiConnectionError ?
-                                <Alert variant="danger">
-                                    Não foi possivel concluir o cadastro. Por favor tente mais tarde.
-                                </Alert> :
-                                <></>
+                                <Alert variant="danger">{apiConnectionError}</Alert> : <></>
                         }
 
                         <Row className="rounded shadow mb-3 pt-3">

@@ -11,10 +11,13 @@ import axios, {AxiosError} from "axios";
 
 export default function CadastroClinicaDono(): JSX.Element {
     const [addressDetails, setAddressDetails] = useState<Contracts.ViaCEPAddress | null>(null);
+    const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
+
     const [navigateToLogin, setNavigateToLogin] = useState<boolean>(false);
     const [passwordMatched, setPasswordMatched] = useState<boolean>(true);
     const [showCRMVField, setShowCRMVField] = useState<boolean>(false);
-    const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
+    const [signInSuccessful, setSignInSuccessful] = useState<boolean>(false);
+
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
 
     if (!Storages.signInStorage.get())
@@ -42,8 +45,9 @@ export default function CadastroClinicaDono(): JSX.Element {
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/clinica`, data);
 
-            Storages.signInStorage.truncate();
-            setNavigateToLogin(true);
+            setSignInSuccessful(true);
+
+            setTimeout(() => setNavigateToLogin(true), 2500);
         } catch (e) {
             const response = (e as AxiosError).response;
 
@@ -63,8 +67,21 @@ export default function CadastroClinicaDono(): JSX.Element {
         }
     }
 
-    if (navigateToLogin)
-        return <Navigate to="/login"/>
+    if (navigateToLogin) {
+        Storages.signInStorage.truncate();
+
+        return <Navigate to="/login"/>;
+    }
+
+    if (signInSuccessful) {
+        return (
+            <Layouts.Layout>
+                <Container>
+                    <Alert variant="success">Cadastro concluído com sucesso</Alert>
+                </Container>
+            </Layouts.Layout>
+        );
+    }
 
     return (
         <Layouts.Layout>

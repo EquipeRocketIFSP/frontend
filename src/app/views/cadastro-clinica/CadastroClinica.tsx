@@ -66,7 +66,7 @@ export default function CadastroClinica(): JSX.Element {
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="clinica_cnae">CNAE*</Form.Label>
                                 <Form.Control name="clinica_cnae" maxLength={255}
-                                              defaultValue={storedData?.clinica_cnpj} id="clinica_cnpj"
+                                              defaultValue={storedData?.clinica_cnae} id="clinica_cnae"
                                               required/>
                             </Form.Group>
                         </Row>

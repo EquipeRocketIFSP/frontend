@@ -41,6 +41,8 @@ export default function CadastroClinicaDono(): JSX.Element {
 
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/clinica`, data);
+
+            Storages.signInStorage.truncate();
             setNavigateToLogin(true);
         } catch (e) {
             const response = (e as AxiosError).response;
@@ -53,6 +55,7 @@ export default function CadastroClinicaDono(): JSX.Element {
                 case 409:
                     setApiConnectionError("Já existe uma clínica com esse CNPJ cadastrada");
                     break;
+
                 default:
                     setApiConnectionError("Não foi possivel concluir o cadastro. Por favor tente mais tarde.");
                     break;
@@ -65,7 +68,7 @@ export default function CadastroClinicaDono(): JSX.Element {
 
     return (
         <Layouts.Layout>
-            <main id="sign-in">
+            <main id="sign-in" className="p-5">
                 <h1>Cadastrar Dono</h1>
 
                 <Container>

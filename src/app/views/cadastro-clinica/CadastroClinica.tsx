@@ -35,8 +35,8 @@ export default function CadastroClinica(): JSX.Element {
 
     return (
         <Layouts.Layout>
-            <main id="sign-in">
-                <h1>Cadastro</h1>
+            <main id="sign-in" className="p-5">
+                <h1>Cadastrar Clínica</h1>
 
                 <Container>
                     <Form onSubmit={onSubmit}>

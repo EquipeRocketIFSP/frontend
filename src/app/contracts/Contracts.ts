@@ -134,6 +134,11 @@ namespace Contracts {
         clinica_celular: string
         clinica_telefone: string | null
     }
+
+    export interface ClinicaFromDataLogin{
+        id: number,
+        nome: string
+    }
 }
 
 export default Contracts;

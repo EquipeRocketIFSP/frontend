@@ -13,11 +13,13 @@ import FormAnimal from "./views/form-animal/FormAnimal";
 import Animal from "./views/animal/Animal";
 import CadastroClinica from "./views/cadastro-clinica/CadastroClinica";
 import CadastroClinicaDono from "./views/cadastro-clinica-dono/CadastroClinicaDono";
+import Login from "./views/login/Login";
 
 export default function Certvet() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/login" element={<Login/>}/>
                 <Route path="/cadastro" element={<CadastroClinica/>}/>
                 <Route path="/cadastro/dono" element={<CadastroClinicaDono/>}/>
 

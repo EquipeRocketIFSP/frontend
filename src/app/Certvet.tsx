@@ -14,6 +14,7 @@ import Animal from "./views/animal/Animal";
 import CadastroClinica from "./views/cadastro-clinica/CadastroClinica";
 import CadastroClinicaDono from "./views/cadastro-clinica-dono/CadastroClinicaDono";
 import Login from "./views/login/Login";
+import Painel from "./views/painel/Painel";
 
 export default function Certvet() {
     return (
@@ -23,6 +24,7 @@ export default function Certvet() {
                 <Route path="/cadastro" element={<CadastroClinica/>}/>
                 <Route path="/cadastro/dono" element={<CadastroClinicaDono/>}/>
 
+                <Route path="/painel" element={<Painel/>}/>
                 <Route path="/painel/animais" element={<Animais/>}/>
                 <Route path="/painel/animais/1" element={<Animal/>}/>
                 <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>

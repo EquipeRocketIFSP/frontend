@@ -2,7 +2,8 @@ import Contracts from "../../../contracts/Contracts";
 import React, {useState} from "react";
 import axios, {AxiosError, HttpStatusCode, AxiosHeaders} from "axios";
 import {Alert, Button, Form, Row, Spinner} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
+import Storages from "../../../Storages";
 
 interface Props {
     email: string,
@@ -14,6 +15,7 @@ export default function PasswordForm(props: Props): JSX.Element {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
+    const [navigateToPainel, setNavigateToPainel] = useState<boolean>(false);
 
     const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
@@ -28,7 +30,11 @@ export default function PasswordForm(props: Props): JSX.Element {
         setLoading(true);
 
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/auth`, formData, {headers});
+            const {data} = await axios.post<Contracts.UserData>(`${process.env.REACT_APP_API_URL}/auth`, formData, {headers});
+
+            Storages.userStorage.set(data);
+
+            setNavigateToPainel(true);
         } catch (e) {
             const response = (e as AxiosError).response;
 
@@ -44,6 +50,9 @@ export default function PasswordForm(props: Props): JSX.Element {
 
         setLoading(false);
     }
+
+    if (navigateToPainel)
+        return <Navigate to="/painel"/>;
 
     return (
         <Form className="col-lg-8" onSubmit={onSubmit}>

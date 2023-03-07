@@ -4,10 +4,9 @@ namespace Contracts {
     }
 
     export interface UserData {
-        id: number,
         token: string,
-        nome: string | null,
-        crmv: string | null,
+        type: string,
+        nome: string | null
     }
 
     export interface Redirect {
@@ -135,7 +134,7 @@ namespace Contracts {
         clinica_telefone: string | null
     }
 
-    export interface ClinicaFromDataLogin{
+    export interface ClinicaFromDataLogin {
         id: number,
         nome: string
     }

@@ -8,7 +8,7 @@ export default function RestrictedLayout(props: React.PropsWithChildren): JSX.El
     const userData = Storages.userStorage.get();
 
     if (!userData?.token.length)
-        return <Navigate to="/"/>;
+        return <Navigate to="/login"/>;
 
     return (
         <Layout>

@@ -13,6 +13,8 @@ import DynamicObject = Contracts.DynamicObject;
 export default function CadastroClinica(): JSX.Element {
     const [addressDetails, setAddressDetails] = useState<Contracts.ViaCEPAddress | null>(null);
     const [navigateToNextSection, setNavigateToNextSection] = useState<boolean>(false);
+    const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
+
     const storedData = Storages.signInStorage.get();
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -20,6 +22,13 @@ export default function CadastroClinica(): JSX.Element {
 
         let data: DynamicObject<any> = {};
         const formData = new FormData(evt.currentTarget);
+
+        const errors = validateForm(formData);
+
+        if (Object.keys(errors).length) {
+            setValidationErrors(errors);
+            return;
+        }
 
         if (!formData.get("clinica_telefone")?.toString().trim().length)
             formData.delete("clinica_telefone");
@@ -61,6 +70,8 @@ export default function CadastroClinica(): JSX.Element {
                                 <Form.Control name="clinica_cnpj" maxLength={255}
                                               defaultValue={storedData?.clinica_cnpj} id="clinica_cnpj"
                                               onInput={Helpers.Masks.cnpj} required/>
+
+                                <Form.Text style={{color: "red"}}>{validationErrors["clinica_cnpj"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-6">
@@ -144,4 +155,13 @@ export default function CadastroClinica(): JSX.Element {
             </main>
         </Layouts.Layout>
     );
+}
+
+function validateForm(formData: FormData): Contracts.DynamicObject<string> {
+    let validationErrors: Contracts.DynamicObject<string> = {};
+
+    if (!Helpers.SpecialValidation.cnpj(formData.get("clinica_cnpj")?.toString() ?? ""))
+        validationErrors["clinica_cnpj"] = "Insira um CNPJ válido";
+
+    return validationErrors;
 }

@@ -67,7 +67,7 @@ export default function PasswordForm(props: Props): JSX.Element {
 
                 {
                     loading ?
-                        <Button variant="primary" className="rounded w-50 disabled">
+                        <Button variant="success" className="rounded w-50 disabled">
                             <Spinner animation="grow" size="sm"/>
                         </Button> :
                         <Button variant="success" className="rounded w-50" type="submit">Entrar</Button>

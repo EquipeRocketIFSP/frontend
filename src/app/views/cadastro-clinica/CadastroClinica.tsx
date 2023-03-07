@@ -136,7 +136,7 @@ export default function CadastroClinica(): JSX.Element {
                         </Row>
 
                         <div className="d-flex justify-content-between">
-                            <Link to="/painel/animais" className="btn btn-outline-secondary">Voltar</Link>
+                            <Link to="/login" className="btn btn-outline-secondary">Voltar</Link>
                             <Button type="submit" variant="outline-primary">Continuar</Button>
                         </div>
                     </Form>

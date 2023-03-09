@@ -9,6 +9,7 @@ import "@fortawesome/fontawesome-free/css/solid.min.css";
 import Animais from "./views/animais/Animais";
 import FormProntuario from "./views/form-prontuario/FormProntuario";
 import FormHistoricoClinico from "./views/form-historico-clinico/FormHistoricoClinico";
+import Agenda from "./views/agenda/Agenda";
 import FormAnimal from "./views/form-animal/FormAnimal";
 import Animal from "./views/animal/Animal";
 import CadastroClinica from "./views/cadastro-clinica/CadastroClinica";
@@ -22,6 +23,7 @@ export default function Certvet() {
     return (
         <BrowserRouter>
             <Routes>
+                
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/redefinir-senha" element={<RedefinePassword/>}/>
@@ -34,6 +36,7 @@ export default function Certvet() {
                 <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
+                <Route path="/painel/agenda" element={<Agenda />} />
             </Routes>
         </BrowserRouter>
     );

@@ -16,11 +16,13 @@ import CadastroClinicaDono from "./views/cadastro-clinica-dono/CadastroClinicaDo
 import Login from "./views/login/Login";
 import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
+import Home from "./views/home/Home";
 
 export default function Certvet() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/redefinir-senha" element={<RedefinePassword/>}/>
                 <Route path="/cadastro" element={<CadastroClinica/>}/>

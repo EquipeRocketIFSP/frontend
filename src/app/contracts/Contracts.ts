@@ -4,10 +4,9 @@ namespace Contracts {
     }
 
     export interface UserData {
-        id: number,
         token: string,
-        nome: string | null,
-        crmv: string | null,
+        type: string,
+        nome: string | null
     }
 
     export interface Redirect {
@@ -39,7 +38,7 @@ namespace Contracts {
         regiao: { id: number, sigla: string, nome: string }
     }
 
-    export interface DadosPessoais {
+    export interface PersonalData {
         id: number,
         nome: string,
         cpf: string,
@@ -55,11 +54,11 @@ namespace Contracts {
         email: string
     }
 
-    export interface Funcionario extends DadosPessoais {
+    export interface Funcionario extends PersonalData {
         crmv: string | null
     }
 
-    export interface Tutor extends DadosPessoais {
+    export interface Tutor extends PersonalData {
     }
 
     export interface Animal {
@@ -117,6 +116,27 @@ namespace Contracts {
 
     export interface CloseModal {
         closeModal: Function
+    }
+
+    export interface SignInClinicFormData {
+        clinica_nome_fantasia: string
+        clinica_razao_social: string
+        clinica_cnpj: string
+        clinica_cnae: string
+        clinica_cep: string
+        clinica_numero: string,
+        clinica_logradouro: string
+        clinica_bairro: string
+        clinica_cidade: string
+        clinica_estado: string
+        clinica_email: string
+        clinica_celular: string
+        clinica_telefone: string | null
+    }
+
+    export interface ClinicaFromDataLogin {
+        id: number,
+        nome: string
     }
 }
 

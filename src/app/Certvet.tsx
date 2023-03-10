@@ -18,6 +18,7 @@ import Login from "./views/login/Login";
 import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
 import Home from "./views/home/Home";
+import Clinica from "./views/clinica/Clinica";
 
 export default function Certvet() {
     return (
@@ -36,6 +37,7 @@ export default function Certvet() {
                 <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
+                <Route path="/painel/clinica/editar" element={<Clinica />} />
                 <Route path="/painel/agenda" element={<Agenda />} />
             </Routes>
         </BrowserRouter>

@@ -138,6 +138,23 @@ namespace Contracts {
         id: number,
         nome: string
     }
+
+    export interface Clinica{
+        id:number,
+        nome_fantasia:string,
+        razao_social:string,
+        cnpj:string,
+        cnae:string,
+        cep:string,
+        logradouro:string,
+        numero:string,
+        bairro:string,
+        cidade:string,
+        estado:string,
+        celular:string,
+        telefone:string,
+        email:string,
+    }
 }
 
 export default Contracts;

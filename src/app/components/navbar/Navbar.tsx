@@ -3,13 +3,14 @@ import Container from "react-bootstrap/Container";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {Link, Navigate} from "react-router-dom";
+import Image from "react-bootstrap/Image";
 
 // @ts-ignore
 import Logo from "../../resources/logo.png";
 import Storages from "../../Storages";
 
 export default function Navbar() {
-    const logged = Storages.userStorage.get() != null;
+    const logged = Storages.userStorage.get() == null;
 
     const [navigateToLogin, setNavigateToLogin] = useState<boolean>(false);
 
@@ -37,6 +38,8 @@ export default function Navbar() {
                         logged ?
                             (
                                 <Nav>
+                                    <Link to="/painel/clinica/editar" className="nav-link">Editar dados da clínica</Link>
+                                    
                                     <Link to="/painel/funcionarios" className="nav-link">Funcionarios</Link>
                                     <Link to="/painel/agenda" className="nav-link">Agenda</Link>
                                     <Link to="/painel/tutores" className="nav-link">Tutores</Link>

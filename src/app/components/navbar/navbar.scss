@@ -1,0 +1,16 @@
+nav.navbar {
+  .profile-dropdown {
+    width: 45px;
+    height: 45px;
+    font-size: 25px;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .dropdown-menu-right {
+    left: unset !important;
+    right: 0 !important;
+  }
+}

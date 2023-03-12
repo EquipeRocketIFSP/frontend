@@ -7,8 +7,8 @@ import Storages from "../../Storages";
 export default function RestrictedLayout(props: React.PropsWithChildren): JSX.Element {
     const userData = Storages.userStorage.get();
 
-    //if (!userData?.token.length)
-      //  return <Navigate to="/login"/>;
+    if (!userData?.token.length)
+        return <Navigate to="/login"/>;
 
     return (
         <Layout>

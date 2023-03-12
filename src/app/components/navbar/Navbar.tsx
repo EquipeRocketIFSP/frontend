@@ -3,14 +3,19 @@ import Container from "react-bootstrap/Container";
 import BootstrapNavbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import {Link, Navigate} from "react-router-dom";
-import Image from "react-bootstrap/Image";
 
 // @ts-ignore
 import Logo from "../../resources/logo.png";
 import Storages from "../../Storages";
+import {Dropdown} from "react-bootstrap";
+
+import "./navbar.scss";
+import Memory from "../../Memory";
 
 export default function Navbar() {
-    const logged = Storages.userStorage.get() == null;
+    const storedData = Storages.userStorage.get();
+    const logged = !!storedData;
+    const firstNameLetter = storedData?.nome?.at(0);
 
     const [navigateToLogin, setNavigateToLogin] = useState<boolean>(false);
 
@@ -26,7 +31,7 @@ export default function Navbar() {
         <BootstrapNavbar collapseOnSelect expand="lg" className="bg-light shadow sticky-top">
             <Container>
 
-                <Link className="navbar-brand" to="/">
+                <Link className="navbar-brand" to={logged ? "/painel" : "/"}>
                     <img src={Logo} title="Logo" alt="Logo" style={{maxWidth: "150px"}}/>
                 </Link>
 
@@ -38,8 +43,6 @@ export default function Navbar() {
                         logged ?
                             (
                                 <Nav>
-                                    <Link to="/painel/clinica/editar" className="nav-link">Editar dados da clínica</Link>
-                                    
                                     <Link to="/painel/funcionarios" className="nav-link">Funcionarios</Link>
                                     <Link to="/painel/agenda" className="nav-link">Agenda</Link>
                                     <Link to="/painel/tutores" className="nav-link">Tutores</Link>
@@ -55,10 +58,24 @@ export default function Navbar() {
 
                     {
                         logged ?
-                            <Nav>
-                                <Nav.Link onClick={logout}>Sair</Nav.Link>
-                            </Nav> :
-                            <></>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="secondary"
+                                                 className="d-flex justify-content-center align-items-center rounded-circle profile-dropdown">
+                                    {firstNameLetter}
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu className="dropdown-menu-right">
+
+                                    {
+                                        Memory.authorites.find((value) => value === "ADMIN") ?
+                                            <Link to="/painel/clinica/editar" className="dropdown-item">
+                                                Dados da clínica
+                                            </Link> : <></>
+                                    }
+
+                                    <Dropdown.Item onClick={logout}>Sair</Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown> : <></>
                     }
 
                 </BootstrapNavbar.Collapse>

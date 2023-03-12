@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 
 import "./certvet.scss";
@@ -19,12 +19,35 @@ import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
 import Home from "./views/home/Home";
 import Clinica from "./views/clinica/Clinica";
+import axios, {AxiosHeaders} from "axios";
+import Storages from "./Storages";
+import Memory from "./Memory";
 
 export default function Certvet() {
+    const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
+
+    useEffect(() => {
+        const userData = Storages.userStorage.get();
+
+        if (!userData) {
+            setAuthoritesLoaded(true);
+            return;
+        }
+
+        const headers = new AxiosHeaders().setAuthorization(`${userData.type} ${userData.token}`);
+
+        axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers})
+            .then(({data}) => Memory.authorites.push(...data));
+
+        setAuthoritesLoaded(true);
+    }, []);
+
+    if (!authoritesLoaded)
+        return <></>;
+
     return (
         <BrowserRouter>
             <Routes>
-                
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/redefinir-senha" element={<RedefinePassword/>}/>
@@ -37,8 +60,8 @@ export default function Certvet() {
                 <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
-                <Route path="/painel/clinica/editar" element={<Clinica />} />
-                <Route path="/painel/agenda" element={<Agenda />} />
+                <Route path="/painel/clinica/editar" element={<Clinica/>}/>
+                <Route path="/painel/agenda" element={<Agenda/>}/>
             </Routes>
         </BrowserRouter>
     );

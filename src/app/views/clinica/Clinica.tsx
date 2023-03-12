@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Button, Container, Form, Row, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Alert, Button, Container, Form, Row, Spinner} from "react-bootstrap";
+import {Link} from "react-router-dom";
 import CEP from "../../components/cep/CEP";
 import UF from "../../components/uf/UF";
 import Contracts from "../../contracts/Contracts";
@@ -8,50 +8,71 @@ import Helpers from "../../helpers/Helpers";
 import Layouts from "../../layouts/Layouts";
 
 import "./clinica.scss";
+import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
+import Storages from "../../Storages";
 
-export default function Clinica():JSX.Element{
-    const [clinica,setClinica]=useState<Contracts.Clinica|null>(null);
+export default function Clinica(): JSX.Element {
+    const [clinica, setClinica] = useState<Contracts.Clinica | null>(null);
     const [addressDetails, setAddressDetails] = useState<Contracts.ViaCEPAddress | null>(null);
+    const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
+    const [clinicaUpdated, setClinicaUpdated] = useState<boolean>(false);
 
-    const onSubmit=(evt:React.FormEvent<HTMLFormElement>)=>{
+    const userData = Storages.userStorage.get();
+
+    const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-        
-        const formData=new FormData(evt.currentTarget);
+
+        setClinicaUpdated(false);
+
+        const formData = new FormData(evt.currentTarget);
         const errors = validateForm(formData);
 
         if (Object.keys(errors).length) {
             setValidationErrors(errors);
             return;
         }
+
+        const headers = new AxiosHeaders()
+            .setContentType("application/json")
+            .setAuthorization(`${userData?.type} ${userData?.token}`);
+
+        try {
+            const {data} = await axios.put(`${process.env.REACT_APP_API_URL}/clinica`, formData, {headers});
+
+            setClinica(data);
+            setClinicaUpdated(true);
+        } catch (e) {
+            const response = (e as AxiosError).response;
+
+            switch (response?.status) {
+                case HttpStatusCode.BadRequest:
+                    setValidationErrors(response.data as Contracts.DynamicObject<string>);
+                    break;
+
+                case HttpStatusCode.Unauthorized:
+                    setApiConnectionError(response.data as string);
+                    break;
+
+                default:
+                    setApiConnectionError("Não foi possivel editar os dados da clínica");
+                    break;
+            }
+        }
     }
 
-    useEffect(()=>{
-        new Promise<Contracts.Clinica>((resolve,reject)=>{
-            const mock:Contracts.Clinica={
-                id:1,
-                nome_fantasia:"string",
-                razao_social:"string",
-                cnpj:"string",
-                cnae:"string",
-                cep:"04225-003",
-                logradouro:"",
-                numero:"",
-                bairro:"string",
-                cidade:"",
-                estado:"string",
-                celular:"string",
-                telefone:"string",
-                email:"string",
-            }
+    useEffect(() => {
+        if (!userData)
+            return;
 
-            setTimeout(()=>resolve(mock),3000);
-        }).then(setClinica);
-    });
+        const headers = new AxiosHeaders();
+        headers.setAuthorization(`${userData.type} ${userData.token}`);
 
-    //TODO: Conectar com o backend para carregar os dados da clinica
+        axios.get<Contracts.Clinica>(`${process.env.REACT_APP_API_URL}/clinica`, {headers})
+            .then(({data}) => setClinica(data));
+    }, []);
 
-    if(!clinica){
+    if (!clinica) {
         return (
             <Layouts.RestrictedLayout>
                 <Container>
@@ -65,11 +86,16 @@ export default function Clinica():JSX.Element{
         );
     }
 
-    return(
+    return (
         <Layouts.RestrictedLayout>
             <Container>
-                <main id="clinica">
-                <Form onSubmit={onSubmit}>
+                <main id="clinica" className="pt-5">
+                    <h1>Dados da clínica</h1>
+
+                    {clinicaUpdated ? <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
+                    {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}
+
+                    <Form onSubmit={onSubmit}>
                         <Row className="rounded shadow mb-3 pt-3">
                             <Form.Group className="mb-3 col-lg-6">
                                 <Form.Label htmlFor="nome_fantasia">Nome Fantasia*</Form.Label>
@@ -167,8 +193,8 @@ export default function Clinica():JSX.Element{
                         </Row>
 
                         <div className="d-flex justify-content-between">
-                            <Link to="/login" className="btn btn-outline-secondary">Voltar</Link>
-                            <Button type="submit" variant="outline-primary">Continuar</Button>
+                            <Link to="/painel" className="btn btn-outline-secondary">Voltar</Link>
+                            <Button type="submit" variant="outline-success">Finalizar</Button>
                         </div>
                     </Form>
                 </main>

@@ -19,7 +19,7 @@ export default function UF(props: Props): JSX.Element {
     return (
         <>
             <Form.Label htmlFor={name}>Estado*</Form.Label>
-            <Form.Select name={name} defaultValue={defaultValue} id={name} required>
+            <Form.Select name={name} id={name} required>
                 <option value="">- Selecione</option>
 
                 {

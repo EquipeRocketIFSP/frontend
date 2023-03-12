@@ -1,16 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Alert, Button, Container, Form, Row, Spinner} from "react-bootstrap";
+import {Alert, Button, Container, Form, Spinner} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
 
 import Storages from "../../Storages";
 
 import Contracts from "../../contracts/Contracts";
-import Helpers from "../../helpers/Helpers";
 import Layouts from "../../layouts/Layouts";
-
-import Address from "../../components/address/Address";
-import Contacts from "../../components/contacts/Contacts";
+import Forms from "../../forms/Forms";
 
 import "./clinica.scss";
 
@@ -28,10 +25,9 @@ export default function Clinica(): JSX.Element {
         setClinicaUpdated(false);
 
         const formData = new FormData(evt.currentTarget);
-        const errors = validateForm(formData);
 
-        if (Object.keys(errors).length) {
-            setValidationErrors(errors);
+        if (Object.keys(validationErrors).length) {
+            setValidationErrors(validationErrors);
             return;
         }
 
@@ -98,41 +94,7 @@ export default function Clinica(): JSX.Element {
                     {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}
 
                     <Form onSubmit={onSubmit}>
-                        <Row className="rounded shadow mb-3 pt-3">
-                            <Form.Group className="mb-3 col-lg-6">
-                                <Form.Label htmlFor="nome_fantasia">Nome Fantasia*</Form.Label>
-                                <Form.Control name="nome_fantasia" maxLength={255}
-                                              defaultValue={clinica?.nome_fantasia}
-                                              id="nome_fantasia"
-                                              required/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-lg-6">
-                                <Form.Label htmlFor="razao_social">Razão Social*</Form.Label>
-                                <Form.Control name="razao_social" maxLength={255}
-                                              defaultValue={clinica?.razao_social} id="razao_social"
-                                              required/>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-lg-6">
-                                <Form.Label htmlFor="cnpj">CNPJ*</Form.Label>
-                                <Form.Control name="cnpj" maxLength={255}
-                                              defaultValue={clinica?.cnpj} id="cnpj"
-                                              onInput={Helpers.Masks.cnpj} required/>
-
-                                <Form.Text style={{color: "red"}}>{validationErrors["cnpj"] ?? ""}</Form.Text>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 col-lg-6">
-                                <Form.Label htmlFor="cnae">CNAE*</Form.Label>
-                                <Form.Control name="cnae" maxLength={255}
-                                              defaultValue={clinica?.cnae} id="cnae"
-                                              required/>
-                            </Form.Group>
-                        </Row>
-
-                        <Address {...clinica}/>
-                        <Contacts {...clinica}/>
+                        <Forms.Clinica data={clinica} validationErrors={validationErrors}/>
 
                         <div className="d-flex justify-content-between">
                             <Link to="/painel" className="btn btn-outline-secondary">Voltar</Link>
@@ -143,13 +105,4 @@ export default function Clinica(): JSX.Element {
             </Container>
         </Layouts.RestrictedLayout>
     );
-}
-
-function validateForm(formData: FormData): Contracts.DynamicObject<string> {
-    let validationErrors: Contracts.DynamicObject<string> = {};
-
-    if (!Helpers.SpecialValidation.cnpj(formData.get("cnpj")?.toString() ?? ""))
-        validationErrors["cnpj"] = "Insira um CNPJ válido";
-
-    return validationErrors;
 }

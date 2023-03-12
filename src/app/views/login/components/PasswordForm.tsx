@@ -4,6 +4,7 @@ import axios, {AxiosError, HttpStatusCode, AxiosHeaders} from "axios";
 import {Alert, Button, Form, Row, Spinner} from "react-bootstrap";
 import {Navigate} from "react-router-dom";
 import Storages from "../../../Storages";
+import Memory from "../../../Memory";
 
 interface Props {
     email: string,
@@ -32,9 +33,14 @@ export default function PasswordForm(props: Props): JSX.Element {
         setLoading(true);
 
         try {
-            const {data} = await axios.post<Contracts.UserData>(`${process.env.REACT_APP_API_URL}/auth`, formData, {headers});
+            const {data: userData} = await axios.post<Contracts.UserData>(`${process.env.REACT_APP_API_URL}/auth`, formData, {headers});
 
-            Storages.userStorage.set(data);
+            headers.setAuthorization(`${userData.type} ${userData.token}`);
+
+            const {data: authorites} = await axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers});
+
+            Storages.userStorage.set(userData);
+            Memory.authorites.push(...authorites);
 
             setNavigateToPainel(true);
         } catch (e) {

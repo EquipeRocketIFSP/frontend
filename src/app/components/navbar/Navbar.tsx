@@ -67,6 +67,7 @@ export default function Navbar() {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu className="dropdown-menu-right">
+                                    <Link to="/painel/usuario/editar" className="dropdown-item">Meus dados</Link>
 
                                     {
                                         Memory.authorites.find((value) => value === "ADMIN") ?

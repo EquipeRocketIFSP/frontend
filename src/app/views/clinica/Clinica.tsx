@@ -15,14 +15,16 @@ export default function Clinica(): JSX.Element {
     const [clinica, setClinica] = useState<Contracts.Clinica | null>(null);
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
-    const [clinicaUpdated, setClinicaUpdated] = useState<boolean>(false);
+    const [dataUpdated, setDataUpdated] = useState<boolean>(false);
+    const [sendingForm, setSendingForm] = useState<boolean>(false);
 
     const userData = Storages.userStorage.get();
 
     const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
 
-        setClinicaUpdated(false);
+        setDataUpdated(false);
+        setSendingForm(true);
 
         const formData = new FormData(evt.currentTarget);
 
@@ -39,7 +41,7 @@ export default function Clinica(): JSX.Element {
             const {data} = await axios.put(`${process.env.REACT_APP_API_URL}/clinica`, formData, {headers});
 
             setClinica(data);
-            setClinicaUpdated(true);
+            setDataUpdated(true);
         } catch (e) {
             const response = (e as AxiosError).response;
 
@@ -57,6 +59,8 @@ export default function Clinica(): JSX.Element {
                     break;
             }
         }
+
+        setSendingForm(false);
     }
 
     useEffect(() => {
@@ -90,16 +94,27 @@ export default function Clinica(): JSX.Element {
                 <main id="clinica" className="pt-5">
                     <h1>Dados da clínica</h1>
 
-                    {clinicaUpdated ? <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
+                    {dataUpdated ? <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
                     {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}
 
                     <Form onSubmit={onSubmit}>
                         <Forms.Clinica data={clinica} validationErrors={validationErrors}/>
 
-                        <div className="d-flex justify-content-between">
-                            <Link to="/painel" className="btn btn-outline-secondary">Voltar</Link>
-                            <Button type="submit" variant="outline-success">Finalizar</Button>
-                        </div>
+                        {
+                            sendingForm ?
+                                (
+                                    <div className="d-flex justify-content-between">
+                                        <Button variant="outline-secondary" disabled>Voltar</Button>
+                                        <Button variant="outline-success" disabled><Spinner animation="grow" size="sm"/></Button>
+                                    </div>
+                                ) :
+                                (
+                                    <div className="d-flex justify-content-between">
+                                        <Link to="/painel" className="btn btn-outline-secondary">Voltar</Link>
+                                        <Button type="submit" variant="outline-success">Finalizar</Button>
+                                    </div>
+                                )
+                        }
                     </Form>
                 </main>
             </Container>

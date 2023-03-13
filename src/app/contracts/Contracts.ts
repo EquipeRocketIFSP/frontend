@@ -50,15 +50,12 @@ namespace Contracts {
         cidade: string,
         estado: string,
         celular: string,
-        telefone: string | null,
+        telefone?: string,
         email: string
     }
 
     export interface Funcionario extends PersonalData {
-        crmv: string | null
-    }
-
-    export interface Tutor extends PersonalData {
+        crmv?: string
     }
 
     export interface Animal {

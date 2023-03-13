@@ -9,9 +9,9 @@ import Contracts from "../../contracts/Contracts";
 import Layouts from "../../layouts/Layouts";
 import Forms from "../../forms/Forms";
 
-import "./clinica.scss";
+import "./form-edit-clinica.scss";
 
-export default function Clinica(): JSX.Element {
+export default function FormEditClinica(): JSX.Element {
     const [clinica, setClinica] = useState<Contracts.Clinica | null>(null);
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});

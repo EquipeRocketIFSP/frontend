@@ -18,7 +18,7 @@ import Login from "./views/login/Login";
 import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
 import Home from "./views/home/Home";
-import Clinica from "./views/clinica/Clinica";
+import FormEditClinica from "./views/form-edit-clinica/FormEditClinica";
 import axios, {AxiosHeaders} from "axios";
 import Storages from "./Storages";
 import Memory from "./Memory";
@@ -55,7 +55,7 @@ export default function Certvet() {
                 <Route path="/cadastro/dono" element={<CadastroClinicaDono/>}/>
 
                 <Route path="/painel" element={<Painel/>}/>
-                <Route path="/painel/clinica/editar" element={<Clinica/>}/>
+                <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>
                 <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
 
                 <Route path="/painel/animais" element={<Animais/>}/>

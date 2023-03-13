@@ -22,6 +22,7 @@ import Clinica from "./views/clinica/Clinica";
 import axios, {AxiosHeaders} from "axios";
 import Storages from "./Storages";
 import Memory from "./Memory";
+import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -37,9 +38,8 @@ export default function Certvet() {
         const headers = new AxiosHeaders().setAuthorization(`${userData.type} ${userData.token}`);
 
         axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers})
-            .then(({data}) => Memory.authorites.push(...data));
-
-        setAuthoritesLoaded(true);
+            .then(({data}) => Memory.authorites.push(...data))
+            .finally(() => setAuthoritesLoaded(true));
     }, []);
 
     if (!authoritesLoaded)
@@ -55,12 +55,14 @@ export default function Certvet() {
                 <Route path="/cadastro/dono" element={<CadastroClinicaDono/>}/>
 
                 <Route path="/painel" element={<Painel/>}/>
+                <Route path="/painel/clinica/editar" element={<Clinica/>}/>
+                <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
+
                 <Route path="/painel/animais" element={<Animais/>}/>
                 <Route path="/painel/animais/1" element={<Animal/>}/>
                 <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
-                <Route path="/painel/clinica/editar" element={<Clinica/>}/>
                 <Route path="/painel/agenda" element={<Agenda/>}/>
             </Routes>
         </BrowserRouter>

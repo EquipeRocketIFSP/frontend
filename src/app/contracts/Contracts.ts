@@ -9,6 +9,22 @@ namespace Contracts {
         nome: string | null
     }
 
+    export interface MetaData {
+        total: number,
+        limit: number,
+        page: number,
+        pages: number,
+        first: string,
+        last: string,
+        prev: string | null,
+        next: string | null
+    }
+
+    export interface PaginetedResponse<I> {
+        meta: MetaData,
+        data: I[]
+    }
+
     export interface Redirect {
         redirect: null | string
     }

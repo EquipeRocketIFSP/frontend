@@ -115,27 +115,6 @@ namespace Contracts {
         closeModal: Function
     }
 
-    export interface SignInClinicFormData {
-        clinica_nome_fantasia: string
-        clinica_razao_social: string
-        clinica_cnpj: string
-        clinica_cnae: string
-        clinica_cep: string
-        clinica_numero: string,
-        clinica_logradouro: string
-        clinica_bairro: string
-        clinica_cidade: string
-        clinica_estado: string
-        clinica_email: string
-        clinica_celular: string
-        clinica_telefone: string | null
-    }
-
-    export interface ClinicaFromDataLogin {
-        id: number,
-        nome: string
-    }
-
     export interface Clinica {
         nome_fantasia: string,
         razao_social: string,

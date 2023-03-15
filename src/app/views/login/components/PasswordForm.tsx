@@ -7,12 +7,11 @@ import Storages from "../../../Storages";
 import Memory from "../../../Memory";
 
 interface Props {
-    email: string,
-    clinica: Contracts.ClinicaFromDataLogin
+    formData: FormData
 }
 
 export default function PasswordForm(props: Props): JSX.Element {
-    const {email, clinica} = props;
+    const {formData} = props;
 
     const [loading, setLoading] = useState<boolean>(false);
     const [loadingForgotPassword, setLoadingForgotPassword] = useState<boolean>(false);
@@ -26,14 +25,14 @@ export default function PasswordForm(props: Props): JSX.Element {
         const headers = new AxiosHeaders();
         headers.setContentType("application/json");
 
-        const formData = new FormData(evt.currentTarget);
-        formData.set("email", email);
-        formData.set("clinica", clinica.id.toString());
+        const data = new FormData(evt.currentTarget);
+        data.set("email", formData.get("email")?.toString() ?? "");
+        data.set("clinica", formData.get("clinica")?.toString() ?? "");
 
         setLoading(true);
 
         try {
-            const {data: userData} = await axios.post<Contracts.UserData>(`${process.env.REACT_APP_API_URL}/auth`, formData, {headers});
+            const {data: userData} = await axios.post<Contracts.UserData>(`${process.env.REACT_APP_API_URL}/auth`, data, {headers});
 
             headers.setAuthorization(`${userData.type} ${userData.token}`);
 
@@ -64,10 +63,6 @@ export default function PasswordForm(props: Props): JSX.Element {
 
         const headers = new AxiosHeaders();
         headers.setContentType("application/json");
-
-        const formData = new FormData();
-        formData.set("email", email);
-        formData.set("clinica", clinica.id.toString());
 
         try {
             await axios.post(`${process.env.REACT_APP_API_URL}/esqueci-minha-senha`, formData, {headers});

@@ -1,7 +1,6 @@
 import {Alert, Form, Row} from "react-bootstrap";
 import Helpers from "../../helpers/Helpers";
 import Address from "../../components/address/Address";
-import Memory from "../../Memory";
 import React from "react";
 import Contracts from "../../contracts/Contracts";
 
@@ -21,57 +20,47 @@ export default function Usuario(props: Props): JSX.Element {
                     <Alert variant="danger">{apiConnectionError}</Alert> : <></>
             }
 
-                <Row className="rounded shadow mb-3 pt-3">
-                    <Form.Group className="mb-3 col-lg-12">
-                        <Form.Label htmlFor="nome">Nome*</Form.Label>
-                        <Form.Control name="nome" defaultValue={data?.nome} maxLength={255} id="nome"
-                                      required/>
-                        <Form.Text style={{color: "red"}}>{validationErrors["nome"] ?? ""}</Form.Text>
-                    </Form.Group>
+            <Row className="rounded shadow mb-3 pt-3">
+                <Form.Group className="mb-3 col-lg-12">
+                    <Form.Label htmlFor="nome">Nome*</Form.Label>
+                    <Form.Control name="nome" defaultValue={data?.nome} maxLength={255} id="nome"
+                                  required/>
+                    <Form.Text style={{color: "red"}}>{validationErrors["nome"] ?? ""}</Form.Text>
+                </Form.Group>
 
-                    <Form.Group className="mb-3 col-lg-6">
-                        <Form.Label htmlFor="cpf">CPF*</Form.Label>
-                        <Form.Control name="cpf" defaultValue={data?.cpf} maxLength={14} id="cpf"
-                                      onInput={Helpers.Masks.cpf}
-                                      required/>
-                        <Form.Text style={{color: "red"}}>{validationErrors["cpf"] ?? ""}</Form.Text>
-                    </Form.Group>
+                <Form.Group className="mb-3 col-lg-6">
+                    <Form.Label htmlFor="cpf">CPF*</Form.Label>
+                    <Form.Control name="cpf" defaultValue={data?.cpf} maxLength={14} id="cpf"
+                                  onInput={Helpers.Masks.cpf}
+                                  required/>
+                    <Form.Text style={{color: "red"}}>{validationErrors["cpf"] ?? ""}</Form.Text>
+                </Form.Group>
 
-                    <Form.Group className="mb-3 col-lg-6">
-                        <Form.Label htmlFor="rg">RG*</Form.Label>
-                        <Form.Control name="rg" defaultValue={data?.rg} maxLength={255} id="rg" required/>
-                        <Form.Text style={{color: "red"}}>{validationErrors["rg"] ?? ""}</Form.Text>
-                    </Form.Group>
-                </Row>
+                <Form.Group className="mb-3 col-lg-6">
+                    <Form.Label htmlFor="rg">RG*</Form.Label>
+                    <Form.Control name="rg" defaultValue={data?.rg} maxLength={255} id="rg" required/>
+                    <Form.Text style={{color: "red"}}>{validationErrors["rg"] ?? ""}</Form.Text>
+                </Form.Group>
+            </Row>
 
-                <Address {...data}/>
+            <Address {...data}/>
 
-                <Row className="rounded shadow mb-3 pt-3">
-                    <Form.Group className="mb-3 col-lg-6">
-                        <Form.Label htmlFor="celular">Celular*</Form.Label>
-                        <Form.Control name="celular" defaultValue={data?.celular} maxLength={15} id="celular"
-                                      onInput={Helpers.Masks.celphone} required/>
-                        <Form.Text style={{color: "red"}}>{validationErrors["celular"] ?? ""}</Form.Text>
-                    </Form.Group>
+            <Row className="rounded shadow mb-3 pt-3">
+                <Form.Group className="mb-3 col-lg-6">
+                    <Form.Label htmlFor="celular">Celular*</Form.Label>
+                    <Form.Control name="celular" defaultValue={data?.celular} maxLength={15} id="celular"
+                                  onInput={Helpers.Masks.celphone} required/>
+                    <Form.Text style={{color: "red"}}>{validationErrors["celular"] ?? ""}</Form.Text>
+                </Form.Group>
 
-                    <Form.Group className="mb-3 col-lg-6">
-                        <Form.Label htmlFor="telefone">Telefone</Form.Label>
-                        <Form.Control name="telefone" defaultValue={data?.telefone} maxLength={14}
-                                      id="telefone"
-                                      onInput={Helpers.Masks.phone}/>
-                        <Form.Text style={{color: "red"}}>{validationErrors["telefone"] ?? ""}</Form.Text>
-                    </Form.Group>
-                </Row>
-
-            {
-                Memory.authorites.find((authority) => authority === "VETERINARIO") ?
-                    <Row className="rounded shadow mb-3 pt-3">
-                        <Form.Group className="mb-3 col-lg-12">
-                            <Form.Label>CRMV*</Form.Label>
-                            <Form.Control name="crmv" defaultValue={data?.crmv} required/>
-                        </Form.Group>
-                    </Row> : <></>
-            }
+                <Form.Group className="mb-3 col-lg-6">
+                    <Form.Label htmlFor="telefone">Telefone</Form.Label>
+                    <Form.Control name="telefone" defaultValue={data?.telefone} maxLength={14}
+                                  id="telefone"
+                                  onInput={Helpers.Masks.phone}/>
+                    <Form.Text style={{color: "red"}}>{validationErrors["telefone"] ?? ""}</Form.Text>
+                </Form.Group>
+            </Row>
         </>
     );
 }

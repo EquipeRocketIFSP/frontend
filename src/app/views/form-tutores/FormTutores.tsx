@@ -1,11 +1,10 @@
-import {Link, Navigate} from "react-router-dom";
+import {Link, Navigate, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
-import {Alert, Button, Container, Form, Row, Spinner} from "react-bootstrap";
+import {Alert, Button, Container, Form, Spinner} from "react-bootstrap";
 
 import Layouts from "../../layouts/Layouts";
 import Contracts from "../../contracts/Contracts";
-import Memory from "../../Memory";
 import Storages from "../../Storages";
 import LoadingScreen from "../../components/loading-screen/LoadingScreen";
 import Forms from "../../forms/Forms";
@@ -19,10 +18,22 @@ export default function FormTutores(): JSX.Element {
     const [sendingForm, setSendingForm] = useState<boolean>(false);
     const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
 
+    const userData = Storages.userStorage.get();
+    const urlParams = useParams<{ id?: string }>();
+
+    useEffect(() => {
+        if (!urlParams.id || !userData)
+            return;
+
+        const headers = new AxiosHeaders()
+            .setAuthorization(`${userData?.type} ${userData?.token}`);
+
+        axios.get(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.id}`, {headers})
+            .then(({data}) => setUsuario(data));
+    }, []);
+
     const onSubmitCreate = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
-
-        const userData = Storages.userStorage.get();
 
         if (!userData)
             return;
@@ -35,10 +46,17 @@ export default function FormTutores(): JSX.Element {
             .setAuthorization(`${userData?.type} ${userData?.token}`);
 
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/tutor`, formData, {headers});
+            if (urlParams.id) {
+                const {data} = await axios.put(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.id}`, formData, {headers});
 
-            setDataCreated(true);
-            setTimeout(() => setNavigateToListing(true), 2000);
+                setUsuario(data);
+                setDataUpdated(true);
+            } else {
+                await axios.post(`${process.env.REACT_APP_API_URL}/tutor`, formData, {headers});
+
+                setDataCreated(true);
+                setTimeout(() => setNavigateToListing(true), 2000);
+            }
         } catch (e) {
             const response = (e as AxiosError).response;
 
@@ -63,6 +81,9 @@ export default function FormTutores(): JSX.Element {
 
     if (navigateToListing)
         return <Navigate to="/painel/tutores"/>;
+
+    if (!usuario && urlParams.id)
+        return <LoadingScreen/>;
 
     return (
         <Layouts.Layout>

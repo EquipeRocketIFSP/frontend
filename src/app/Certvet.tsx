@@ -60,6 +60,7 @@ export default function Certvet() {
                 <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>
                 <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
                 <Route path="/painel/tutores" element={<Tutores/>}/>
+                <Route path="/painel/tutores/:id" element={<FormTutores/>}/>
                 <Route path="/painel/tutores/adicionar" element={<FormTutores/>}/>
 
                 <Route path="/painel/animais" element={<Animais/>}/>

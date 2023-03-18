@@ -46,6 +46,14 @@ export default function Usuario(props: Props): JSX.Element {
             <Address {...data}/>
 
             <Row className="rounded shadow mb-3 pt-3">
+                <Form.Group className="mb-3 col-lg-12">
+                    <Form.Label htmlFor="email">E-mail*</Form.Label>
+                    <Form.Control name="email" defaultValue={data?.email} maxLength={255} id="email"
+                                  type="email"
+                                  required/>
+                    <Form.Text style={{color: "red"}}>{validationErrors["email"] ?? ""}</Form.Text>
+                </Form.Group>
+
                 <Form.Group className="mb-3 col-lg-6">
                     <Form.Label htmlFor="celular">Celular*</Form.Label>
                     <Form.Control name="celular" defaultValue={data?.celular} maxLength={15} id="celular"

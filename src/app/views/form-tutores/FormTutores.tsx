@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
 import {Alert, Button, Container, Form, Row, Spinner} from "react-bootstrap";
@@ -10,24 +10,68 @@ import Storages from "../../Storages";
 import LoadingScreen from "../../components/loading-screen/LoadingScreen";
 import Forms from "../../forms/Forms";
 
-export default function FormTutores():JSX.Element{
+export default function FormTutores(): JSX.Element {
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
     const [usuario, setUsuario] = useState<Contracts.Funcionario | null>(null);
+    const [dataCreated, setDataCreated] = useState<boolean>(false);
     const [dataUpdated, setDataUpdated] = useState<boolean>(false);
     const [sendingForm, setSendingForm] = useState<boolean>(false);
+    const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
 
-    const onSubmit=()=>{
-        
+    const onSubmitCreate = async (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+
+        const userData = Storages.userStorage.get();
+
+        if (!userData)
+            return;
+
+        setSendingForm(true);
+
+        const formData = new FormData(evt.currentTarget);
+        const headers = new AxiosHeaders()
+            .setContentType("application/json")
+            .setAuthorization(`${userData?.type} ${userData?.token}`);
+
+        try {
+            await axios.post(`${process.env.REACT_APP_API_URL}/tutor`, formData, {headers});
+
+            setDataCreated(true);
+            setTimeout(() => setNavigateToListing(true), 2000);
+        } catch (e) {
+            const response = (e as AxiosError).response;
+
+            switch (response?.status) {
+                case HttpStatusCode.BadRequest:
+                    setValidationErrors(response.data as Contracts.DynamicObject<string>);
+                    break;
+
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Conflict:
+                    setApiConnectionError(response.data as string);
+                    break;
+
+                default:
+                    setApiConnectionError("Não foi possivel concluir essa operação");
+                    break;
+            }
+        }
+
+        setSendingForm(false);
     }
 
-    return(
+    if (navigateToListing)
+        return <Navigate to="/painel/tutores"/>;
+
+    return (
         <Layouts.Layout>
             <Container>
                 <main id="form-edit-usuario" className="py-3">
                     <h1>Dados do tutor</h1>
 
-                    <Form onSubmit={onSubmit}>
+                    <Form onSubmit={onSubmitCreate}>
+                        {dataCreated ? <Alert variant="success">Cadastro efetuado com sucesso</Alert> : <></>}
                         {dataUpdated ? <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
 
                         <Forms.Usuario

@@ -6,8 +6,8 @@ import {Alert, Button, Container, Form, Row, Spinner} from "react-bootstrap";
 import Layouts from "../../../layouts/Layouts";
 import Contracts from "../../../contracts/Contracts";
 import Storages from "../../../Storages";
-import LoadingScreen from "../../../components/loading-screen/LoadingScreen";
 import Forms from "../../../forms/Forms";
+import Components from "../../../components/Components";
 
 type FormStatus = "idle" | "created" | "updated";
 
@@ -105,7 +105,7 @@ export default function DefaultForm(props: Props): JSX.Element {
         return <Navigate to={`/painel/${clientPathname}`}/>;
 
     if (!usuario && urlParams.id)
-        return <LoadingScreen/>;
+        return <Components.LoadingScreen/>;
 
     return (
         <Layouts.RestrictedLayout>

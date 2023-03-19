@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
 import "@fortawesome/fontawesome-free/css/solid.min.css";
 
-import Animais from "./views/animais/Animais";
 import FormProntuario from "./views/form-prontuario/FormProntuario";
 import FormHistoricoClinico from "./views/form-historico-clinico/FormHistoricoClinico";
 import Agenda from "./views/agenda/Agenda";
@@ -24,6 +23,7 @@ import Storages from "./Storages";
 import Memory from "./Memory";
 import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
 import Users from "./views/users/Users";
+import Animals from "./views/animals/Animals";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -58,11 +58,13 @@ export default function Certvet() {
                 <Route path="/painel" element={<Painel/>}/>
                 <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>
                 <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
-                <Route path="/painel/tutores" element={<Users.Tutores.Listing/>}/>
-                <Route path="/painel/tutores/:id" element={<Users.Tutores.Form/>}/>
-                <Route path="/painel/tutores/adicionar" element={<Users.Tutores.Form/>}/>
 
-                <Route path="/painel/animais" element={<Animais/>}/>
+                <Route path="/painel/tutores" element={<Users.Tutores.Listing/>}/>
+                <Route path="/painel/tutores/:id" element={<Users.Tutores.Details/>}/>
+                <Route path="/painel/tutores/adicionar" element={<Users.Tutores.Form/>}/>
+                <Route path="/painel/tutores/:id/editar" element={<Users.Tutores.Form/>}/>
+
+                <Route path="/painel/animais" element={<Animals.Listing/>}/>
                 <Route path="/painel/animais/1" element={<Animal/>}/>
                 <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>

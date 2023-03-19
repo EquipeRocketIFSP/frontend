@@ -10,7 +10,6 @@ export default function Listing(): JSX.Element {
     const [searchParams] = useSearchParams();
     const search = searchParams.get("buscar");
     const page = searchParams.get("pagina") ?? "1";
-    console.log(page);
 
     return (
         <Layouts.RestrictedLayout>

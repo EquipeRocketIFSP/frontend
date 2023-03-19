@@ -16,7 +16,7 @@ export default function Listing(): JSX.Element {
                 <Components.SearchBar/>
 
                 <main>
-                    <Components.Listing pathname={`tutor?buscar=${search}`} componentType={Item}/>
+                    <Components.Listing pathname={!search ? `tutor` : `tutor?buscar=${search}`} componentType={Item}/>
                 </main>
             </Container>
         </Layouts.RestrictedLayout>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Spinner} from "react-bootstrap";
+import {Alert, Spinner} from "react-bootstrap";
 import axios, {AxiosHeaders} from "axios";
 
 import Contracts from "../../contracts/Contracts";
@@ -33,8 +33,8 @@ export default function Listing(props: Props): JSX.Element {
     if (loading)
         return <Spinner animation="grow"/>;
 
-    if (!response)
-        return <></>;
+    if (!response?.data.length)
+        return <Alert variant="info" style={{textAlign: "center"}}>Nenhum item encontrado</Alert>;
 
     return (
         <>

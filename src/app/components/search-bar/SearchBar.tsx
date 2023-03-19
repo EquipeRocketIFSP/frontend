@@ -18,8 +18,16 @@ export default function SearchBar(props: Props) {
         evt.preventDefault();
 
         const url = new URL(window.location.href);
-        url.searchParams.set("search", search);
+        url.searchParams.set("search", search ?? "");
 
+        setSearchParams(url.searchParams);
+    }
+
+    const clearForm = () => {
+        const url = new URL(window.location.href);
+        url.searchParams.set("search", "");
+
+        setSearch("");
         setSearchParams(url.searchParams);
     }
 
@@ -38,7 +46,7 @@ export default function SearchBar(props: Props) {
 
                         {
                             search.length ?
-                                <Button variant="outline-danger" onClick={() => setSearch("")}>
+                                <Button variant="outline-danger" onClick={clearForm}>
                                     {
                                         window.innerWidth > 767 ? "Limpar Busca" :
                                             <i className="fa fa-solid fa-xmark"> </i>

@@ -1,22 +1,32 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {Button, Form, Row} from "react-bootstrap";
 
 interface Props {
     btnAdd?: {
         label: string,
-        href: string
+        href: string,
     }
 }
 
 export default function SearchBar(props: Props) {
-    const [search, setSearch] = useState<string>("");
     const {btnAdd} = props;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [search, setSearch] = useState<string>(searchParams.get("search") ?? "");
+
+    const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("search", search);
+
+        setSearchParams(url.searchParams);
+    }
 
     return (
         <div className="bg-light search-bar my-5 px-3">
             <Row>
-                <Form className="col-8 col-md-6">
+                <Form className="col-8 col-md-6" onSubmit={onSubmit}>
                     <Form.Group className="d-flex align-items-center h-100">
                         <Form.Control className="w-50 me-2" type="text" name="buscar" placeholder="Buscar"
                                       value={search}

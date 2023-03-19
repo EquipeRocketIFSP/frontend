@@ -28,7 +28,7 @@ export default function Listing(props: Props): JSX.Element {
         axios.get<Contracts.PaginetedResponse<Object>>(`${process.env.REACT_APP_API_URL}/${pathname}`, {headers})
             .then(({data}) => setResponse(data))
             .finally(() => setLoading(false));
-    }, []);
+    }, [pathname]);
 
     if (loading)
         return <Spinner animation="grow"/>;

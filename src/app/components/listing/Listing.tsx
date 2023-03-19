@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Spinner} from "react-bootstrap";
+import {Alert, Spinner} from "react-bootstrap";
 import axios, {AxiosHeaders} from "axios";
 
 import Contracts from "../../contracts/Contracts";
@@ -28,13 +28,13 @@ export default function Listing(props: Props): JSX.Element {
         axios.get<Contracts.PaginetedResponse<Object>>(`${process.env.REACT_APP_API_URL}/${pathname}`, {headers})
             .then(({data}) => setResponse(data))
             .finally(() => setLoading(false));
-    }, []);
+    }, [pathname]);
 
     if (loading)
         return <Spinner animation="grow"/>;
 
-    if (!response)
-        return <></>;
+    if (!response?.data.length)
+        return <Alert variant="info" style={{textAlign: "center"}}>Nenhum item encontrado</Alert>;
 
     return (
         <>

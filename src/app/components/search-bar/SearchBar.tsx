@@ -1,22 +1,40 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {Button, Form, Row} from "react-bootstrap";
 
 interface Props {
     btnAdd?: {
         label: string,
-        href: string
+        href: string,
     }
 }
 
 export default function SearchBar(props: Props) {
-    const [search, setSearch] = useState<string>("");
     const {btnAdd} = props;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [search, setSearch] = useState<string>(searchParams.get("buscar") ?? "");
+
+    const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("buscar", search ?? "");
+
+        setSearchParams(url.searchParams);
+    }
+
+    const clearForm = () => {
+        const url = new URL(window.location.href);
+        url.searchParams.set("buscar", "");
+
+        setSearch("");
+        setSearchParams(url.searchParams);
+    }
 
     return (
         <div className="bg-light search-bar my-5 px-3">
             <Row>
-                <Form className="col-8 col-md-6">
+                <Form className="col-8 col-md-6" onSubmit={onSubmit}>
                     <Form.Group className="d-flex align-items-center h-100">
                         <Form.Control className="w-50 me-2" type="text" name="buscar" placeholder="Buscar"
                                       value={search}
@@ -28,7 +46,7 @@ export default function SearchBar(props: Props) {
 
                         {
                             search.length ?
-                                <Button variant="outline-danger" onClick={() => setSearch("")}>
+                                <Button variant="outline-danger" onClick={clearForm}>
                                     {
                                         window.innerWidth > 767 ? "Limpar Busca" :
                                             <i className="fa fa-solid fa-xmark"> </i>

@@ -23,7 +23,7 @@ import axios, {AxiosHeaders} from "axios";
 import Storages from "./Storages";
 import Memory from "./Memory";
 import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
-import Tutores from "./views/tutores/Tutores";
+import Users from "./views/users/Users";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -58,7 +58,9 @@ export default function Certvet() {
                 <Route path="/painel" element={<Painel/>}/>
                 <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>
                 <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
-                <Route path="/painel/tutores" element={<Tutores/>}/>
+                <Route path="/painel/tutores" element={<Users.Tutores.Listing/>}/>
+                <Route path="/painel/tutores/:id" element={<Users.Tutores.Form/>}/>
+                <Route path="/painel/tutores/adicionar" element={<Users.Tutores.Form/>}/>
 
                 <Route path="/painel/animais" element={<Animais/>}/>
                 <Route path="/painel/animais/1" element={<Animal/>}/>

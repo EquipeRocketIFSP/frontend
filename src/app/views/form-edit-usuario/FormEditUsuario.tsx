@@ -96,6 +96,16 @@ export default function FormEditUsuario(): JSX.Element {
                             apiConnectionError={apiConnectionError}
                         />
 
+                        {
+                            Memory.authorites.find((authority) => authority === "VETERINARIO") ?
+                                <Row className="rounded shadow mb-3 pt-3">
+                                    <Form.Group className="mb-3 col-lg-12">
+                                        <Form.Label>CRMV*</Form.Label>
+                                        <Form.Control name="crmv" defaultValue={usuario?.crmv} required/>
+                                    </Form.Group>
+                                </Row> : <></>
+                        }
+
                         <Row className="rounded shadow mb-3 pt-3">
                             <Form.Group className="mb-3 col-lg-12">
                                 <Form.Label htmlFor="email">E-mail*</Form.Label>

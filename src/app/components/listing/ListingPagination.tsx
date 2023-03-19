@@ -1,49 +1,103 @@
 import {Pagination} from "react-bootstrap";
-import React, {useState} from "react";
+import React from "react";
 import Contracts from "../../contracts/Contracts";
-import {Link, Navigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function ListingPagination(props: Contracts.MetaData): JSX.Element {
     const {first, last, next, prev, page, pages} = props;
-    const [navigateTo, setNavigateTo] = useState<string | null>(null);
 
     let paginationItems: JSX.Element[] = [];
 
     if (pages < 5) {
         for (let i = 1; i <= pages; i++) {
             paginationItems.push(
-                <Link to={parseAPIURL(first, i)}>
-                    <Pagination.Item active={i === page}>{i}</Pagination.Item>
-                </Link>
+                <div className={`page-item ${i === page ? "active" : ""}`}>
+                    <Link className="page-link" to={parseAPIURL(first, i)}>
+                        <span aria-hidden="true">{i}</span>
+                    </Link>
+                </div>
             );
         }
     } else {
-        paginationItems = [
-            <Link to={parseAPIURL(first, 1)}><Pagination.Item active={1 === page}>1</Pagination.Item></Link>,
-            <Link to={parseAPIURL(first, 2)}><Pagination.Item active={2 === page}>2</Pagination.Item></Link>,
-            <Pagination.Ellipsis/>,
-            <Link to={parseAPIURL(first, (pages - 1))}><Pagination.Item
-                active={(pages - 1) === page}>{pages - 1}</Pagination.Item></Link>,
-            <Link to={parseAPIURL(first, pages)}><Pagination.Item
-                active={pages === page}>{pages}</Pagination.Item></Link>,
-        ];
-    }
+        const firstHalfActive = (
+            page <= (pages / 2) && page > 2 ?
+                <div className="page-item active">
+                    <Link className="page-link" to={parseAPIURL(first, page)}>
+                        <span aria-hidden="true">{page}</span>
+                    </Link>
+                </div>
+                : <></>
+        );
 
-    if (navigateTo) {
-        const href = navigateTo;
-        setNavigateTo(null);
-        return <Navigate to={href}/>;
+        const lastHalfActive = (
+            page > (pages / 2) && page < (pages - 1) ?
+                <div className="page-item active">
+                    <Link className="page-link" to={parseAPIURL(first, page)}>
+                        <span aria-hidden="true">{page}</span>
+                    </Link>
+                </div> : <></>
+        );
+
+        paginationItems = [
+            <div className={`page-item ${1 === page ? "active" : ""}`}>
+                <Link className="page-link" to={parseAPIURL(first, 1)}>
+                    <span aria-hidden="true">1</span>
+                </Link>
+            </div>,
+
+            <div className={`page-item ${2 === page ? "active" : ""}`}>
+                <Link className="page-link" to={parseAPIURL(first, 2)}>
+                    <span aria-hidden="true">2</span>
+                </Link>
+            </div>,
+
+            firstHalfActive,
+
+            <Pagination.Ellipsis/>,
+
+            lastHalfActive,
+
+            <div className={`page-item ${(pages - 1) === page ? "active" : ""}`}>
+                <Link className="page-link" to={parseAPIURL(first, (pages - 1))}>
+                    <span aria-hidden="true">{pages - 1}</span>
+                </Link>
+            </div>,
+
+            <div className={`page-item ${pages === page ? "active" : ""}`}>
+                <Link className="page-link" to={parseAPIURL(first, pages)}>
+                    <span aria-hidden="true">{pages}</span>
+                </Link>
+            </div>
+        ];
     }
 
     return (
         <Pagination className="justify-content-center">
-            <Link to={parseAPIURL(first)}><Pagination.First/></Link>
-            <Link to={parseAPIURL(prev)}><Pagination.Prev/></Link>
+            <div className="page-item">
+                <Link className="page-link" to={parseAPIURL(first)}>
+                    <span aria-hidden="true">«</span>
+                </Link>
+            </div>
+
+            <div className="page-item">
+                <Link className="page-link" to={parseAPIURL(prev)}>
+                    <span aria-hidden="true">‹</span>
+                </Link>
+            </div>
 
             {paginationItems}
 
-            <Link to={parseAPIURL(next)}> <Pagination.Next/></Link>
-            <Link to={parseAPIURL(last)}><Pagination.Last/></Link>
+            <div className="page-item">
+                <Link className="page-link" to={parseAPIURL(next)}>
+                    <span aria-hidden="true">›</span>
+                </Link>
+            </div>
+
+            <div className="page-item">
+                <Link className="page-link" to={parseAPIURL(last)}>
+                    <span aria-hidden="true">»</span>
+                </Link>
+            </div>
         </Pagination>
     );
 }

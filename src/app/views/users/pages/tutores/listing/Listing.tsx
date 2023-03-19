@@ -8,7 +8,9 @@ import Item from "./components/Item";
 
 export default function Listing(): JSX.Element {
     const [searchParams] = useSearchParams();
-    const search = searchParams.get("search");
+    const search = searchParams.get("buscar");
+    const page = searchParams.get("pagina") ?? "1";
+    console.log(page);
 
     return (
         <Layouts.RestrictedLayout>
@@ -16,7 +18,9 @@ export default function Listing(): JSX.Element {
                 <Components.SearchBar/>
 
                 <main>
-                    <Components.Listing pathname={!search ? `tutor` : `tutor?buscar=${search}`} componentType={Item}/>
+                    <Components.Listing
+                        pathname={!search ? `tutor?pagina=${page}` : `tutor?buscar=${search}&pagina=${page}`}
+                        componentType={Item}/>
                 </main>
             </Container>
         </Layouts.RestrictedLayout>

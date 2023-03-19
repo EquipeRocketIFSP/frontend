@@ -12,20 +12,20 @@ interface Props {
 export default function SearchBar(props: Props) {
     const {btnAdd} = props;
     const [searchParams, setSearchParams] = useSearchParams();
-    const [search, setSearch] = useState<string>(searchParams.get("search") ?? "");
+    const [search, setSearch] = useState<string>(searchParams.get("buscar") ?? "");
 
     const onSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
 
         const url = new URL(window.location.href);
-        url.searchParams.set("search", search ?? "");
+        url.searchParams.set("buscar", search ?? "");
 
         setSearchParams(url.searchParams);
     }
 
     const clearForm = () => {
         const url = new URL(window.location.href);
-        url.searchParams.set("search", "");
+        url.searchParams.set("buscar", "");
 
         setSearch("");
         setSearchParams(url.searchParams);

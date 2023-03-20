@@ -9,8 +9,6 @@ import "@fortawesome/fontawesome-free/css/solid.min.css";
 import FormProntuario from "./views/form-prontuario/FormProntuario";
 import FormHistoricoClinico from "./views/form-historico-clinico/FormHistoricoClinico";
 import Agenda from "./views/agenda/Agenda";
-import FormAnimal from "./views/form-animal/FormAnimal";
-import Animal from "./views/animal/Animal";
 import CadastroClinica from "./views/cadastro-clinica/CadastroClinica";
 import CadastroClinicaDono from "./views/cadastro-clinica-dono/CadastroClinicaDono";
 import Login from "./views/login/Login";
@@ -64,9 +62,10 @@ export default function Certvet() {
                 <Route path="/painel/tutores/adicionar" element={<Users.Tutores.Form/>}/>
                 <Route path="/painel/tutores/:id/editar" element={<Users.Tutores.Form/>}/>
 
-                <Route path="/painel/animais" element={<Animals.Listing/>}/>
-                <Route path="/painel/animais/1" element={<Animal/>}/>
-                <Route path="/painel/animais/adicionar" element={<FormAnimal/>}/>
+                <Route path="/painel/animais/:id" element={<Animals.Details/>}/>
+                <Route path="/painel/tutores/:tutorId/animais/adicionar" element={<Animals.Form/>}/>
+                <Route path="/painel/animais/:id/editar" element={<Animals.Form/>}/>
+
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
                 <Route path="/painel/agenda" element={<Agenda/>}/>

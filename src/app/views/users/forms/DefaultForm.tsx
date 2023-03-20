@@ -17,10 +17,6 @@ interface Props {
     apiPathname: string,
 }
 
-interface Path extends Record<string, string | undefined> {
-    id?: string
-}
-
 interface SubmitContext {
     url: string,
     formData: FormData,
@@ -39,7 +35,7 @@ export default function DefaultForm(props: Props): JSX.Element {
     const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
 
     const userData = Storages.userStorage.get();
-    const urlParams = useParams<Path>();
+    const urlParams = useParams<Contracts.PathVariables>();
 
     const headers = new AxiosHeaders()
         .setContentType("application/json")

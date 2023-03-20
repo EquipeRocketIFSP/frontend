@@ -14,7 +14,8 @@ export default function Listing() {
 
     return (
         <Container>
-            <Components.SearchBar/>
+            <Components.SearchBar
+                btnAdd={{label: "Adicionar", href: `/painel/tutores/${urlParams.id}/animais/adicionar`}}/>
 
             <main>
                 <Components.Listing

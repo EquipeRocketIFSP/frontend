@@ -1,21 +1,53 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-import Layouts from "../../layouts/Layouts";
+import Layouts from "../../../../layouts/Layouts";
 import {Container, ListGroup, Pagination, Row} from "react-bootstrap";
-import SearchBar from "../../components/search-bar/SearchBar";
-import {Link} from "react-router-dom";
+import SearchBar from "../../../../components/search-bar/SearchBar";
+import {Link, useParams} from "react-router-dom";
+import Contracts from "../../../../contracts/Contracts";
+import Storages from "../../../../Storages";
+import axios, {AxiosHeaders} from "axios";
+import Components from "../../../../components/Components";
 
-export default function Animal(): JSX.Element {
+export default function Details(): JSX.Element {
+    const [animal, setAnimal] = useState<Contracts.Animal | null>(null);
+
+    const userData = Storages.userStorage.get();
+    const urlParams = useParams<Contracts.PathVariables>();
+
+    const headers = new AxiosHeaders()
+        .setContentType("application/json")
+        .setAuthorization(`${userData?.type} ${userData?.token}`);
+
+    useEffect(() => {
+        if (!urlParams.id || !userData)
+            return;
+
+        axios.get(`${process.env.REACT_APP_API_URL}/animal/${urlParams.id}`, {headers})
+            .then(({data}) => setAnimal(data));
+    }, []);
+
+    if (!animal)
+        return <Components.LoadingScreen/>;
+
     return (
         <Layouts.Layout>
             <main id="animal">
                 <h1>Dados do animal</h1>
 
                 <Container>
-                    <Row className="summary-aniamal mb-5 p-2">
-                        <span><b>Tutor: </b>Joe Doe</span>
-                        <span><b>Animal: </b>Lil Cat</span>
-                        <span><b>Idade: </b>5</span>
+                    <Row className="summary mb-5 p-2">
+                        <span><b>Nome: </b>{animal.nome}</span>
+                        <span><b>Sexo: </b>{animal.sexo === "MACHO" ? "Macho" : "Fêmea"}</span>
+                        <span><b>Idade: </b>{animal.idade}</span>
+                        <span><b>Espécie: </b>{animal.especie}</span>
+                        <span><b>Raça: </b>{animal.raca}</span>
+                        <span><b>Pelagem: </b>{animal.pelagem}</span>
+
+                        <div className="col-12">
+                            <Link to={`/painel/animais/${urlParams.id}/editar`}
+                                  className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
+                        </div>
                     </Row>
 
                     <SearchBar btnAdd={{label: "Novo Antendimento", href: "/painel/prontuario/cadastrar"}}/>

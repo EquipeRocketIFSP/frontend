@@ -1,4 +1,6 @@
 namespace Contracts {
+    export type AnimalSex = "MACHO" | "FEMEA";
+
     export interface DynamicObject<I> {
         [key: string]: I
     }
@@ -23,6 +25,10 @@ namespace Contracts {
     export interface PaginetedResponse<I> {
         meta: MetaData,
         data: I[]
+    }
+
+    export interface PathVariables extends Record<string, string | undefined> {
+        id?: string
     }
 
     export interface Redirect {
@@ -77,15 +83,13 @@ namespace Contracts {
     export interface Animal {
         id: number,
         nome: string,
-        idade: string,
-        sexo: "MASCULINO" | "FEMININO",
-        raca: string,
         especie: string,
+        ano_nascimento: number,
+        tutores: PersonalData[],
         pelagem: string,
-        tutor: string,
-        formaIdentificacao: string,
-        pai: string | null,
-        mae: string | null
+        raca: string,
+        peso: string,
+        sexo: AnimalSex
     }
 
     export interface Agendamento {

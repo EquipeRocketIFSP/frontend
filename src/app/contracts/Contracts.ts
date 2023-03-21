@@ -85,9 +85,10 @@ namespace Contracts {
         nome: string,
         especie: string,
         idade: number,
-        tutores: number[],
+        tutores: PersonalData[],
         pelagem: string,
         raca: string,
+        peso: string,
         sexo: AnimalSex
     }
 

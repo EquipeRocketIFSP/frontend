@@ -9,11 +9,15 @@ import Storages from "../../../../Storages";
 import axios, {AxiosHeaders} from "axios";
 import Components from "../../../../components/Components";
 
+interface PathVariables extends Contracts.PathVariables {
+    tutorId?: string
+}
+
 export default function Details(): JSX.Element {
     const [animal, setAnimal] = useState<Contracts.Animal | null>(null);
 
     const userData = Storages.userStorage.get();
-    const urlParams = useParams<Contracts.PathVariables>();
+    const urlParams = useParams<PathVariables>();
 
     const headers = new AxiosHeaders()
         .setContentType("application/json")
@@ -39,14 +43,14 @@ export default function Details(): JSX.Element {
                     <Row className="summary mb-5 p-2">
                         <span><b>Nome: </b>{animal.nome}</span>
                         <span><b>Sexo: </b>{animal.sexo === "MACHO" ? "Macho" : "Fêmea"}</span>
-                        <span><b>Idade: </b>{animal.idade}</span>
+                        <span><b>Idade: </b>{animal.idade} anos</span>
+                        <span><b>Peso: </b>{animal.peso} kg</span>
                         <span><b>Espécie: </b>{animal.especie}</span>
                         <span><b>Raça: </b>{animal.raca}</span>
                         <span><b>Pelagem: </b>{animal.pelagem}</span>
 
                         <div className="col-12">
-                            <Link to={`/painel/animais/${urlParams.id}/editar`}
-                                  className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
+                            <Link to="editar" className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
                         </div>
                     </Row>
 

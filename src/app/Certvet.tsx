@@ -62,9 +62,9 @@ export default function Certvet() {
                 <Route path="/painel/tutores/adicionar" element={<Users.Tutores.Form/>}/>
                 <Route path="/painel/tutores/:id/editar" element={<Users.Tutores.Form/>}/>
 
-                <Route path="/painel/animais/:id" element={<Animals.Details/>}/>
+                <Route path="/painel/tutores/:tutorId/animais/:id" element={<Animals.Details/>}/>
                 <Route path="/painel/tutores/:tutorId/animais/adicionar" element={<Animals.Form/>}/>
-                <Route path="/painel/animais/:id/editar" element={<Animals.Form/>}/>
+                <Route path="/painel/tutores/:tutorId/animais/:id/editar" element={<Animals.Form/>}/>
 
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>

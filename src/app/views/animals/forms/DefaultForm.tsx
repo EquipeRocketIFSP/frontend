@@ -49,7 +49,7 @@ export default function DefaultForm(): JSX.Element {
     useEffect(() => {
         axios.get<Contracts.PaginetedResponse<Contracts.PersonalData>>(`${process.env.REACT_APP_API_URL}/tutor?buscar=${searchTutor}`, {headers})
             .then(async ({data: response}) => {
-                if (!response.data.find(({id}) => id.toString() === urlParams.tutorId)) {
+                if (!response.data.find(({id}) => id.toString() === urlParams.tutorId) && !urlParams.id) {
                     try {
                         const {data: dataTutor} = await axios.get<Contracts.PersonalData>(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.tutorId}`, {headers})
 
@@ -63,7 +63,7 @@ export default function DefaultForm(): JSX.Element {
 
                 setTutores(response.data);
 
-                if (defaultTutor && !selectedTutores.length)
+                if (defaultTutor && !selectedTutores.length && !urlParams.id)
                     setSelectedTutores([{value: defaultTutor.id, label: defaultTutor.nome, isFixed: true}]);
             })
             .catch(console.error);
@@ -74,7 +74,12 @@ export default function DefaultForm(): JSX.Element {
             return;
 
         axios.get<Contracts.Animal>(`${process.env.REACT_APP_API_URL}/animal/${urlParams.id}`, {headers})
-            .then(({data}) => setAnimal(data))
+            .then(({data}) => {
+                setAnimal(data);
+                setSelectedTutores(data.tutores.map((tutor) => {
+                    return {value: tutor.id, label: tutor.nome, isFixed: false};
+                }));
+            })
             .catch(console.error);
     }, []);
 
@@ -145,6 +150,8 @@ export default function DefaultForm(): JSX.Element {
         setSelectedTutores(values as ReactSelectOption[]);
     }
 
+    console.log(selectedTutores)
+
     if (navigateToListing)
         return <Navigate to={`/painel`}/>;
 
@@ -172,7 +179,8 @@ export default function DefaultForm(): JSX.Element {
                         <Row>
                             <Form.Group className="mb-3 col-lg-12">
                                 <Form.Label>Nome*</Form.Label>
-                                <Form.Control name="nome" required/>
+                                <Form.Control name="nome" defaultValue={animal?.nome} required/>
+                                <Form.Text>{validationErrors["nome"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-12">
@@ -184,40 +192,48 @@ export default function DefaultForm(): JSX.Element {
                                         onInputChange={(value) => onInputChange(value)}
                                         onChange={onChange}
                                         closeMenuOnSelect={false} isMulti required/>
+
+                                <Form.Text>{validationErrors["tutores"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Sexo*</Form.Label>
                                 <Form.Select name="sexo" required>
                                     <option value="">- Selecione</option>
-                                    <option value="MACHO">Macho</option>
-                                    <option value="FEMEA">Fêmea</option>
+                                    <option value="MACHO" selected={animal?.sexo === "MACHO"}>Macho</option>
+                                    <option value="FEMEA" selected={animal?.sexo === "FEMEA"}>Fêmea</option>
                                 </Form.Select>
+                                <Form.Text>{validationErrors["sexo"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Idade*</Form.Label>
-                                <Form.Control name="idade" min={1} type="number" required/>
+                                <Form.Control name="idade" min={1} type="number" defaultValue={animal?.idade} required/>
+                                <Form.Text>{validationErrors["idade"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Peso*</Form.Label>
-                                <Form.Control name="peso" min={1} type="number" required/>
+                                <Form.Control name="peso" min={1} type="number" defaultValue={animal?.peso} required/>
+                                <Form.Text>{validationErrors["peso"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Especie*</Form.Label>
-                                <Form.Control name="especie" required/>
+                                <Form.Control name="especie" maxLength={255} defaultValue={animal?.especie} required/>
+                                <Form.Text>{validationErrors["especie"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Raça*</Form.Label>
-                                <Form.Control name="raca" required/>
+                                <Form.Control name="raca" maxLength={255} defaultValue={animal?.raca} required/>
+                                <Form.Text>{validationErrors["raca"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Pelagem*</Form.Label>
-                                <Form.Control name="pelagem" required/>
+                                <Form.Control name="pelagem" maxLength={255} defaultValue={animal?.pelagem} required/>
+                                <Form.Text>{validationErrors["pelagem"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             {

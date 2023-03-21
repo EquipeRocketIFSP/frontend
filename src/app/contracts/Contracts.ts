@@ -84,7 +84,7 @@ namespace Contracts {
         id: number,
         nome: string,
         especie: string,
-        idade: number,
+        ano_nascimento: number,
         tutores: PersonalData[],
         pelagem: string,
         raca: string,

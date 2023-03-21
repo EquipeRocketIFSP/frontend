@@ -150,8 +150,6 @@ export default function DefaultForm(): JSX.Element {
         setSelectedTutores(values as ReactSelectOption[]);
     }
 
-    console.log(selectedTutores)
-
     if (navigateToListing)
         return <Navigate to={`/painel`}/>;
 
@@ -161,6 +159,8 @@ export default function DefaultForm(): JSX.Element {
     const tutoresSelectOptions = tutores.map(({id, nome}) => {
         return {value: id, label: nome, isFixed: urlParams.tutorId === id.toString()}
     });
+
+    const yearsSelectOptions = factoryYearsOption();
 
     return (
         <Layouts.Layout>
@@ -208,12 +208,24 @@ export default function DefaultForm(): JSX.Element {
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Idade*</Form.Label>
-                                <Form.Control name="idade" min={1} type="number" defaultValue={animal?.idade} required/>
-                                <Form.Text>{validationErrors["idade"] ?? ""}</Form.Text>
+
+                                <Form.Select name="ano_nascimento" required>
+                                    <option value="">- Selecione</option>
+
+                                    {
+                                        yearsSelectOptions.map((year) => (
+                                            <option value={year}
+                                                    key={year}
+                                                    selected={animal?.ano_nascimento === year}>{year}</option>
+                                        ))
+                                    }
+                                </Form.Select>
+
+                                <Form.Text>{validationErrors["ano_nascimento"] ?? ""}</Form.Text>
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
-                                <Form.Label>Peso*</Form.Label>
+                                <Form.Label>Peso (kg)*</Form.Label>
                                 <Form.Control name="peso" min={1} type="number" defaultValue={animal?.peso} required/>
                                 <Form.Text>{validationErrors["peso"] ?? ""}</Form.Text>
                             </Form.Group>
@@ -275,4 +287,15 @@ async function editOnSubmit(context: SubmitContext, setData: (data: Contracts.An
 
     setData(data);
     setDataStatus("updated");
+}
+
+function factoryYearsOption(): number[] {
+    const years: number[] = [];
+    const present = new Date().getFullYear();
+    const past = present - 20;
+
+    for (let i = present; i >= past; i--)
+        years.push(i);
+
+    return years;
 }

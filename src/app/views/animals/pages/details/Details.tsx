@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
+import axios, {AxiosHeaders} from "axios";
+import {Container, ListGroup, Pagination, Row} from "react-bootstrap";
 
 import Layouts from "../../../../layouts/Layouts";
-import {Container, ListGroup, Pagination, Row} from "react-bootstrap";
 import SearchBar from "../../../../components/search-bar/SearchBar";
-import {Link, useParams} from "react-router-dom";
 import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
-import axios, {AxiosHeaders} from "axios";
 import Components from "../../../../components/Components";
 
 interface PathVariables extends Contracts.PathVariables {
@@ -34,6 +34,8 @@ export default function Details(): JSX.Element {
     if (!animal)
         return <Components.LoadingScreen/>;
 
+    const age = new Date().getFullYear() - animal.ano_nascimento;
+
     return (
         <Layouts.Layout>
             <main id="animal">
@@ -43,7 +45,7 @@ export default function Details(): JSX.Element {
                     <Row className="summary mb-5 p-2">
                         <span><b>Nome: </b>{animal.nome}</span>
                         <span><b>Sexo: </b>{animal.sexo === "MACHO" ? "Macho" : "Fêmea"}</span>
-                        <span><b>Idade: </b>{animal.idade} anos</span>
+                        <span><b>Idade: </b>{age} {age > 1 ? "anos" : "ano"}</span>
                         <span><b>Peso: </b>{animal.peso} kg</span>
                         <span><b>Espécie: </b>{animal.especie}</span>
                         <span><b>Raça: </b>{animal.raca}</span>

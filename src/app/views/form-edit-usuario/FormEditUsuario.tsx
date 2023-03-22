@@ -7,8 +7,8 @@ import Layouts from "../../layouts/Layouts";
 import Contracts from "../../contracts/Contracts";
 import Memory from "../../Memory";
 import Storages from "../../Storages";
-import LoadingScreen from "../../components/loading-screen/LoadingScreen";
 import Forms from "../../forms/Forms";
+import Components from "../../components/Components";
 
 export default function FormEditUsuario(): JSX.Element {
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
@@ -79,7 +79,7 @@ export default function FormEditUsuario(): JSX.Element {
     }, []);
 
     if (!usuario)
-        return <LoadingScreen/>;
+        return <Components.LoadingScreen/>;
 
     return (
         <Layouts.RestrictedLayout>

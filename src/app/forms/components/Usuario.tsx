@@ -1,8 +1,9 @@
-import {Alert, Form, Row} from "react-bootstrap";
-import Helpers from "../../helpers/Helpers";
-import Address from "../../components/address/Address";
 import React from "react";
+import {Alert, Form, Row} from "react-bootstrap";
+
+import Helpers from "../../helpers/Helpers";
 import Contracts from "../../contracts/Contracts";
+import Components from "../../components/Components";
 
 interface Props {
     data: Contracts.Funcionario | null,
@@ -43,7 +44,7 @@ export default function Usuario(props: Props): JSX.Element {
                 </Form.Group>
             </Row>
 
-            <Address {...data}/>
+            <Components.Address {...data}/>
 
             <Row className="rounded shadow mb-3 pt-3">
                 <Form.Group className="mb-3 col-lg-6">

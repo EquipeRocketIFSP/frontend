@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../../components/navbar/Navbar";
+import Components from "../../components/Components";
 
 export default function Layout(props: React.PropsWithChildren): JSX.Element {
     return (
         <>
-            <Navbar/>
+            <Components.Navbar/>
 
             {props.children}
         </>

@@ -4,7 +4,6 @@ import axios, {AxiosHeaders} from "axios";
 import {Container, ListGroup, Pagination, Row} from "react-bootstrap";
 
 import Layouts from "../../../../layouts/Layouts";
-import SearchBar from "../../../../components/search-bar/SearchBar";
 import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
 import Components from "../../../../components/Components";
@@ -56,7 +55,7 @@ export default function Details(): JSX.Element {
                         </div>
                     </Row>
 
-                    <SearchBar btnAdd={{label: "Novo Antendimento", href: "/painel/prontuario/cadastrar"}}/>
+                    <Components.SearchBar btnAdd={{label: "Novo Antendimento", href: "/painel/prontuario/cadastrar"}}/>
 
                     <h5 style={{textAlign: "center"}}>Prontuários</h5>
 

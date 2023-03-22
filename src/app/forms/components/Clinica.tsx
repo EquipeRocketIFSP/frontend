@@ -1,10 +1,8 @@
 import React from "react";
 import {Form, Row} from "react-bootstrap";
 
-import CNPJ from "../../components/cnpj/CNPJ";
-import Address from "../../components/address/Address";
-import Contacts from "../../components/contacts/Contacts";
 import Contracts from "../../contracts/Contracts";
+import Components from "../../components/Components";
 
 interface Props {
     data: Contracts.Clinica | null,
@@ -33,7 +31,7 @@ export default function Clinica(props: Props): JSX.Element {
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6">
-                    <CNPJ validationErrors={validationErrors} cnpj={data?.cnpj}/>
+                    <Components.CNPJ validationErrors={validationErrors} cnpj={data?.cnpj}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6">
@@ -44,8 +42,8 @@ export default function Clinica(props: Props): JSX.Element {
                 </Form.Group>
             </Row>
 
-            <Address {...data}/>
-            <Contacts {...data}/>
+            <Components.Address {...data}/>
+            <Components.Contacts {...data}/>
         </>
     );
 }

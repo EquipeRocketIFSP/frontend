@@ -15,6 +15,7 @@ interface Props {
     title: string,
     clientPathname: string,
     apiPathname: string,
+    breadcrumbs: JSX.Element
 }
 
 interface SubmitContext {
@@ -25,7 +26,7 @@ interface SubmitContext {
 }
 
 export default function DefaultForm(props: Props): JSX.Element {
-    const {title, apiPathname, clientPathname} = props;
+    const {title, apiPathname, clientPathname,breadcrumbs} = props;
 
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
@@ -108,6 +109,8 @@ export default function DefaultForm(props: Props): JSX.Element {
             <Container>
                 <main className="py-3">
                     <h1>{title}</h1>
+
+                    {breadcrumbs}
 
                     <Form onSubmit={onSubmit}>
                         {dataStatus === "created" ?

@@ -8,6 +8,7 @@ import CEPComponent from "./cep/CEP";
 import CNPJComponent from "./cnpj/CNPJ";
 import UFComponent from "./uf/UF";
 import ContactsComponent from "./contacts/Contacts";
+import BreadcrumbsComponent from "./breadcrumbs/Breadcrumbs";
 
 namespace Components {
     export const Navbar = NavbarComponent;
@@ -20,6 +21,7 @@ namespace Components {
     export const CNPJ = CNPJComponent;
     export const UF = UFComponent;
     export const Contacts = ContactsComponent;
+    export const Breadcrumbs = BreadcrumbsComponent;
 }
 
 export default Components;

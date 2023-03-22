@@ -38,9 +38,15 @@ export default function Details(): JSX.Element {
     return (
         <Layouts.Layout>
             <main id="animal">
-                <h1>Dados do animal</h1>
 
                 <Container>
+                    <Components.Breadcrumbs>
+                        <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                        <li className="breadcrumb-item"><Link to="/painel/tutores">Tutores</Link></li>
+                        <li className="breadcrumb-item"><Link to={"/painel/tutores/"+urlParams.tutorId}>Animais do tutor</Link></li>
+                        <li className="breadcrumb-item active">Detalhes do Animal</li>
+                    </Components.Breadcrumbs>
+
                     <Row className="summary mb-5 p-2">
                         <span><b>Nome: </b>{animal.nome}</span>
                         <span><b>Sexo: </b>{animal.sexo === "MACHO" ? "Macho" : "Fêmea"}</span>

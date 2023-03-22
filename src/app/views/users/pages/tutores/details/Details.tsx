@@ -32,6 +32,12 @@ export default function Details(): JSX.Element {
     return (
         <Layouts.RestrictedLayout>
             <Container className="pt-4">
+                <Components.Breadcrumbs>
+                    <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                    <li className="breadcrumb-item"><Link to="/painel/tutores">Tutores</Link></li>
+                    <li className="breadcrumb-item active">Detalhes do tutor</li>
+                </Components.Breadcrumbs>
+
                 <Row className="summary mb-5 p-2">
                     <span><b>Nome: </b>{usuario.nome}</span>
                     <span><b>E-mail: </b>{usuario.email}</span>

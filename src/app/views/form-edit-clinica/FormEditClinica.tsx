@@ -10,6 +10,7 @@ import Layouts from "../../layouts/Layouts";
 import Forms from "../../forms/Forms";
 
 import "./form-edit-clinica.scss";
+import Components from "../../components/Components";
 
 export default function FormEditClinica(): JSX.Element {
     const [clinica, setClinica] = useState<Contracts.Clinica | null>(null);
@@ -93,6 +94,11 @@ export default function FormEditClinica(): JSX.Element {
             <Container>
                 <main id="clinica" className="pt-5">
                     <h1>Dados da clínica</h1>
+
+                    <Components.Breadcrumbs>
+                        <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                        <li className="breadcrumb-item active">Dados da clínica</li>
+                    </Components.Breadcrumbs>
 
                     {dataUpdated ? <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
                     {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}

@@ -1,6 +1,6 @@
 import React from "react";
 import {Container} from "react-bootstrap";
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 
 import Layouts from "../../../../../layouts/Layouts";
 import Components from "../../../../../components/Components";
@@ -15,6 +15,11 @@ export default function Listing(): JSX.Element {
     return (
         <Layouts.RestrictedLayout>
             <Container>
+                <Components.Breadcrumbs>
+                    <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                    <li className="breadcrumb-item active">Tutores</li>
+                </Components.Breadcrumbs>
+
                 <Components.SearchBar/>
 
                 <h4>Tutores</h4>

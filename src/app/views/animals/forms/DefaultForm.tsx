@@ -168,6 +168,24 @@ export default function DefaultForm(): JSX.Element {
                 <h1>Dados do animal</h1>
 
                 <Container>
+                    <Components.Breadcrumbs>
+                        <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                        <li className="breadcrumb-item"><Link to="/painel/tutores">Tutores</Link></li>
+                        <li className="breadcrumb-item"><Link to={"/painel/tutores/" + urlParams.tutorId}>Detalhes do
+                            tutor</Link></li>
+
+                        {
+                            urlParams.id ?
+                                <li className="breadcrumb-item">
+                                    <Link to={"/painel/tutores/" + urlParams.tutorId + "/animais/" + urlParams.id}>Detalhes
+                                        do Animal</Link>
+                                </li> :
+                                <></>
+                        }
+
+                        <li className="breadcrumb-item active">Dados do animal</li>
+                    </Components.Breadcrumbs>
+
                     <Form onSubmit={onSubmit}>
                         {dataStatus === "created" ?
                             <Alert variant="success">Cadastro efetuado com sucesso</Alert> : <></>}
@@ -259,8 +277,13 @@ export default function DefaultForm(): JSX.Element {
                                     ) :
                                     (
                                         <div className="d-flex justify-content-between">
-                                            <Link to={`/painel`}
-                                                  className="btn btn-outline-secondary">Voltar</Link>
+                                            <Link
+                                                to={
+                                                    urlParams?.id ?
+                                                        `/painel/tutores/${urlParams.tutorId}/animais/${urlParams?.id}` :
+                                                        `/painel/tutores/${urlParams.tutorId}`
+                                                }
+                                                className="btn btn-outline-secondary">Voltar</Link>
                                             <Button type="submit" variant="outline-success">Finalizar</Button>
                                         </div>
                                     )

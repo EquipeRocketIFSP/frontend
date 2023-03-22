@@ -87,6 +87,11 @@ export default function FormEditUsuario(): JSX.Element {
                 <main id="form-edit-usuario" className="py-3">
                     <h1>Dados do usuário</h1>
 
+                    <Components.Breadcrumbs>
+                        <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                        <li className="breadcrumb-item active">Meus dados</li>
+                    </Components.Breadcrumbs>
+
                     <Form onSubmit={onSubmit}>
                         {dataUpdated ? <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
 

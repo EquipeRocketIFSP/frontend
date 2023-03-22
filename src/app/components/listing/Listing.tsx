@@ -8,11 +8,13 @@ import ListingPagination from "./ListingPagination";
 
 interface Props extends React.PropsWithChildren {
     pathname: string,
-    componentType: any
+    componentDesktopLegend: any,
+    componentItem: any
+
 }
 
 export default function Listing(props: Props): JSX.Element {
-    const {pathname, componentType} = props;
+    const {pathname, componentItem, componentDesktopLegend} = props;
 
     const [loading, setLoading] = useState<boolean>(true);
     const [response, setResponse] = useState<Contracts.PaginetedResponse<Object> | null>(null);
@@ -39,8 +41,10 @@ export default function Listing(props: Props): JSX.Element {
     return (
         <>
             <div style={{height: "60vh"}}>
+                <div className="d-none d-md-block">{factoryComponentType(componentDesktopLegend, {})}</div>
+
                 {
-                    response.data.map((data) => factoryComponentType(componentType, data))
+                    response.data.map((data) => factoryComponentType(componentItem, data))
                 }
             </div>
 

@@ -5,6 +5,7 @@ import {useParams, useSearchParams} from "react-router-dom";
 import Components from "../../../../components/Components";
 import Item from "./components/Item";
 import Contracts from "../../../../contracts/Contracts";
+import Legend from "./components/Legend";
 
 export default function Listing() {
     const [searchParams] = useSearchParams();
@@ -17,10 +18,13 @@ export default function Listing() {
             <Components.SearchBar
                 btnAdd={{label: "Adicionar", href: `/painel/tutores/${urlParams.id}/animais/adicionar`}}/>
 
+            <h4>Animais do tutor</h4>
+
             <main>
                 <Components.Listing
                     pathname={!search ? `tutor/${urlParams.id}/animal?pagina=${page}` : `tutor/${urlParams.id}/animal?buscar=${search}&pagina=${page}`}
-                    componentType={Item}/>
+                    componentDesktopLegend={Legend}
+                    componentItem={Item}/>
             </main>
         </Container>
     );

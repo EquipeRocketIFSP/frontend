@@ -5,6 +5,7 @@ import {useSearchParams} from "react-router-dom";
 import Layouts from "../../../../../layouts/Layouts";
 import Components from "../../../../../components/Components";
 import Item from "./components/Item";
+import Legend from "./components/Legend";
 
 export default function Listing(): JSX.Element {
     const [searchParams] = useSearchParams();
@@ -16,10 +17,13 @@ export default function Listing(): JSX.Element {
             <Container>
                 <Components.SearchBar/>
 
+                <h4>Tutores</h4>
+
                 <main>
                     <Components.Listing
                         pathname={!search ? `tutor?pagina=${page}` : `tutor?buscar=${search}&pagina=${page}`}
-                        componentType={Item}/>
+                        componentDesktopLegend={Legend}
+                        componentItem={Item}/>
                 </main>
             </Container>
         </Layouts.RestrictedLayout>

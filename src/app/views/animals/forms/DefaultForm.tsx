@@ -163,7 +163,7 @@ export default function DefaultForm(): JSX.Element {
     const yearsSelectOptions = factoryYearsOption();
 
     return (
-        <Layouts.Layout>
+        <Layouts.RestrictedLayout>
             <main id="form-animal">
                 <h1>Dados do animal</h1>
 
@@ -292,7 +292,7 @@ export default function DefaultForm(): JSX.Element {
                     </Form>
                 </Container>
             </main>
-        </Layouts.Layout>
+        </Layouts.RestrictedLayout>
     );
 }
 

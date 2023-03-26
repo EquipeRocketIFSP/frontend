@@ -1,6 +1,14 @@
 namespace Contracts {
     export type AnimalSex = "MACHO" | "FEMEA";
 
+    export type FormStatus = "idle" | "created" | "updated";
+
+    export interface ReactSelectOption {
+        value: number,
+        label: string,
+        isFixed: boolean
+    }
+
     export interface DynamicObject<I> {
         [key: string]: I
     }

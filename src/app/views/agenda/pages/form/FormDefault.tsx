@@ -1,16 +1,24 @@
 import React, {useState} from "react";
+import {Link, Navigate} from "react-router-dom";
+import Calendar from "./components/Calendar";
+import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
+import {Alert, Button, Container, Row, Spinner, Form} from "react-bootstrap";
+
 import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
-import {Link, Navigate} from "react-router-dom";
-import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
 import Layouts from "../../../../layouts/Layouts";
-import {Alert, Button, Container, Row, Spinner, Form} from "react-bootstrap";
 import AnimalSelect from "./components/AnimalSelect";
 import TutorSelect from "./components/TutorSelect";
 import VeterinarioSelect from "./components/VeterinarioSelect";
 
 import "react-datepicker/dist/react-datepicker.css";
-import Calendar from "./components/Calendar";
+
+interface SubmitContext {
+    url: string,
+    formData: FormData,
+    headers: AxiosHeaders,
+    setDataStatus: (status: Contracts.FormStatus) => void,
+}
 
 export default function FormDefault(): JSX.Element {
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
@@ -22,6 +30,7 @@ export default function FormDefault(): JSX.Element {
     const [selectedTutor, setSelectedTutor] = useState<Contracts.ReactSelectOption | null>(null);
     const [selectedAnimal, setSelectedAnimal] = useState<Contracts.ReactSelectOption | null>(null);
     const [selectedVeterinario, setSelectedVeterinario] = useState<Contracts.ReactSelectOption | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
     const userData = Storages.userStorage.get();
 
@@ -35,18 +44,31 @@ export default function FormDefault(): JSX.Element {
         if (!userData)
             return;
 
-        const errors: Contracts.DynamicObject<string> = {};
+        const formData = new FormData(evt.currentTarget);
 
-        setValidationErrors(errors);
+        formData.set("tutor", selectedTutor?.value.toString() ?? "");
+        formData.set("animal", selectedAnimal?.value.toString() ?? "");
+        formData.set("veterinario", selectedVeterinario?.value.toString() ?? "");
+        formData.set("data_consulta", selectedDate.toJSON());
+
+        const errors = validateForm(formData);
+
+        if (Object.keys(errors).length) {
+            setValidationErrors(errors);
+            return;
+        }
+
+        setApiConnectionError(null);
         setDataStatus("idle");
         setSendingForm(true);
 
-        const formData = new FormData(evt.currentTarget);
-
-        //selectedTutores.forEach(({value}) => formData.append("tutores[]", value.toString()));
-
         try {
-
+            await createOnSubmit({
+                url: `${process.env.REACT_APP_API_URL}/agendamento`,
+                formData,
+                headers,
+                setDataStatus
+            }, setNavigateToListing);
         } catch (e) {
             const response = (e as AxiosError).response;
 
@@ -99,7 +121,7 @@ export default function FormDefault(): JSX.Element {
                             <VeterinarioSelect validationErrors={validationErrors}
                                                setSelectedItem={setSelectedVeterinario}/>
 
-                            <Calendar/>
+                            <Calendar setSelectedDate={setSelectedDate}/>
 
                             <Form.Group className="mb-3 col-lg-12">
                                 <Form.Label htmlFor="observacoes">Observações</Form.Label>
@@ -133,4 +155,27 @@ export default function FormDefault(): JSX.Element {
             </main>
         </Layouts.RestrictedLayout>
     );
+}
+
+async function createOnSubmit(context: SubmitContext, setNavigateToListing: (value: boolean) => void) {
+    const {url, formData, headers, setDataStatus} = context;
+    await axios.post(url, formData, {headers});
+
+    setDataStatus("created");
+    setTimeout(() => setNavigateToListing(true), 2000);
+}
+
+function validateForm(formData: FormData): Contracts.DynamicObject<string> {
+    const validationErrors: Contracts.DynamicObject<string> = {};
+
+    if (!formData.get("tutor")?.toString().length)
+        validationErrors["tutor"] = "Selecione um dos tutores do animal";
+
+    if (!formData.get("animal")?.toString().length)
+        validationErrors["animal"] = "Selecione o animal";
+
+    if (!formData.get("veterinario")?.toString().length)
+        validationErrors["veterinario"] = "Selecione o veterinário";
+
+    return validationErrors;
 }

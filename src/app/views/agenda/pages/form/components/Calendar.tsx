@@ -2,10 +2,19 @@ import React, {useState} from "react";
 import DatePicker from "react-datepicker";
 import {Form, Row} from "react-bootstrap";
 
-export default function Calendar(): JSX.Element {
+interface Props {
+    setSelectedDate: (date: Date) => void
+}
+
+export default function Calendar(props: Props): JSX.Element {
     const today = new Date();
 
     const [selectedDate, setSelectedDate] = useState<Date>(today);
+
+    const onChange = (date: Date | null) => {
+        setSelectedDate(date ?? today);
+        props.setSelectedDate(date ?? today);
+    }
 
     return (
         <Form.Group className="mb-3 col-lg-12">
@@ -16,7 +25,7 @@ export default function Calendar(): JSX.Element {
                     <div className="d-flex justify-content-center">
                         <DatePicker
                             selected={selectedDate}
-                            onChange={(date) => setSelectedDate(date ?? today)}
+                            onChange={onChange}
                             minDate={today}
                             name="data_consulta"
                             id="data_consulta"

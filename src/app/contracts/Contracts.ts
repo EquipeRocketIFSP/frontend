@@ -102,10 +102,11 @@ namespace Contracts {
 
     export interface Agendamento {
         id: number,
+        data_consulta: string,
+        observacoes: string,
         animal: string,
-        criadoEm: string,
-        dataConsulta: string,
-        tipoConsulta: string,
+        tutor: string,
+        veterinario: PersonalData
     }
 
     export interface Prontuario {

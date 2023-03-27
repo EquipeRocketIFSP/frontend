@@ -12,6 +12,7 @@ import TutorSelect from "./components/TutorSelect";
 import VeterinarioSelect from "./components/VeterinarioSelect";
 
 import "react-datepicker/dist/react-datepicker.css";
+import Memory from "../../../../Memory";
 
 interface SubmitContext {
     url: string,
@@ -34,9 +35,7 @@ export default function FormDefault(): JSX.Element {
 
     const userData = Storages.userStorage.get();
 
-    const headers = new AxiosHeaders()
-        .setContentType("application/json")
-        .setAuthorization(`${userData?.type} ${userData?.token}`);
+    const {headers} = Memory;
 
     const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault();
@@ -92,7 +91,7 @@ export default function FormDefault(): JSX.Element {
     }
 
     if (navigateToListing)
-        return <Navigate to={`/painel`}/>;
+        return <Navigate to={`/painel/agenda`}/>;
 
     return (
         <Layouts.RestrictedLayout>

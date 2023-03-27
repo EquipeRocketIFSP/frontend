@@ -16,7 +16,7 @@ import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
 import Home from "./views/home/Home";
 import FormEditClinica from "./views/form-edit-clinica/FormEditClinica";
-import axios, {AxiosHeaders} from "axios";
+import axios from "axios";
 import Storages from "./Storages";
 import Memory from "./Memory";
 import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
@@ -34,9 +34,9 @@ export default function Certvet() {
             return;
         }
 
-        const headers = new AxiosHeaders().setAuthorization(`${userData.type} ${userData.token}`);
+        Memory.headers.setAuthorization(`${userData.type} ${userData.token}`);
 
-        axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers})
+        axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers: Memory.headers})
             .then(({data}) => Memory.authorites.push(...data))
             .finally(() => setAuthoritesLoaded(true));
     }, []);

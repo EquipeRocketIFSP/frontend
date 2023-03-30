@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import axios from "axios";
 
 import "./certvet.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,7 +17,6 @@ import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
 import Home from "./views/home/Home";
 import FormEditClinica from "./views/form-edit-clinica/FormEditClinica";
-import axios from "axios";
 import Storages from "./Storages";
 import Memory from "./Memory";
 import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
@@ -66,7 +66,7 @@ export default function Certvet() {
                 <Route path="/painel/tutores/:tutorId/animais/adicionar" element={<Animals.Form/>}/>
                 <Route path="/painel/tutores/:tutorId/animais/:id/editar" element={<Animals.Form/>}/>
 
-                {/*<Route path="/painel/agenda" element={<Agenda/>}/>*/}
+                <Route path="/painel/agenda" element={<Agenda.Calendar/>}/>
                 <Route path="/painel/agenda/adicionar" element={<Agenda.Form/>}/>
 
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>

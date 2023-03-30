@@ -2,7 +2,7 @@ import {EventClickArg, EventContentArg} from "@fullcalendar/core";
 import daygrid from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
-import {Button, Card, Container, Row} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 
 import Layouts from "../../../../layouts/Layouts";
 import {useEffect, useState} from "react";

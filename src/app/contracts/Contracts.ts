@@ -106,7 +106,7 @@ namespace Contracts {
         observacoes: string,
         animal: string,
         tutor: string,
-        veterinario: PersonalData
+        veterinario: string
     }
 
     export interface Prontuario {

@@ -93,7 +93,7 @@ export default function Calendar(props: Props): JSX.Element {
                                             <b className="d-md-none">Hora: <br/></b>{date.toLocaleTimeString()}
                                         </ListGroup.Item>
                                         <ListGroup.Item className="col-md-5">
-                                            <b className="d-md-none">Veterinário: <br/></b>{veterinario.nome}
+                                            <b className="d-md-none">Veterinário: <br/></b>{veterinario}
                                         </ListGroup.Item>
                                         <ListGroup.Item className="col-md-4">
                                             <b className="d-md-none">Animal: <br/></b>{animal}

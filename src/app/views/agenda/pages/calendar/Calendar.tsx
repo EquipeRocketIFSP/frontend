@@ -11,12 +11,13 @@ import axios from "axios";
 import Memory from "../../../../Memory";
 import Components from "../../../../components/Components";
 import {Navigate} from "react-router-dom";
+import ScheduleModal from "./components/ScheduleModal";
 
 export default function Calendar(): JSX.Element {
     const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
     const [queriedDates, setQueriedDates] = useState<string[]>([]);
     const [agendamentos, setAgendamentos] = useState<Contracts.Agendamento[]>([]);
-    const [navigateTo, setNavigateTo] = useState<string | null>(null);
+    const [agendamento, setAgendamento] = useState<Contracts.AgendamentoComplete | null>(null);
 
     useEffect(() => {
         selectedMonth.setDate(1);
@@ -35,20 +36,22 @@ export default function Calendar(): JSX.Element {
 
     const eventClick = (evt: EventClickArg) => {
         evt.jsEvent.preventDefault();
-        setNavigateTo((evt.el as HTMLAnchorElement).href.replace(window.location.origin, ""));
+
+        axios.get<Contracts.AgendamentoComplete>((evt.el as HTMLAnchorElement).href, {headers: Memory.headers})
+            .then(({data}) => setAgendamento(data))
+            .catch(console.error);
     }
+
+    const closeModal = () => setAgendamento(null);
 
     const events = agendamentos.map((agendamento) => {
         return {
             title: agendamento.animal,
             start: agendamento.data_consulta,
-            url: `${window.location.pathname}/evento/${agendamento.id}`,
+            url: `${process.env.REACT_APP_API_URL}/agendamento/${agendamento.id}`,
             color: "green"
         };
     });
-
-    if (navigateTo)
-        return <Navigate to={navigateTo}/>;
 
     if (!events.length)
         return <Components.LoadingScreen/>;
@@ -95,6 +98,10 @@ export default function Calendar(): JSX.Element {
                     </Row>
                 </main>
             </Container>
+
+            <div>
+                {agendamento ? <ScheduleModal closeModal={closeModal} agendamento={agendamento}/> : <></>}
+            </div>
         </Layouts.RestrictedLayout>
     );
 }

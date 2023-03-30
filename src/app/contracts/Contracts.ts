@@ -109,6 +109,15 @@ namespace Contracts {
         veterinario: string
     }
 
+    export interface AgendamentoComplete {
+        id: number,
+        data_consulta: string,
+        observacoes: string,
+        animal: Animal,
+        tutor: PersonalData,
+        veterinario: Funcionario
+    }
+
     export interface Prontuario {
         id: number,
         veterinario: string,

@@ -27,7 +27,10 @@ export default function DeleteConfirmationModal(props: Contracts.CloseModal): JS
             setAgendamentos(agendamentos);
             setDeleted(true);
 
-            setTimeout(() => setAgendamento(null), 1000);
+            setTimeout(() => {
+                closeModal();
+                setAgendamento(null);
+            }, 1000);
         } catch (e) {
             setApiErrorMessage("Não foi possivel concluir essa operação");
         }

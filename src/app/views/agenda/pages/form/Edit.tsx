@@ -3,7 +3,7 @@ import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
 import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
 import Memory from "../../../../Memory";
-import {useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import Layouts from "../../../../layouts/Layouts";
 import {Container} from "react-bootstrap";
 import Components from "../../../../components/Components";
@@ -12,6 +12,7 @@ import Agenda from "../../Agenda";
 export default function Edit(): JSX.Element {
     const urlParams = useParams<Contracts.PathVariables>();
 
+    const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
     const [dataStatus, setDataStatus] = useState<Contracts.FormStatus>("idle");
     const [agendamento, setAgendamento] = useState<Contracts.AgendamentoComplete | null>(null);
@@ -49,10 +50,14 @@ export default function Edit(): JSX.Element {
 
         setAgendamento(data);
         setDataStatus("updated");
+        setTimeout(() => setNavigateToListing(true), 1000);
     }
 
     if (!agendamento)
         return <Components.LoadingScreen/>;
+
+    if (navigateToListing)
+        return <Navigate to={`/painel/agenda`}/>;
 
     return (
         <Layouts.RestrictedLayout>

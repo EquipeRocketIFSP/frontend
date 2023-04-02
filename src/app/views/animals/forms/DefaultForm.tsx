@@ -151,7 +151,7 @@ export default function DefaultForm(): JSX.Element {
     }
 
     if (navigateToListing)
-        return <Navigate to={`/painel`}/>;
+        return <Navigate to={`/painel/tutores/${urlParams.tutorId}`}/>;
 
     if (!animal && urlParams.id)
         return <Components.LoadingScreen/>;

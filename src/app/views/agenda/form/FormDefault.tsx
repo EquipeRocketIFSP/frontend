@@ -20,6 +20,9 @@ export default function FormDefault(props: Props): JSX.Element {
     const {agendamento} = props;
     const {validationErrors, sendingForm} = useContext(Components.FormSubmitContext);
 
+    const scheduledDate = agendamento ? new Date(agendamento.data_consulta) : new Date();
+    scheduledDate.setHours(scheduledDate.getHours() - 3);
+
     const [
         selectedTutor,
         setSelectedTutor
@@ -35,7 +38,7 @@ export default function FormDefault(props: Props): JSX.Element {
         setSelectedVeterinario
     ] = useState<Contracts.ReactSelectOption | null>(agendamento ? Helpers.ReactSelectOptionFactory.factory(agendamento.veterinario) : null);
 
-    const [selectedDate, setSelectedDate] = useState<Date>(agendamento ? new Date(agendamento.data_consulta) : new Date());
+    const [selectedDate, setSelectedDate] = useState<Date>(scheduledDate);
 
     return (
         <>
@@ -55,7 +58,7 @@ export default function FormDefault(props: Props): JSX.Element {
                                    veterinario={agendamento?.veterinario}
                                    setSelectedItem={setSelectedVeterinario}/>
 
-                <Calendar selectedDate={agendamento?.data_consulta?new Date(agendamento?.data_consulta):new Date()} setSelectedDate={setSelectedDate}/>
+                <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate}/>
 
                 <Form.Group className="mb-3 col-lg-12">
                     <Form.Label htmlFor="observacoes">Observações</Form.Label>

@@ -60,9 +60,12 @@ export default function Calendar(): JSX.Element {
     }
 
     const events = agendamentos.map((agendamento) => {
+        const start = new Date(agendamento.data_consulta);
+        start.setHours(start.getHours() - 3);
+
         return {
             title: agendamento.animal,
-            start: agendamento.data_consulta,
+            start,
             url: `${process.env.REACT_APP_API_URL}/agendamento/${agendamento.id}`,
             color: "green"
         };

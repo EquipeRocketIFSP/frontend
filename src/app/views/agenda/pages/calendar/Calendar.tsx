@@ -85,7 +85,7 @@ export default function Calendar(): JSX.Element {
                                 <FullCalendar
                                     plugins={[daygrid, interactionPlugin]}
                                     initialView="dayGridMonth"
-                                    weekends={false}
+                                    weekends
                                     events={events}
                                     eventColor={"green"}
                                     eventContent={renderEventContent}

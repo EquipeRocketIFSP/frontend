@@ -9,14 +9,16 @@ import Storages from "../../../../Storages";
 interface Props {
     setSelectedItem: (item: Contracts.ReactSelectOption) => void,
     tutorId: number,
-    validationErrors: Contracts.DynamicObject<string>
+    validationErrors: Contracts.DynamicObject<string>,
+    animal?: Contracts.Animal
 }
 
 export default function AnimalSelect(props: Props): JSX.Element {
-    const [selectedItem, setSelectedItem] = useState<Contracts.ReactSelectOption | null>();
+    const [selectedItem, setSelectedItem] = useState<Contracts.ReactSelectOption | null>(props.animal ? Helpers.ReactSelectOptionFactory.factory(props.animal) : null);
     const [items, setItems] = useState<Contracts.Animal[]>([]);
     const [search, setSearch] = useState<string>("");
     const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timer | null>(null);
+    const [isFirstLoading, setIsFirstLoading] = useState<boolean>(true);
 
     const userData = Storages.userStorage.get();
     const headers = new AxiosHeaders().setAuthorization(`${userData?.type} ${userData?.token}`);
@@ -25,7 +27,14 @@ export default function AnimalSelect(props: Props): JSX.Element {
         axios.get<Contracts.PaginetedResponse<Contracts.Animal>>(`${process.env.REACT_APP_API_URL}/tutor/${props.tutorId}/animal?buscar=${search}`, {headers})
             .then(({data: response}) => setItems(response.data))
             .catch(console.error)
-            .finally(() => setSelectedItem(null));
+            .finally(() => {
+                if (props.animal && isFirstLoading)
+                    setSelectedItem(Helpers.ReactSelectOptionFactory.factory(props.animal));
+                else
+                    setSelectedItem(null);
+
+                setIsFirstLoading(false);
+            });
     }, [search, props.tutorId]);
 
     const onInputChange = (value: string) => {

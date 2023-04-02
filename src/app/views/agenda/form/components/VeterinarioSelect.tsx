@@ -8,13 +8,18 @@ import Storages from "../../../../Storages";
 
 interface Props {
     setSelectedItem: (item: Contracts.ReactSelectOption) => void,
-    validationErrors: Contracts.DynamicObject<string>
+    validationErrors: Contracts.DynamicObject<string>,
+    veterinario?: Contracts.PersonalData
 }
 
 export default function VeterinarioSelect(props: Props): JSX.Element {
     const [items, setItems] = useState<Contracts.PersonalData[]>([]);
     const [search, setSearch] = useState<string>("");
     const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timer | null>(null);
+    const [
+        selectedItem,
+        setSelectedItem
+    ] = useState<Contracts.ReactSelectOption | null>(props.veterinario ? Helpers.ReactSelectOptionFactory.factory(props.veterinario) : null);
 
     const userData = Storages.userStorage.get();
     const headers = new AxiosHeaders().setAuthorization(`${userData?.type} ${userData?.token}`);
@@ -36,6 +41,7 @@ export default function VeterinarioSelect(props: Props): JSX.Element {
     }
 
     const onChange = (value: SingleValue<Contracts.ReactSelectOption>) => {
+        setSelectedItem(value);
         props.setSelectedItem(value as Contracts.ReactSelectOption);
     }
 
@@ -45,6 +51,7 @@ export default function VeterinarioSelect(props: Props): JSX.Element {
         <Form.Group className="mb-3 col-lg-12">
             <Form.Label>Veterinário*</Form.Label>
             <Select options={selectOptions}
+                    value={selectedItem}
                     placeholder="Selecione o veterinário"
                     onInputChange={(value) => onInputChange(value)}
                     onChange={onChange}

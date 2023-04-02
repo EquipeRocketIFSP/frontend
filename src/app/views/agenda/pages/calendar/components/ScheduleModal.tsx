@@ -14,7 +14,7 @@ export default function ScheduleModal(props: Props): JSX.Element {
     if (!agendamento)
         return <></>;
 
-    const {data_consulta, observacoes, veterinario, tutor, animal} = agendamento;
+    const {id, data_consulta, observacoes, veterinario, tutor, animal} = agendamento;
 
     const consultDate = new Date(data_consulta);
     consultDate.setHours(consultDate.getHours() - 3);
@@ -54,7 +54,7 @@ export default function ScheduleModal(props: Props): JSX.Element {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant="primary" onClick={() => closeModal()}>Editar</Button>
+                <Link className="btn btn-primary" to={`${id}/editar`}>Editar</Link>
                 <Button variant="danger" onClick={showDeleteModal}>Cancelar Agendamento</Button>
                 <Button variant="secondary" onClick={() => closeModal()}>Fechar</Button>
             </Modal.Footer>

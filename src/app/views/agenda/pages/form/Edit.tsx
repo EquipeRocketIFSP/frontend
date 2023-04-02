@@ -1,21 +1,31 @@
-import React, {useState} from "react";
-import {Container} from "react-bootstrap";
-import {Navigate} from "react-router-dom";
-import axios from "axios";
-import {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
+import React, {useEffect, useState} from "react";
+import Contracts from "../../../../contracts/Contracts";
+import Storages from "../../../../Storages";
+import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
+import Memory from "../../../../Memory";
+import {useParams} from "react-router-dom";
 import Layouts from "../../../../layouts/Layouts";
+import {Container} from "react-bootstrap";
 import Components from "../../../../components/Components";
 import Agenda from "../../Agenda";
-import Memory from "../../../../Memory";
-import Storages from "../../../../Storages";
-import Contracts from "../../../../contracts/Contracts";
 
-export default function Create(): JSX.Element {
-    const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
+export default function Edit(): JSX.Element {
+    const urlParams = useParams<Contracts.PathVariables>();
+
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
     const [dataStatus, setDataStatus] = useState<Contracts.FormStatus>("idle");
+    const [agendamento, setAgendamento] = useState<Contracts.AgendamentoComplete | null>(null);
 
     const userData = Storages.userStorage.get();
+
+    useEffect(() => {
+        if (!urlParams.id || !userData)
+            return;
+
+        axios.get<Contracts.AgendamentoComplete>(`${process.env.REACT_APP_API_URL}/agendamento/${urlParams.id}`, {headers: Memory.headers})
+            .then(({data}) => setAgendamento(data))
+            .catch(console.error);
+    }, []);
 
     const onSubmit = async (formData: FormData) => {
         if (!userData)
@@ -35,14 +45,14 @@ export default function Create(): JSX.Element {
             });
         }
 
-        await axios.post(`${process.env.REACT_APP_API_URL}/agendamento`, formData, {headers: Memory.headers});
+        const {data} = await axios.put(`${process.env.REACT_APP_API_URL}/agendamento/${agendamento?.id}`, formData, {headers: Memory.headers});
 
-        setDataStatus("created");
-        setTimeout(() => setNavigateToListing(true), 2000);
+        setAgendamento(data);
+        setDataStatus("updated");
     }
 
-    if (navigateToListing)
-        return <Navigate to={`/painel/agenda`}/>;
+    if (!agendamento)
+        return <Components.LoadingScreen/>;
 
     return (
         <Layouts.RestrictedLayout>
@@ -57,7 +67,7 @@ export default function Create(): JSX.Element {
                         dataStatus={dataStatus}
                         validationErrors={validationErrors}
                     >
-                        <Agenda.Form/>
+                        <Agenda.Form agendamento={agendamento}/>
                     </Components.FormSubmit>
                 </Container>
             </main>

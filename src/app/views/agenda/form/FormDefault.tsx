@@ -10,35 +10,57 @@ import VeterinarioSelect from "./components/VeterinarioSelect";
 
 import "react-datepicker/dist/react-datepicker.css";
 import Components from "../../../components/Components";
+import Helpers from "../../../helpers/Helpers";
 
-export default function FormDefault(): JSX.Element {
+interface Props {
+    agendamento?: Contracts.AgendamentoComplete
+}
+
+export default function FormDefault(props: Props): JSX.Element {
+    const {agendamento} = props;
     const {validationErrors, sendingForm} = useContext(Components.FormSubmitContext);
 
-    const [selectedTutor, setSelectedTutor] = useState<Contracts.ReactSelectOption | null>(null);
-    const [selectedAnimal, setSelectedAnimal] = useState<Contracts.ReactSelectOption | null>(null);
-    const [selectedVeterinario, setSelectedVeterinario] = useState<Contracts.ReactSelectOption | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+    const [
+        selectedTutor,
+        setSelectedTutor
+    ] = useState<Contracts.ReactSelectOption | null>(agendamento ? Helpers.ReactSelectOptionFactory.factory(agendamento.tutor) : null);
+
+    const [
+        selectedAnimal,
+        setSelectedAnimal
+    ] = useState<Contracts.ReactSelectOption | null>(agendamento ? Helpers.ReactSelectOptionFactory.factory(agendamento.animal) : null);
+
+    const [
+        selectedVeterinario,
+        setSelectedVeterinario
+    ] = useState<Contracts.ReactSelectOption | null>(agendamento ? Helpers.ReactSelectOptionFactory.factory(agendamento.veterinario) : null);
+
+    const [selectedDate, setSelectedDate] = useState<Date>(agendamento ? new Date(agendamento.data_consulta) : new Date());
 
     return (
         <>
             <Row>
-                <TutorSelect validationErrors={validationErrors} setSelectedItem={setSelectedTutor}/>
+                <TutorSelect validationErrors={validationErrors} tutor={agendamento?.tutor}
+                             setSelectedItem={setSelectedTutor}/>
 
                 {
                     selectedTutor ?
                         <AnimalSelect validationErrors={validationErrors} tutorId={selectedTutor.value}
+                                      animal={agendamento?.animal}
                                       setSelectedItem={setSelectedAnimal}/> :
                         <></>
                 }
 
                 <VeterinarioSelect validationErrors={validationErrors}
+                                   veterinario={agendamento?.veterinario}
                                    setSelectedItem={setSelectedVeterinario}/>
 
                 <Calendar setSelectedDate={setSelectedDate}/>
 
                 <Form.Group className="mb-3 col-lg-12">
                     <Form.Label htmlFor="observacoes">Observações</Form.Label>
-                    <Form.Control as="textarea" name="observacoes" id="observacoes" rows={3}/>
+                    <Form.Control as="textarea" name="observacoes" id="observacoes" rows={3}
+                                  defaultValue={agendamento?.observacoes}/>
                 </Form.Group>
 
                 <input type="hidden" name="tutor" value={selectedTutor?.value.toString() ?? ""}/>

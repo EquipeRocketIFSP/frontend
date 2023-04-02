@@ -8,11 +8,13 @@ import Storages from "../../../../Storages";
 
 interface Props {
     setSelectedItem: (item: Contracts.ReactSelectOption) => void,
-    validationErrors: Contracts.DynamicObject<string>
+    validationErrors: Contracts.DynamicObject<string>,
+    tutor?: Contracts.PersonalData
 }
 
 export default function TutorSelect(props: Props): JSX.Element {
     const [items, setItems] = useState<Contracts.PersonalData[]>([]);
+    const [selectedItem, setSelectedItem] = useState<Contracts.ReactSelectOption | null>(props.tutor ? Helpers.ReactSelectOptionFactory.factory(props.tutor) : null);
     const [search, setSearch] = useState<string>("");
     const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timer | null>(null);
 
@@ -36,6 +38,7 @@ export default function TutorSelect(props: Props): JSX.Element {
     }
 
     const onChange = (value: SingleValue<Contracts.ReactSelectOption>) => {
+        setSelectedItem(value);
         props.setSelectedItem(value as Contracts.ReactSelectOption);
     }
 
@@ -44,11 +47,22 @@ export default function TutorSelect(props: Props): JSX.Element {
     return (
         <Form.Group className="mb-3 col-lg-12">
             <Form.Label>Tutor responsável*</Form.Label>
-            <Select options={selectOptions}
-                    placeholder="Selecione o tutor responsável"
-                    onInputChange={(value) => onInputChange(value)}
-                    onChange={onChange}
-                    closeMenuOnSelect required/>
+
+            {
+                selectedItem ?
+                    <Select options={selectOptions}
+                            value={selectedItem}
+                            placeholder="Selecione o tutor responsável"
+                            onInputChange={(value) => onInputChange(value)}
+                            onChange={onChange}
+                            closeMenuOnSelect required/> :
+
+                    <Select options={selectOptions}
+                            placeholder="Selecione o tutor responsável"
+                            onInputChange={(value) => onInputChange(value)}
+                            onChange={onChange}
+                            closeMenuOnSelect required/>
+            }
 
             <Form.Text>{props.validationErrors["tutor"] ?? ""}</Form.Text>
         </Form.Group>

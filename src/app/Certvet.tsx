@@ -67,7 +67,7 @@ export default function Certvet() {
                 <Route path="/painel/tutores/:tutorId/animais/:id/editar" element={<Animals.Form/>}/>
 
                 <Route path="/painel/agenda" element={<Agenda.Calendar/>}/>
-                <Route path="/painel/agenda/adicionar" element={<Agenda.Form/>}/>
+                <Route path="/painel/agenda/adicionar" element={<Agenda.Create/>}/>
 
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>

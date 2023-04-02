@@ -1,20 +1,18 @@
 import {Form} from "react-bootstrap";
 import Select, {SingleValue} from "react-select";
 import React, {useEffect, useState} from "react";
-import Contracts from "../../../../../contracts/Contracts";
+import Contracts from "../../../../contracts/Contracts";
 import axios, {AxiosHeaders} from "axios";
-import Helpers from "../../../../../helpers/Helpers";
-import Storages from "../../../../../Storages";
+import Helpers from "../../../../helpers/Helpers";
+import Storages from "../../../../Storages";
 
 interface Props {
     setSelectedItem: (item: Contracts.ReactSelectOption) => void,
-    tutorId: number,
     validationErrors: Contracts.DynamicObject<string>
 }
 
-export default function AnimalSelect(props: Props): JSX.Element {
-    const [selectedItem, setSelectedItem] = useState<Contracts.ReactSelectOption | null>();
-    const [items, setItems] = useState<Contracts.Animal[]>([]);
+export default function VeterinarioSelect(props: Props): JSX.Element {
+    const [items, setItems] = useState<Contracts.PersonalData[]>([]);
     const [search, setSearch] = useState<string>("");
     const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timer | null>(null);
 
@@ -22,11 +20,10 @@ export default function AnimalSelect(props: Props): JSX.Element {
     const headers = new AxiosHeaders().setAuthorization(`${userData?.type} ${userData?.token}`);
 
     useEffect(() => {
-        axios.get<Contracts.PaginetedResponse<Contracts.Animal>>(`${process.env.REACT_APP_API_URL}/tutor/${props.tutorId}/animal?buscar=${search}`, {headers})
+        axios.get<Contracts.PaginetedResponse<Contracts.PersonalData>>(`${process.env.REACT_APP_API_URL}/veterinario?buscar=${search}`, {headers})
             .then(({data: response}) => setItems(response.data))
-            .catch(console.error)
-            .finally(() => setSelectedItem(null));
-    }, [search, props.tutorId]);
+            .catch(console.error);
+    }, [search]);
 
     const onInputChange = (value: string) => {
         if (timeoutRef) {
@@ -39,7 +36,6 @@ export default function AnimalSelect(props: Props): JSX.Element {
     }
 
     const onChange = (value: SingleValue<Contracts.ReactSelectOption>) => {
-        setSelectedItem(value);
         props.setSelectedItem(value as Contracts.ReactSelectOption);
     }
 
@@ -47,15 +43,14 @@ export default function AnimalSelect(props: Props): JSX.Element {
 
     return (
         <Form.Group className="mb-3 col-lg-12">
-            <Form.Label>Animal*</Form.Label>
+            <Form.Label>Veterinário*</Form.Label>
             <Select options={selectOptions}
-                    value={selectedItem}
-                    placeholder="Selecione o animal"
+                    placeholder="Selecione o veterinário"
                     onInputChange={(value) => onInputChange(value)}
                     onChange={onChange}
                     closeMenuOnSelect required/>
 
-            <Form.Text>{props.validationErrors["animal"] ?? ""}</Form.Text>
+            <Form.Text>{props.validationErrors["veterinario"] ?? ""}</Form.Text>
         </Form.Group>
     );
 }

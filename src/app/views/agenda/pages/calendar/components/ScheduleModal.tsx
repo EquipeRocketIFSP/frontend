@@ -1,6 +1,5 @@
 import {Button, Modal, Row} from "react-bootstrap";
 import React, {useContext} from "react";
-import Contracts from "../../../../../contracts/Contracts";
 import {Link} from "react-router-dom";
 import {CalendarContext} from "../Calendar";
 

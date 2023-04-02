@@ -1,10 +1,10 @@
 import {Form} from "react-bootstrap";
 import Select, {SingleValue} from "react-select";
 import React, {useEffect, useState} from "react";
-import Contracts from "../../../../../contracts/Contracts";
+import Contracts from "../../../../contracts/Contracts";
 import axios, {AxiosHeaders} from "axios";
-import Helpers from "../../../../../helpers/Helpers";
-import Storages from "../../../../../Storages";
+import Helpers from "../../../../helpers/Helpers";
+import Storages from "../../../../Storages";
 
 interface Props {
     setSelectedItem: (item: Contracts.ReactSelectOption) => void,

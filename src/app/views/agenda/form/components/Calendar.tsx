@@ -3,8 +3,8 @@ import DatePicker from "react-datepicker";
 import {Form, ListGroup, Row} from "react-bootstrap";
 import axios from "axios";
 
-import Memory from "../../../../../Memory";
-import Contracts from "../../../../../contracts/Contracts";
+import Memory from "../../../../Memory";
+import Contracts from "../../../../contracts/Contracts";
 
 interface Props {
     setSelectedDate: (date: Date) => void

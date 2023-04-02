@@ -5,18 +5,34 @@ import FullCalendar from "@fullcalendar/react";
 import {Container, Row} from "react-bootstrap";
 
 import Layouts from "../../../../layouts/Layouts";
-import {useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import Contracts from "../../../../contracts/Contracts";
 import axios from "axios";
 import Memory from "../../../../Memory";
 import Components from "../../../../components/Components";
 import ScheduleModal from "./components/ScheduleModal";
+import DeleteConfirmationModal from "./components/DeleteConfirmationModal";
+
+export interface ICalendarContext {
+    agendamento: Contracts.AgendamentoComplete | null,
+    agendamentos: Contracts.Agendamento[],
+    setAgendamento: Function
+    setAgendamentos: Function
+}
+
+export const CalendarContext = createContext<ICalendarContext>({
+    agendamento: null,
+    agendamentos: [],
+    setAgendamento: () => console.error("Função não implementada"),
+    setAgendamentos: () => console.error("Função não implementada"),
+});
 
 export default function Calendar(): JSX.Element {
     const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
     const [queriedDates, setQueriedDates] = useState<string[]>([]);
     const [agendamentos, setAgendamentos] = useState<Contracts.Agendamento[]>([]);
     const [agendamento, setAgendamento] = useState<Contracts.AgendamentoComplete | null>(null);
+    const [showDeleteAgendamentoModal, setShowDeleteAgendamentoModal] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -59,27 +75,28 @@ export default function Calendar(): JSX.Element {
 
     return (
         <Layouts.RestrictedLayout>
-            <Container>
-                <main className="py-3">
-                    <h1>Agenda</h1>
+            <CalendarContext.Provider value={{agendamento, agendamentos, setAgendamento, setAgendamentos}}>
+                <Container>
+                    <main className="py-3">
+                        <h1>Agenda</h1>
 
-                    <Row>
-                        <Components.SearchBar btnAdd={{label: "Agendar", href: "adicionar"}} disableSearch/>
+                        <Row>
+                            <Components.SearchBar btnAdd={{label: "Agendar", href: "adicionar"}} disableSearch/>
 
-                        <div className="col-12 p-2">
-                            <FullCalendar
-                                plugins={[daygrid, interactionPlugin]}
-                                initialView="dayGridMonth"
-                                weekends={false}
-                                events={events}
-                                eventColor={"green"}
-                                eventContent={renderEventContent}
-                                datesSet={(evt) => setSelectedMonth(evt.start)}
-                                eventClick={eventClick}
-                            />
-                        </div>
+                            <div className="col-12 p-2">
+                                <FullCalendar
+                                    plugins={[daygrid, interactionPlugin]}
+                                    initialView="dayGridMonth"
+                                    weekends={false}
+                                    events={events}
+                                    eventColor={"green"}
+                                    eventContent={renderEventContent}
+                                    datesSet={(evt) => setSelectedMonth(evt.start)}
+                                    eventClick={eventClick}
+                                />
+                            </div>
 
-                        {/*<div className="col-12 col-md-3 p-2">
+                            {/*<div className="col-12 col-md-3 p-2">
                             <Card className="d-flex justify-content-center h-100">
                                 <Card.Title>Eventos</Card.Title>
 
@@ -96,13 +113,24 @@ export default function Calendar(): JSX.Element {
                                 </Card.Body>
                             </Card>
                         </div>*/}
-                    </Row>
-                </main>
-            </Container>
+                        </Row>
+                    </main>
+                </Container>
 
-            <div>
-                {agendamento ? <ScheduleModal closeModal={closeModal} agendamento={agendamento}/> : <></>}
-            </div>
+                <div>
+                    {
+                        agendamento && !showDeleteAgendamentoModal ?
+                            <ScheduleModal
+                                closeModal={closeModal}
+                                showDeleteModal={() => setShowDeleteAgendamentoModal(true)}/> : <></>
+                    }
+
+                    {
+                        agendamento && showDeleteAgendamentoModal ?
+                            <DeleteConfirmationModal closeModal={() => setShowDeleteAgendamentoModal(false)}/> : <></>
+                    }
+                </div>
+            </CalendarContext.Provider>
         </Layouts.RestrictedLayout>
     );
 }

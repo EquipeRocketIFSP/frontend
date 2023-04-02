@@ -1,16 +1,21 @@
 import {Button, Modal, Row} from "react-bootstrap";
-import React from "react";
+import React, {useContext} from "react";
 import Contracts from "../../../../../contracts/Contracts";
 import {Link} from "react-router-dom";
+import {CalendarContext} from "../Calendar";
 
-interface Props {
-    closeModal: () => void,
-    agendamento: Contracts.AgendamentoComplete
+interface Props extends Contracts.CloseModal {
+    showDeleteModal: () => void
 }
 
 export default function ScheduleModal(props: Props): JSX.Element {
-    const {closeModal} = props;
-    const {data_consulta, observacoes, veterinario, tutor, animal} = props.agendamento;
+    const {closeModal, showDeleteModal} = props;
+    const {agendamento} = useContext(CalendarContext);
+
+    if (!agendamento)
+        return <></>;
+
+    const {data_consulta, observacoes, veterinario, tutor, animal} = agendamento;
 
     const consultDate = new Date(data_consulta);
     consultDate.setHours(consultDate.getHours() - 3);
@@ -49,7 +54,7 @@ export default function ScheduleModal(props: Props): JSX.Element {
 
             <Modal.Footer>
                 <Button variant="primary" onClick={() => closeModal()}>Editar</Button>
-                <Button variant="danger" onClick={() => closeModal()}>Cancelar Agendamento</Button>
+                <Button variant="danger" onClick={showDeleteModal}>Cancelar Agendamento</Button>
                 <Button variant="secondary" onClick={() => closeModal()}>Fechar</Button>
             </Modal.Footer>
         </Modal>

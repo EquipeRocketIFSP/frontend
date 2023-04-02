@@ -55,7 +55,7 @@ export default function FormDefault(props: Props): JSX.Element {
                                    veterinario={agendamento?.veterinario}
                                    setSelectedItem={setSelectedVeterinario}/>
 
-                <Calendar setSelectedDate={setSelectedDate}/>
+                <Calendar selectedDate={agendamento?.data_consulta?new Date(agendamento?.data_consulta):new Date()} setSelectedDate={setSelectedDate}/>
 
                 <Form.Group className="mb-3 col-lg-12">
                     <Form.Label htmlFor="observacoes">Observações</Form.Label>

@@ -7,13 +7,14 @@ import Memory from "../../../../Memory";
 import Contracts from "../../../../contracts/Contracts";
 
 interface Props {
+    selectedDate?: Date,
     setSelectedDate: (date: Date) => void
 }
 
 export default function Calendar(props: Props): JSX.Element {
     const today = new Date();
 
-    const [selectedDate, setSelectedDate] = useState<Date>(today);
+    const [selectedDate, setSelectedDate] = useState<Date>(props.selectedDate ?? today);
     const [selectedMonth, setSelectedMonth] = useState<Date>(today);
     const [agendamentos, setAgendamentos] = useState<Contracts.Agendamento[]>([]);
     const [queriedDates, setQueriedDates] = useState<string[]>([]);

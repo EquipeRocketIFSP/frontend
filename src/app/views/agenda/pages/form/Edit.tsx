@@ -25,7 +25,7 @@ export default function Edit(): JSX.Element {
 
         axios.get<Contracts.AgendamentoComplete>(`${process.env.REACT_APP_API_URL}/agendamento/${urlParams.id}`, {headers: Memory.headers})
             .then(({data}) => setAgendamento(data))
-            .catch(console.error);
+            .catch(() => setNavigateToListing(true));
     }, []);
 
     const onSubmit = async (formData: FormData) => {
@@ -53,11 +53,11 @@ export default function Edit(): JSX.Element {
         setTimeout(() => setNavigateToListing(true), 1000);
     }
 
-    if (!agendamento)
-        return <Components.LoadingScreen/>;
-
     if (navigateToListing)
         return <Navigate to={`/painel/agenda`}/>;
+
+    if (!agendamento)
+        return <Components.LoadingScreen/>;
 
     return (
         <Layouts.RestrictedLayout>

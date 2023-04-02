@@ -10,7 +10,6 @@ import Contracts from "../../../../contracts/Contracts";
 import axios from "axios";
 import Memory from "../../../../Memory";
 import Components from "../../../../components/Components";
-import {Navigate} from "react-router-dom";
 import ScheduleModal from "./components/ScheduleModal";
 
 export default function Calendar(): JSX.Element {
@@ -18,6 +17,7 @@ export default function Calendar(): JSX.Element {
     const [queriedDates, setQueriedDates] = useState<string[]>([]);
     const [agendamentos, setAgendamentos] = useState<Contracts.Agendamento[]>([]);
     const [agendamento, setAgendamento] = useState<Contracts.AgendamentoComplete | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         selectedMonth.setDate(1);
@@ -31,7 +31,8 @@ export default function Calendar(): JSX.Element {
 
         axios.get<Contracts.Agendamento[]>(`${process.env.REACT_APP_API_URL}/agendamento?data=${queryDate}`, {headers: Memory.headers})
             .then(({data}) => setAgendamentos([...agendamentos, ...data]))
-            .catch(console.error);
+            .catch(console.error)
+            .finally(() => setLoading(false));
     }, [selectedMonth]);
 
     const eventClick = (evt: EventClickArg) => {
@@ -53,7 +54,7 @@ export default function Calendar(): JSX.Element {
         };
     });
 
-    if (!events.length)
+    if (loading)
         return <Components.LoadingScreen/>;
 
     return (

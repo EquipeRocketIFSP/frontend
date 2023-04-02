@@ -51,6 +51,5 @@ export default function DeleteConfirmationModal(props: Contracts.CloseModal): JS
                 <Button variant="danger" onClick={deleteSchedule}>Sim, desejo cancelar o agendamento</Button>
             </Modal.Footer>
         </Modal>
-    )
-        ;
+    );
 }

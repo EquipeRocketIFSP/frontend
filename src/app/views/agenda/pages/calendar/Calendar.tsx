@@ -59,8 +59,6 @@ export default function Calendar(): JSX.Element {
             .catch(console.error);
     }
 
-    const closeModal = () => setAgendamento(null);
-
     const events = agendamentos.map((agendamento) => {
         return {
             title: agendamento.animal,
@@ -120,9 +118,7 @@ export default function Calendar(): JSX.Element {
                 <div>
                     {
                         agendamento && !showDeleteAgendamentoModal ?
-                            <ScheduleModal
-                                closeModal={closeModal}
-                                showDeleteModal={() => setShowDeleteAgendamentoModal(true)}/> : <></>
+                            <ScheduleModal showDeleteModal={() => setShowDeleteAgendamentoModal(true)}/> : <></>
                     }
 
                     {

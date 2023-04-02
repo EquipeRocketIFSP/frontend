@@ -4,13 +4,13 @@ import Contracts from "../../../../../contracts/Contracts";
 import {Link} from "react-router-dom";
 import {CalendarContext} from "../Calendar";
 
-interface Props extends Contracts.CloseModal {
+interface Props {
     showDeleteModal: () => void
 }
 
 export default function ScheduleModal(props: Props): JSX.Element {
-    const {closeModal, showDeleteModal} = props;
-    const {agendamento} = useContext(CalendarContext);
+    const {showDeleteModal} = props;
+    const {agendamento, setAgendamento} = useContext(CalendarContext);
 
     if (!agendamento)
         return <></>;
@@ -19,6 +19,8 @@ export default function ScheduleModal(props: Props): JSX.Element {
 
     const consultDate = new Date(data_consulta);
     consultDate.setHours(consultDate.getHours() - 3);
+
+    const closeModal = () => setAgendamento(null);
 
     return (
         <Modal show={true} onHide={() => closeModal()} size="lg" centered>

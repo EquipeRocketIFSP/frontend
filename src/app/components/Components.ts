@@ -9,6 +9,8 @@ import CNPJComponent from "./cnpj/CNPJ";
 import UFComponent from "./uf/UF";
 import ContactsComponent from "./contacts/Contacts";
 import BreadcrumbsComponent from "./breadcrumbs/Breadcrumbs";
+import FormSubmitComponent from "./form-submit/FormSubmit";
+import {FormSubmitContext as FormSubmitComponentContext} from "./form-submit/FormSubmit";
 
 namespace Components {
     export const Navbar = NavbarComponent;
@@ -22,6 +24,8 @@ namespace Components {
     export const UF = UFComponent;
     export const Contacts = ContactsComponent;
     export const Breadcrumbs = BreadcrumbsComponent;
+    export const FormSubmit = FormSubmitComponent;
+    export const FormSubmitContext = FormSubmitComponentContext;
 }
 
 export default Components;

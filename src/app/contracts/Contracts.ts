@@ -1,6 +1,14 @@
 namespace Contracts {
     export type AnimalSex = "MACHO" | "FEMEA";
 
+    export type FormStatus = "idle" | "created" | "updated";
+
+    export interface ReactSelectOption {
+        value: number,
+        label: string,
+        isFixed: boolean
+    }
+
     export interface DynamicObject<I> {
         [key: string]: I
     }
@@ -94,10 +102,20 @@ namespace Contracts {
 
     export interface Agendamento {
         id: number,
+        data_consulta: string,
+        observacoes: string,
         animal: string,
-        criadoEm: string,
-        dataConsulta: string,
-        tipoConsulta: string,
+        tutor: string,
+        veterinario: string
+    }
+
+    export interface AgendamentoComplete {
+        id: number,
+        data_consulta: string,
+        observacoes: string,
+        animal: Animal,
+        tutor: PersonalData,
+        veterinario: Funcionario
     }
 
     export interface Prontuario {

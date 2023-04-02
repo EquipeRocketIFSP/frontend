@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import axios from "axios";
 
 import "./certvet.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,7 +17,6 @@ import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
 import Home from "./views/home/Home";
 import FormEditClinica from "./views/form-edit-clinica/FormEditClinica";
-import axios, {AxiosHeaders} from "axios";
 import Storages from "./Storages";
 import Memory from "./Memory";
 import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
@@ -34,9 +34,9 @@ export default function Certvet() {
             return;
         }
 
-        const headers = new AxiosHeaders().setAuthorization(`${userData.type} ${userData.token}`);
+        Memory.headers.setAuthorization(`${userData.type} ${userData.token}`);
 
-        axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers})
+        axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers: Memory.headers})
             .then(({data}) => Memory.authorites.push(...data))
             .finally(() => setAuthoritesLoaded(true));
     }, []);
@@ -66,9 +66,12 @@ export default function Certvet() {
                 <Route path="/painel/tutores/:tutorId/animais/adicionar" element={<Animals.Form/>}/>
                 <Route path="/painel/tutores/:tutorId/animais/:id/editar" element={<Animals.Form/>}/>
 
+                <Route path="/painel/agenda" element={<Agenda.Calendar/>}/>
+                <Route path="/painel/agenda/adicionar" element={<Agenda.Create/>}/>
+                <Route path="/painel/agenda/:id/editar" element={<Agenda.Edit/>}/>
+
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
-                <Route path="/painel/agenda" element={<Agenda/>}/>
             </Routes>
         </BrowserRouter>
     );

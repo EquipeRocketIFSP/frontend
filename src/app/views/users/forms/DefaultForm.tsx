@@ -26,7 +26,7 @@ interface SubmitContext {
 }
 
 export default function DefaultForm(props: Props): JSX.Element {
-    const {title, apiPathname, clientPathname,breadcrumbs} = props;
+    const {title, apiPathname, clientPathname, breadcrumbs} = props;
 
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
@@ -34,6 +34,7 @@ export default function DefaultForm(props: Props): JSX.Element {
     const [dataStatus, setDataStatus] = useState<FormStatus>("idle");
     const [sendingForm, setSendingForm] = useState<boolean>(false);
     const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
+    const [notFound, setNotFound] = useState<boolean>(false);
 
     const userData = Storages.userStorage.get();
     const urlParams = useParams<Contracts.PathVariables>();
@@ -47,7 +48,8 @@ export default function DefaultForm(props: Props): JSX.Element {
             return;
 
         axios.get(`${process.env.REACT_APP_API_URL}/${apiPathname}/${urlParams.id}`, {headers})
-            .then(({data}) => setUsuario(data));
+            .then(({data}) => setUsuario(data))
+            .catch(() => setNotFound(true));
     }, []);
 
     const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -97,6 +99,9 @@ export default function DefaultForm(props: Props): JSX.Element {
 
         setSendingForm(false);
     }
+
+    if (notFound)
+        return <Navigate to="/not-found"/>;
 
     if (navigateToListing)
         return <Navigate to={`/painel/${clientPathname}`}/>;

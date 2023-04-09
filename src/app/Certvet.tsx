@@ -21,6 +21,7 @@ import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
 import Users from "./views/users/Users";
 import Animals from "./views/animals/Animals";
 import SignIn from "./views/sign-in/SignIn";
+import NotFound from "./views/not-found/NotFound";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -71,6 +72,8 @@ export default function Certvet() {
 
                 <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
                 <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
+
+                <Route path="*" element={<NotFound/>}/>
             </Routes>
         </BrowserRouter>
     );

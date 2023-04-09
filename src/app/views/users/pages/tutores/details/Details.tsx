@@ -5,11 +5,12 @@ import React, {useEffect, useState} from "react";
 import Contracts from "../../../../../contracts/Contracts";
 import axios, {AxiosHeaders} from "axios";
 import Storages from "../../../../../Storages";
-import {Link, useParams} from "react-router-dom";
+import {Link, Navigate, useParams} from "react-router-dom";
 import Animals from "../../../../animals/Animals";
 
 export default function Details(): JSX.Element {
     const [usuario, setUsuario] = useState<Contracts.PersonalData | null>(null);
+    const [notFound, setNotFound] = useState<boolean>(false);
 
     const userData = Storages.userStorage.get();
     const urlParams = useParams<Contracts.PathVariables>();
@@ -23,8 +24,12 @@ export default function Details(): JSX.Element {
             return;
 
         axios.get(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.id}`, {headers})
-            .then(({data}) => setUsuario(data));
+            .then(({data}) => setUsuario(data))
+            .catch(() => setNotFound(true));
     }, []);
+
+    if (notFound)
+        return <Navigate to="/not-found"/>;
 
     if (!usuario)
         return <Components.LoadingScreen/>;

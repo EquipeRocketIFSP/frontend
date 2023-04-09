@@ -10,8 +10,6 @@ import "@fortawesome/fontawesome-free/css/solid.min.css";
 import FormProntuario from "./views/form-prontuario/FormProntuario";
 import FormHistoricoClinico from "./views/form-historico-clinico/FormHistoricoClinico";
 import Agenda from "./views/agenda/Agenda";
-import CadastroClinica from "./views/cadastro-clinica/CadastroClinica";
-import CadastroClinicaDono from "./views/cadastro-clinica-dono/CadastroClinicaDono";
 import Login from "./views/login/Login";
 import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
@@ -22,6 +20,7 @@ import Memory from "./Memory";
 import FormEditUsuario from "./views/form-edit-usuario/FormEditUsuario";
 import Users from "./views/users/Users";
 import Animals from "./views/animals/Animals";
+import SignIn from "./views/sign-in/SignIn";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -50,8 +49,8 @@ export default function Certvet() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/redefinir-senha" element={<RedefinePassword/>}/>
-                <Route path="/cadastro" element={<CadastroClinica/>}/>
-                <Route path="/cadastro/dono" element={<CadastroClinicaDono/>}/>
+                <Route path="/cadastro" element={<SignIn.Clinica/>}/>
+                <Route path="/cadastro/dono" element={<SignIn.Owner/>}/>
 
                 <Route path="/painel" element={<Painel/>}/>
                 <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>

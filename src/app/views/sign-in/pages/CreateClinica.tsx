@@ -1,14 +1,14 @@
-import Layouts from "../../layouts/Layouts";
+import Layouts from "../../../layouts/Layouts";
 import {Button, Container, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import {Navigate} from "react-router-dom";
-import Contracts from "../../contracts/Contracts";
-import Storages from "../../Storages";
+import Contracts from "../../../contracts/Contracts";
+import Storages from "../../../Storages";
 import DynamicObject = Contracts.DynamicObject;
-import Forms from "../../forms/Forms";
+import Forms from "../../../forms/Forms";
 
-export default function CadastroClinica(): JSX.Element {
+export default function CreateClinica(): JSX.Element {
     const [navigateToNextSection, setNavigateToNextSection] = useState<boolean>(false);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
 

@@ -88,7 +88,7 @@ export default function FormDefault(props: Props): JSX.Element {
                     ) :
                     (
                         <div className="d-flex justify-content-between">
-                            <Link to="" className="btn btn-outline-secondary">Voltar</Link>
+                            <Link to="/painel/agenda" className="btn btn-outline-secondary">Voltar</Link>
                             <Button type="submit" variant="outline-success">Finalizar</Button>
                         </div>
                     )

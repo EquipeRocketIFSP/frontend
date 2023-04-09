@@ -36,6 +36,7 @@ export default function DefaultForm(): JSX.Element {
     const [dataStatus, setDataStatus] = useState<FormStatus>("idle");
     const [sendingForm, setSendingForm] = useState<boolean>(false);
     const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
+    const [notFound, setNotFound] = useState<boolean>(false);
     const [searchTutor, setSearchTutor] = useState<string>("");
     const [timeoutRef, setTimeoutRef] = useState<NodeJS.Timer | null>(null);
 
@@ -73,14 +74,14 @@ export default function DefaultForm(): JSX.Element {
         if (!urlParams.id || !userData)
             return;
 
-        axios.get<Contracts.Animal>(`${process.env.REACT_APP_API_URL}/animal/${urlParams.id}`, {headers})
+        axios.get<Contracts.Animal>(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.tutorId}/animal/${urlParams.id}`, {headers})
             .then(({data}) => {
                 setAnimal(data);
                 setSelectedTutores(data.tutores.map((tutor) => {
                     return {value: tutor.id, label: tutor.nome, isFixed: false};
                 }));
             })
-            .catch(console.error);
+            .catch(() => setNotFound(true));
     }, []);
 
     const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
@@ -107,7 +108,7 @@ export default function DefaultForm(): JSX.Element {
                 }, setNavigateToListing);
             } else {
                 await editOnSubmit({
-                    url: `${process.env.REACT_APP_API_URL}/animal/${urlParams.id}`,
+                    url: `${process.env.REACT_APP_API_URL}/tutor/${urlParams.tutorId}/animal/${urlParams.id}`,
                     formData, setDataStatus, headers
                 }, setAnimal);
             }
@@ -149,6 +150,9 @@ export default function DefaultForm(): JSX.Element {
 
         setSelectedTutores(values as ReactSelectOption[]);
     }
+
+    if (notFound)
+        return <Navigate to="/not-found"/>;
 
     if (navigateToListing)
         return <Navigate to={`/painel/tutores/${urlParams.tutorId}`}/>;

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, Navigate, useParams} from "react-router-dom";
 import axios, {AxiosHeaders} from "axios";
 import {Container, ListGroup, Pagination, Row} from "react-bootstrap";
 
@@ -14,6 +14,7 @@ interface PathVariables extends Contracts.PathVariables {
 
 export default function Details(): JSX.Element {
     const [animal, setAnimal] = useState<Contracts.Animal | null>(null);
+    const [notFound, setNotFound] = useState<boolean>(false);
 
     const userData = Storages.userStorage.get();
     const urlParams = useParams<PathVariables>();
@@ -26,9 +27,13 @@ export default function Details(): JSX.Element {
         if (!urlParams.id || !userData)
             return;
 
-        axios.get(`${process.env.REACT_APP_API_URL}/animal/${urlParams.id}`, {headers})
-            .then(({data}) => setAnimal(data));
+        axios.get(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.tutorId}/animal/${urlParams.id}`, {headers})
+            .then(({data}) => setAnimal(data))
+            .catch(() => setNotFound(true));
     }, []);
+
+    if (notFound)
+        return <Navigate to="/not-found"/>;
 
     if (!animal)
         return <Components.LoadingScreen/>;
@@ -43,7 +48,8 @@ export default function Details(): JSX.Element {
                     <Components.Breadcrumbs>
                         <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
                         <li className="breadcrumb-item"><Link to="/painel/tutores">Tutores</Link></li>
-                        <li className="breadcrumb-item"><Link to={"/painel/tutores/"+urlParams.tutorId}>Animais do tutor</Link></li>
+                        <li className="breadcrumb-item"><Link to={"/painel/tutores/" + urlParams.tutorId}>Animais do
+                            tutor</Link></li>
                         <li className="breadcrumb-item active">Detalhes do Animal</li>
                     </Components.Breadcrumbs>
 

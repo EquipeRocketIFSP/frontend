@@ -1,5 +1,3 @@
-import Layouts from "../../layouts/Layouts";
-import {Container} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import Storages from "../../Storages";
 

@@ -1,12 +1,19 @@
 import Layouts from "../../layouts/Layouts";
 import {Container} from "react-bootstrap";
+import {Link} from "react-router-dom";
+import Storages from "../../Storages";
 
-export default function NotFound():JSX.Element{
+export default function NotFound(): JSX.Element {
+    const userData = Storages.userStorage.get();
+
     return (
-        <Layouts.Layout>
-            <Container>
-                <h1>Página não encontrada</h1>
-            </Container>
-        </Layouts.Layout>
+        <div className="d-flex align-items-center justify-content-center vh-100">
+            <div className="text-center">
+                <h1 className="display-1 fw-bold">404</h1>
+                <p className="fs-3"><span className="text-danger">Ops!</span> Página não encontrada</p>
+
+                <Link to={userData ? "/painel" : "/"} className="btn btn-primary">Ir à página inicial</Link>
+            </div>
+        </div>
     );
 }

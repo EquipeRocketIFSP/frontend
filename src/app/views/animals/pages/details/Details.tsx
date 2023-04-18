@@ -41,7 +41,7 @@ export default function Details(): JSX.Element {
     const age = new Date().getFullYear() - animal.ano_nascimento;
 
     return (
-        <Layouts.Layout>
+        <Layouts.RestrictedLayout>
             <main id="animal">
 
                 <Container>
@@ -105,6 +105,6 @@ export default function Details(): JSX.Element {
 
                 </Container>
             </main>
-        </Layouts.Layout>
+        </Layouts.RestrictedLayout>
     );
 }

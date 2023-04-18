@@ -118,6 +118,18 @@ namespace Contracts {
         veterinario: Funcionario
     }
 
+    export interface Medicamento {
+        id: number,
+        nome: string,
+        codigo_registro: string,
+        principio_ativo: string,
+        via_uso: string,
+        concentracao: string,
+        fabricante: string,
+        nome_referencia: string,
+        vencimento_registro: string
+    }
+
     export interface Prontuario {
         id: number,
         veterinario: string,

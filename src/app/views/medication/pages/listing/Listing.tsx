@@ -1,4 +1,4 @@
-import {useSearchParams} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {Container} from "react-bootstrap";
 import Components from "../../../../components/Components";
 import React from "react";
@@ -14,6 +14,11 @@ export default function Listing(): JSX.Element {
     return (
         <Layouts.RestrictedLayout>
             <Container>
+                <Components.Breadcrumbs>
+                    <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
+                    <li className="breadcrumb-item active">Medicamentos</li>
+                </Components.Breadcrumbs>
+
                 <Components.SearchBar/>
 
                 <h4>Medicamentos validos pela Anvisa</h4>

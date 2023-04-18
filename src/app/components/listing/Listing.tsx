@@ -6,6 +6,8 @@ import Contracts from "../../contracts/Contracts";
 import Storages from "../../Storages";
 import ListingPagination from "./ListingPagination";
 
+import "./listing.scss";
+
 interface Props extends React.PropsWithChildren {
     pathname: string,
     componentDesktopLegend: any,
@@ -40,7 +42,7 @@ export default function Listing(props: Props): JSX.Element {
 
     return (
         <>
-            <div style={{height: "60vh"}}>
+            <div className="listing">
                 <div className="d-none d-md-block">{factoryComponentType(componentDesktopLegend, {})}</div>
 
                 {

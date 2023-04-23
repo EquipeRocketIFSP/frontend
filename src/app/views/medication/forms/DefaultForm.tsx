@@ -11,10 +11,10 @@ export default function DefaultForm(): JSX.Element {
         <>
             <Row>
                 <Form.Group className="mb-3 col-lg-12">
-                    <Form.Label htmlFor="numero_registro">Número de registro</Form.Label>
-                    <Form.Control name="numero_registro" id="numero_registro" maxLength={255}
+                    <Form.Label htmlFor="codigo_registro">Código de registro</Form.Label>
+                    <Form.Control name="codigo_registro" id="codigo_registro" maxLength={255}
                                   onInput={Helpers.Masks.number} required/>
-                    <Form.Text className="text-danger">{validationErrors["numero_registro"] ?? ""}</Form.Text>
+                    <Form.Text className="text-danger">{validationErrors["codigo_registro"] ?? ""}</Form.Text>
                 </Form.Group>
             </Row>
 

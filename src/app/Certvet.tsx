@@ -27,11 +27,9 @@ import Auth from "./views/auth/Auth";
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
 
-    const userData = Storages.userStorage.get();
-
-    Memory.headers.setAuthorization(`${userData?.type} ${userData?.token}`);
-
     useEffect(() => {
+        const userData = Storages.userStorage.get();
+
         if (!userData) {
             setAuthoritesLoaded(true);
             return;

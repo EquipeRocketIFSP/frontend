@@ -35,6 +35,8 @@ export default function Certvet() {
             return;
         }
 
+        Memory.headers.setAuthorization(`${userData.type} ${userData.token}`);
+
         axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers: Memory.headers})
             .then(({data}) => Memory.authorites.push(...data))
             .finally(() => setAuthoritesLoaded(true));

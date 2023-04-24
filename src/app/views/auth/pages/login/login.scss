@@ -1,0 +1,12 @@
+#login {
+  .rounded {
+    border-radius: 50px !important;
+  }
+
+  input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+}

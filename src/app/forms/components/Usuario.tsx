@@ -30,11 +30,7 @@ export default function Usuario(props: Props): JSX.Element {
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6">
-                    <Form.Label htmlFor="cpf">CPF*</Form.Label>
-                    <Form.Control name="cpf" defaultValue={data?.cpf} maxLength={14} id="cpf"
-                                  onInput={Helpers.Masks.cpf}
-                                  required/>
-                    <Form.Text style={{color: "red"}}>{validationErrors["cpf"] ?? ""}</Form.Text>
+                    <Components.CPF validationErrors={validationErrors} cpf={data?.cpf}/>
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6">

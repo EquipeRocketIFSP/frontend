@@ -5,6 +5,7 @@ import LoadingScreenComponent from "./loading-screen/LoadingScreen";
 import MultiGroupsComponent from "./multi-groups/MultiGroups";
 import AddressComponent from "./address/Address";
 import CEPComponent from "./cep/CEP";
+import CPFComponent from "./cpf/CPF";
 import CNPJComponent from "./cnpj/CNPJ";
 import UFComponent from "./uf/UF";
 import ContactsComponent from "./contacts/Contacts";
@@ -20,6 +21,7 @@ namespace Components {
     export const MultiGroups = MultiGroupsComponent;
     export const Address = AddressComponent;
     export const CEP = CEPComponent;
+    export const CPF = CPFComponent;
     export const CNPJ = CNPJComponent;
     export const UF = UFComponent;
     export const Contacts = ContactsComponent;

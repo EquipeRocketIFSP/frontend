@@ -20,10 +20,7 @@ export default function FormOwner() {
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6">
-                    <Form.Label htmlFor="dono_cpf">CPF*</Form.Label>
-                    <Form.Control name="dono_cpf" maxLength={255} id="dono_cpf" onInput={Helpers.Masks.cpf}
-                                  required/>
-                    <Form.Text style={{color: "red"}}>{validationErrors["dono_cpf"] ?? ""}</Form.Text>
+                    <Components.CPF validationErrors={validationErrors} name="dono_cpf"/>
                 </Form.Group>
 
                 <Form.Group className="mb-3 col-lg-6">

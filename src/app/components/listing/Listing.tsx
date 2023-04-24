@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Alert, Spinner, Row} from "react-bootstrap";
-import axios, {AxiosHeaders} from "axios";
+import axios from "axios";
 
 import Contracts from "../../contracts/Contracts";
-import Storages from "../../Storages";
 import ListingPagination from "./ListingPagination";
 
 import "./listing.scss";
+import Memory from "../../Memory";
 
 interface Props extends React.PropsWithChildren {
     pathname: string,
@@ -22,14 +22,7 @@ export default function Listing(props: Props): JSX.Element {
     const [response, setResponse] = useState<Contracts.PaginetedResponse<Object> | null>(null);
 
     useEffect(() => {
-        const userData = Storages.userStorage.get();
-
-        if (!userData)
-            return;
-
-        const headers = new AxiosHeaders().setAuthorization(`${userData.type} ${userData.token}`);
-
-        axios.get<Contracts.PaginetedResponse<Object>>(`${process.env.REACT_APP_API_URL}/${pathname}`, {headers})
+        axios.get<Contracts.PaginetedResponse<Object>>(`${process.env.REACT_APP_API_URL}/${pathname}`, {headers: Memory.headers})
             .then(({data}) => setResponse(data))
             .finally(() => setLoading(false));
     }, [pathname]);

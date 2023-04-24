@@ -8,7 +8,8 @@ interface Props extends React.PropsWithChildren {
     setDataStatus: (status: Contracts.FormStatus) => void
     setValidationErrors: (errors: Contracts.DynamicObject<string>) => void,
     dataStatus: Contracts.FormStatus,
-    validationErrors: Contracts.DynamicObject<string>
+    validationErrors: Contracts.DynamicObject<string>,
+    successMessageOnCreation?: string
 }
 
 interface Context {
@@ -22,7 +23,15 @@ export const FormSubmitContext = createContext<Context>({
 });
 
 export default function FormSubmit(props: Props): JSX.Element {
-    const {onSubmit, setDataStatus, setValidationErrors, children, validationErrors, dataStatus} = props;
+    const {
+        onSubmit,
+        setDataStatus,
+        setValidationErrors,
+        children,
+        validationErrors,
+        dataStatus,
+        successMessageOnCreation
+    } = props;
 
     const [apiConnectionError, setApiConnectionError] = useState<string | null>(null);
     const [sendingForm, setSendingForm] = useState<boolean>(false);
@@ -62,7 +71,7 @@ export default function FormSubmit(props: Props): JSX.Element {
     return (
         <Form onSubmit={formSubmit}>
             {dataStatus === "created" ?
-                <Alert variant="success">Cadastro efetuado com sucesso</Alert> : <></>}
+                <Alert variant="success">{successMessageOnCreation ?? "Cadastro efetuado com sucesso"}</Alert> : <></>}
             {dataStatus === "updated" ?
                 <Alert variant="success">Dados alterados com sucesso</Alert> : <></>}
 

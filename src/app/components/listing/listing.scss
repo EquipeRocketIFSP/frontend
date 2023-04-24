@@ -1,0 +1,13 @@
+.listing {
+  height: 60vh;
+  overflow-y: auto;
+  overflow-x: clip;
+
+  a {
+    text-decoration: none;
+
+    .list-group-item {
+      color: var(--bs-link-color);
+    }
+  }
+}

@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Alert, Spinner} from "react-bootstrap";
+import {Alert, Spinner, Row} from "react-bootstrap";
 import axios, {AxiosHeaders} from "axios";
 
 import Contracts from "../../contracts/Contracts";
 import Storages from "../../Storages";
 import ListingPagination from "./ListingPagination";
+
+import "./listing.scss";
 
 interface Props extends React.PropsWithChildren {
     pathname: string,
@@ -33,14 +35,14 @@ export default function Listing(props: Props): JSX.Element {
     }, [pathname]);
 
     if (loading)
-        return <Spinner animation="grow"/>;
+        return <Row className="justify-content-center"><Spinner animation="grow"/></Row>;
 
     if (!response?.data.length)
         return <Alert variant="info" style={{textAlign: "center"}}>Nenhum item encontrado</Alert>;
 
     return (
         <>
-            <div style={{height: "60vh"}}>
+            <div className="listing">
                 <div className="d-none d-md-block">{factoryComponentType(componentDesktopLegend, {})}</div>
 
                 {

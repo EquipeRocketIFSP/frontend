@@ -48,6 +48,7 @@ export default function Navbar() {
                                     <Link to="/painel/funcionarios" className="nav-link">Funcionarios</Link>
                                     <Link to="/painel/agenda" className="nav-link">Agenda</Link>
                                     <Link to="/painel/tutores" className="nav-link">Tutores</Link>
+                                    <Link to="/painel/medicamentos" className="nav-link">Medicamentos</Link>
                                 </Nav>
                             ) :
                             <></>

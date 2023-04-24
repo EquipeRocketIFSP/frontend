@@ -22,6 +22,7 @@ import Users from "./views/users/Users";
 import Animals from "./views/animals/Animals";
 import SignIn from "./views/sign-in/SignIn";
 import NotFound from "./views/not-found/NotFound";
+import Medication from "./views/medication/Medication";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -56,6 +57,10 @@ export default function Certvet() {
                 <Route path="/painel" element={<Painel/>}/>
                 <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>
                 <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
+
+                <Route path="/painel/medicamentos" element={<Medication.Listing/>}/>
+                <Route path="/painel/medicamentos/:id" element={<Medication.Details/>}/>
+                <Route path="/painel/medicamentos/adicionar" element={<Medication.Create/>}/>
 
                 <Route path="/painel/tutores" element={<Users.Tutores.Listing/>}/>
                 <Route path="/painel/tutores/:id" element={<Users.Tutores.Details/>}/>

@@ -27,15 +27,15 @@ import Auth from "./views/auth/Auth";
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
 
-    useEffect(() => {
-        const userData = Storages.userStorage.get();
+    const userData = Storages.userStorage.get();
 
+    Memory.headers.setAuthorization(`${userData?.type} ${userData?.token}`);
+
+    useEffect(() => {
         if (!userData) {
             setAuthoritesLoaded(true);
             return;
         }
-
-        Memory.headers.setAuthorization(`${userData.type} ${userData.token}`);
 
         axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers: Memory.headers})
             .then(({data}) => Memory.authorites.push(...data))

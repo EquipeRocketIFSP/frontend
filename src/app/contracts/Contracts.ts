@@ -3,6 +3,8 @@ namespace Contracts {
 
     export type FormStatus = "idle" | "created" | "updated";
 
+    export type Authority = "ADMIN" | "FUNCIONARIO" | "VETERINARIO" | "TUTOR";
+
     export interface ReactSelectOption {
         value: number,
         label: string,
@@ -81,7 +83,8 @@ namespace Contracts {
         estado: string,
         celular: string,
         telefone?: string,
-        email: string
+        email: string,
+        authorities: Authority[]
     }
 
     export interface Funcionario extends PersonalData {

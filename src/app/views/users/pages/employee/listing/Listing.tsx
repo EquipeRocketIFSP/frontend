@@ -26,7 +26,7 @@ export default function Listing(): JSX.Element {
 
                 <main>
                     <Components.Listing
-                        pathname={!search ? `tutor?pagina=${page}` : `tutor?buscar=${search}&pagina=${page}`}
+                        pathname={!search ? `funcionario?pagina=${page}` : `funcionario?buscar=${search}&pagina=${page}`}
                         componentDesktopLegend={Legend}
                         componentItem={Item}/>
                 </main>

@@ -253,7 +253,7 @@ export default function DefaultForm(): JSX.Element {
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
-                                <Form.Label>Especie*</Form.Label>
+                                <Form.Label>Espcie*</Form.Label>
                                 <Form.Control name="especie" maxLength={255} defaultValue={animal?.especie} required/>
                                 <Form.Text>{validationErrors["especie"] ?? ""}</Form.Text>
                             </Form.Group>

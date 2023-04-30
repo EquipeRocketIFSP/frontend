@@ -84,7 +84,8 @@ namespace Contracts {
         celular: string,
         telefone?: string,
         email: string,
-        authorities: Authority[]
+        authorities: Authority[],
+        deleted_at: string | null
     }
 
     export interface Funcionario extends PersonalData {

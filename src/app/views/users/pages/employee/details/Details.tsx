@@ -1,29 +1,24 @@
+import React, {useEffect, useState} from "react";
+import {Link, Navigate, useParams} from "react-router-dom";
 import {Container, Row} from "react-bootstrap";
+import axios from "axios";
+
 import Components from "../../../../../components/Components";
 import Layouts from "../../../../../layouts/Layouts";
-import React, {useEffect, useState} from "react";
 import Contracts from "../../../../../contracts/Contracts";
-import axios, {AxiosHeaders} from "axios";
-import Storages from "../../../../../Storages";
-import {Link, Navigate, useParams} from "react-router-dom";
-import Animals from "../../../../animals/Animals";
+import Memory from "../../../../../Memory";
 
 export default function Details(): JSX.Element {
-    const [usuario, setUsuario] = useState<Contracts.PersonalData | null>(null);
+    const [usuario, setUsuario] = useState<Contracts.Funcionario | null>(null);
     const [notFound, setNotFound] = useState<boolean>(false);
 
-    const userData = Storages.userStorage.get();
     const urlParams = useParams<Contracts.PathVariables>();
 
-    const headers = new AxiosHeaders()
-        .setContentType("application/json")
-        .setAuthorization(`${userData?.type} ${userData?.token}`);
-
     useEffect(() => {
-        if (!urlParams.id || !userData)
+        if (!urlParams.id)
             return;
 
-        axios.get(`${process.env.REACT_APP_API_URL}/tutor/${urlParams.id}`, {headers})
+        axios.get(`${process.env.REACT_APP_API_URL}/funcionario/${urlParams.id}`, {headers: Memory.headers})
             .then(({data}) => setUsuario(data))
             .catch(() => setNotFound(true));
     }, []);
@@ -39,13 +34,14 @@ export default function Details(): JSX.Element {
             <Container className="pt-4">
                 <Components.Breadcrumbs>
                     <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
-                    <li className="breadcrumb-item"><Link to="/painel/tutores">Tutores</Link></li>
-                    <li className="breadcrumb-item active">Detalhes do tutor</li>
+                    <li className="breadcrumb-item"><Link to="/painel/funcionarios">Funcionarios</Link></li>
+                    <li className="breadcrumb-item active">Detalhes do funcionario</li>
                 </Components.Breadcrumbs>
 
                 <Row className="summary mb-5 p-2">
                     <span><b>Nome: </b>{usuario.nome}</span>
                     <span><b>E-mail: </b>{usuario.email}</span>
+                    {usuario.crmv ? <span><b>CRMV: </b>{usuario.crmv}</span> : <></>}
                     <span><b>CPF: </b>{usuario.cpf}</span>
                     <span><b>RG: </b>{usuario.rg}</span>
                     <span><b>Endereço: </b>{usuario.logradouro}, {usuario.numero} - {usuario.cep} {usuario.bairro} - {usuario.cidade}/{usuario.estado}</span>
@@ -53,13 +49,11 @@ export default function Details(): JSX.Element {
                     {usuario.telefone?.length ? <span><b>Telefone: </b>{usuario.telefone}</span> : <></>}
 
                     <div className="col-12">
-                        <Link to={`/painel/tutores/${urlParams.id}/editar`}
+                        <Link to={`/painel/funcionarios/${urlParams.id}/editar`}
                               className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
                     </div>
                 </Row>
             </Container>
-
-            <Animals.Listing/>
         </Layouts.RestrictedLayout>
     );
 }

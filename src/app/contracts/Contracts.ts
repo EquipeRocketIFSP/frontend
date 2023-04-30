@@ -89,7 +89,8 @@ namespace Contracts {
     }
 
     export interface Funcionario extends PersonalData {
-        crmv?: string
+        crmv?: string,
+        is_techinical_responsible?: boolean
     }
 
     export interface Animal {

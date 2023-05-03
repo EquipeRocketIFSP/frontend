@@ -21,7 +21,7 @@ export default function Listing(): JSX.Element {
 
                 <Components.SearchBar/>
 
-                <h4>Medicamentos validos pela Anvisa</h4>
+                <h4>Medicamentos</h4>
 
                 <main>
                     <Components.Listing

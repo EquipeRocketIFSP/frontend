@@ -7,7 +7,6 @@ import axios from "axios";
 import Components from "../../../../components/Components";
 import Memory from "../../../../Memory";
 import {Container, Row} from "react-bootstrap";
-import Stock from "../../../stock/Stock";
 
 export default function Details(): JSX.Element {
     const [medication, setMedication] = useState<Contracts.Medicamento | null>(null);
@@ -50,8 +49,6 @@ export default function Details(): JSX.Element {
                         <span><b>Via de uso: </b>{medication.via_uso}</span>
                         <span><b>Concentração: </b>{medication.concentracao}</span>
                     </Row>
-
-                    <Stock.Listing/>
                 </Container>
             </main>
         </Layouts.RestrictedLayout>

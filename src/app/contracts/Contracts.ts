@@ -130,9 +130,15 @@ namespace Contracts {
         principio_ativo: string,
         via_uso: string,
         concentracao: string,
-        fabricante: string,
-        nome_referencia: string,
-        vencimento_registro: string
+        fabricante: string
+    }
+
+    export interface Estoque {
+        id: number,
+        lote: string,
+        medida: string,
+        quantidade: number,
+        validade: string
     }
 
     export interface Prontuario {

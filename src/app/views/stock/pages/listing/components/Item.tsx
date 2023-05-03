@@ -23,7 +23,7 @@ export default function Item(props: Contracts.Estoque): JSX.Element {
                 </ListGroup.Item>
 
                 <ListGroup.Item className="col-md-3">
-                    <b className="d-md-none">Validade: </b>{validade}
+                    <b className="d-md-none">Validade: </b>{new Date(validade).toLocaleDateString()}
                 </ListGroup.Item>
             </ListGroup>
         </Link>

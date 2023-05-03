@@ -64,7 +64,9 @@ export default function Certvet() {
                 <Route path="/painel/medicamentos/:id" element={<Medication.Details/>}/>
                 <Route path="/painel/medicamentos/adicionar" element={<Medication.Create/>}/>
 
+                <Route path="/painel/medicamentos/:medicationId/estoques/:id" element={<Stock.Details/>}/>
                 <Route path="/painel/medicamentos/:medicationId/estoques/adicionar" element={<Stock.Create/>}/>
+                <Route path="/painel/medicamentos/:medicationId/estoques/:id/editar" element={<Stock.Edit/>}/>
 
                 <Route path="/painel/funcionarios" element={<Users.Employees.Listing/>}/>
                 <Route path="/painel/funcionarios/:id" element={<Users.Employees.Details/>}/>

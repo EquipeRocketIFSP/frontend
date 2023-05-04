@@ -33,7 +33,7 @@ namespace Contracts {
     }
 
     export interface PaginetedResponse<I> {
-        meta: MetaData,
+        meta: MetaData | null,
         data: I[]
     }
 
@@ -139,6 +139,14 @@ namespace Contracts {
         medida: string,
         quantidade: number,
         validade: string
+    }
+
+    export interface EstoqueTransacao {
+        id: number,
+        data: string,
+        motivo: string,
+        quantidade: number,
+        status: string
     }
 
     export interface Prontuario {

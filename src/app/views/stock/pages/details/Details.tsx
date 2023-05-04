@@ -7,6 +7,7 @@ import axios from "axios";
 import Components from "../../../../components/Components";
 import Memory from "../../../../Memory";
 import {Container, Row} from "react-bootstrap";
+import StockTransaction from "../../../stock-transaction/StockTransaction";
 
 interface PathVariables extends Contracts.PathVariables {
     medicationId: string
@@ -58,6 +59,8 @@ export default function Details(): JSX.Element {
                             <Link to="editar" className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
                         </div>
                     </Row>
+
+                    <StockTransaction.Listing/>
                 </Container>
             </main>
         </Layouts.RestrictedLayout>

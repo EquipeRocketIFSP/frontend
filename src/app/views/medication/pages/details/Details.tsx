@@ -49,6 +49,10 @@ export default function Details(): JSX.Element {
                         <span><b>Fabricante: </b>{medication.fabricante}</span>
                         <span><b>Via de uso: </b>{medication.via_uso}</span>
                         <span><b>Concentração: </b>{medication.concentracao}</span>
+
+                        <div className="col-12">
+                            <Link to="editar" className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
+                        </div>
                     </Row>
 
                     <Stock.Listing/>

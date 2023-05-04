@@ -1,8 +1,6 @@
-import {Link, useParams, useSearchParams} from "react-router-dom";
-import {Container} from "react-bootstrap";
+import {useParams, useSearchParams} from "react-router-dom";
 import Components from "../../../../components/Components";
 import React from "react";
-import Layouts from "../../../../layouts/Layouts";
 import Legend from "./components/Legend";
 import Item from "./components/Item";
 import Contracts from "../../../../contracts/Contracts";
@@ -15,7 +13,7 @@ export default function Listing(): JSX.Element {
 
     return (
         <>
-            <Components.SearchBar disableSearch btnAdd={{label: "Novo Lote", href: "adicionar"}}/>
+            <Components.SearchBar disableSearch btnAdd={{label: "Novo Lote", href: "estoques/adicionar"}}/>
 
             <h4>Estoques/Lotes</h4>
 

@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Container} from "react-bootstrap";
-import {Navigate} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 import Medication from "../../Medication";
@@ -9,25 +9,37 @@ import Contracts from "../../../../contracts/Contracts";
 import Layouts from "../../../../layouts/Layouts";
 import Memory from "../../../../Memory";
 
-export default function Create(): JSX.Element {
+export default function Edit(): JSX.Element {
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
     const [dataStatus, setDataStatus] = useState<Contracts.FormStatus>("idle");
     const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
+    const [data, setData] = useState<Contracts.Medicamento>();
+
+    const {id} = useParams<Contracts.PathVariables>();
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/medicamento/${id}`, {headers: Memory.headers})
+            .then(({data}) => setData(data))
+            .catch(() => setNavigateToListing(true));
+    }, []);
 
     const onSubmit = async (formData: FormData) => {
-        await axios.post(`${process.env.REACT_APP_API_URL}/medicamento`, formData, {headers: Memory.headers});
+        await axios.put(`${process.env.REACT_APP_API_URL}/medicamento/${id}`, formData, {headers: Memory.headers});
 
-        setDataStatus("created");
+        setDataStatus("updated");
         setTimeout(() => setNavigateToListing(true), 2000);
     }
 
     if (navigateToListing)
         return <Navigate to="/painel/medicamentos"/>;
 
+    if (!data)
+        return <Components.LoadingScreen/>;
+
     return (
         <Layouts.RestrictedLayout>
             <main className="pt-5">
-                <h1>Adicionar um novo medicamento</h1>
+                <h1>Editar medicamento</h1>
 
                 <Container>
                     <Components.FormSubmit
@@ -37,7 +49,7 @@ export default function Create(): JSX.Element {
                         dataStatus={dataStatus}
                         validationErrors={validationErrors}
                     >
-                        <Medication.Form/>
+                        <Medication.Form data={data}/>
                     </Components.FormSubmit>
                 </Container>
             </main>

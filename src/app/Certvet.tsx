@@ -23,6 +23,7 @@ import SignIn from "./views/sign-in/SignIn";
 import NotFound from "./views/not-found/NotFound";
 import Medication from "./views/medication/Medication";
 import Auth from "./views/auth/Auth";
+import Stock from "./views/stock/Stock";
 
 export default function Certvet() {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
@@ -62,6 +63,11 @@ export default function Certvet() {
                 <Route path="/painel/medicamentos" element={<Medication.Listing/>}/>
                 <Route path="/painel/medicamentos/:id" element={<Medication.Details/>}/>
                 <Route path="/painel/medicamentos/adicionar" element={<Medication.Create/>}/>
+                <Route path="/painel/medicamentos/:id/editar" element={<Medication.Edit/>}/>
+
+                <Route path="/painel/medicamentos/:medicationId/estoques/:id" element={<Stock.Details/>}/>
+                <Route path="/painel/medicamentos/:medicationId/estoques/adicionar" element={<Stock.Create/>}/>
+                <Route path="/painel/medicamentos/:medicationId/estoques/:id/editar" element={<Stock.Edit/>}/>
 
                 <Route path="/painel/funcionarios" element={<Users.Employees.Listing/>}/>
                 <Route path="/painel/funcionarios/:id" element={<Users.Employees.Details/>}/>

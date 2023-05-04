@@ -7,48 +7,60 @@ import axios from "axios";
 import Components from "../../../../components/Components";
 import Memory from "../../../../Memory";
 import {Container, Row} from "react-bootstrap";
+import StockTransaction from "../../../stock-transaction/StockTransaction";
+
+interface PathVariables extends Contracts.PathVariables {
+    medicationId: string
+}
 
 export default function Details(): JSX.Element {
-    const [medication, setMedication] = useState<Contracts.Medicamento | null>(null);
+    const [data, setData] = useState<Contracts.Estoque>();
     const [notFound, setNotFound] = useState<boolean>(false);
 
     const userData = Storages.userStorage.get();
-    const urlParams = useParams<Contracts.PathVariables>();
+    const urlParams = useParams<PathVariables>();
 
     useEffect(() => {
         if (!urlParams.id || !userData)
             return;
 
-        axios.get(`${process.env.REACT_APP_API_URL}/medicamento/${urlParams.id}`, {headers: Memory.headers})
-            .then(({data}) => setMedication(data))
+        axios.get<Contracts.Estoque>(`${process.env.REACT_APP_API_URL}/medicamento/${urlParams.medicationId}/estoque/${urlParams.id}`, {headers: Memory.headers})
+            .then(({data}) => setData(data))
             .catch(() => setNotFound(true));
     }, []);
 
     if (notFound)
         return <Navigate to="/not-found"/>;
 
-    if (!medication)
+    if (!data)
         return <Components.LoadingScreen/>;
 
     return (
         <Layouts.RestrictedLayout>
-            <main id="medication">
+            <main id="stock">
 
                 <Container>
                     <Components.Breadcrumbs>
                         <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
                         <li className="breadcrumb-item"><Link to="/painel/medicamentos">Medicamentos</Link></li>
-                        <li className="breadcrumb-item active">Detalhes do Medicamento</li>
+                        <li className="breadcrumb-item">
+                            <Link to={`/painel/medicamentos/${urlParams.medicationId}`}>Detalhes do medicamento</Link>
+                        </li>
+
+                        <li className="breadcrumb-item active">Detalhes do Estoque</li>
                     </Components.Breadcrumbs>
 
                     <Row className="summary mb-5 p-2">
-                        <span><b>Código de registro: </b>{medication.codigo_registro}</span>
-                        <span><b>Nome: </b>{medication.nome}</span>
-                        <span><b>Princípio ativo: </b>{medication.principio_ativo}</span>
-                        <span><b>Fabricante: </b>{medication.fabricante}</span>
-                        <span><b>Via de uso: </b>{medication.via_uso}</span>
-                        <span><b>Concentração: </b>{medication.concentracao}</span>
+                        <span><b>Lote: </b>{data.lote}</span>
+                        <span><b>Validade: </b>{new Date(data.validade).toLocaleDateString()}</span>
+                        <span><b>Quantidade: </b>{data.quantidade} {data.medida}</span>
+
+                        <div className="col-12">
+                            <Link to="editar" className="btn btn-outline-primary btn-sm btn-edit">Editar</Link>
+                        </div>
                     </Row>
+
+                    <StockTransaction.Listing/>
                 </Container>
             </main>
         </Layouts.RestrictedLayout>

@@ -53,7 +53,7 @@ export default function Listing(props: Props): JSX.Element {
                 }
             </div>
 
-            <ListingPagination {...response.meta}/>
+            {response.meta ? <ListingPagination {...response.meta}/> : <></>}
         </ListingContext.Provider>
     );
 }

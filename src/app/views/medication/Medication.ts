@@ -1,4 +1,4 @@
-import DefaultForm from "./forms/DefaultForm";
+import DefaultForm from "./pages/form/components/DefaultForm";
 import DetailsPage from "./pages/details/Details";
 import ListingPage from "./pages/listing/Listing";
 import CreatePage from "./pages/form/Create";

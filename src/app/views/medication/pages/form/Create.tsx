@@ -27,7 +27,7 @@ export default function Create(): JSX.Element {
     return (
         <Layouts.RestrictedLayout>
             <main className="pt-5">
-                <h1>Validar e adicionar um novo medicamento</h1>
+                <h1>Adicionar um novo medicamento</h1>
 
                 <Container>
                     <Components.FormSubmit
@@ -36,7 +36,6 @@ export default function Create(): JSX.Element {
                         setValidationErrors={setValidationErrors}
                         dataStatus={dataStatus}
                         validationErrors={validationErrors}
-                        successMessageOnCreation="Requisição de inclusão de medicamento recebida"
                     >
                         <Medication.Form/>
                     </Components.FormSubmit>

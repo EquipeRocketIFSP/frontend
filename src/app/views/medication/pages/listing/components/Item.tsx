@@ -4,7 +4,7 @@ import Contracts from "../../../../../contracts/Contracts";
 import {Link} from "react-router-dom";
 
 export default function Item(props: Contracts.Medicamento): JSX.Element {
-    const {id, nome, nome_referencia, codigo_registro, via_uso, fabricante} = props;
+    const {id, nome, concentracao, codigo_registro, via_uso, fabricante} = props;
 
     return (
         <Link to={`/painel/medicamentos/${id}`}>
@@ -18,7 +18,7 @@ export default function Item(props: Contracts.Medicamento): JSX.Element {
                 </ListGroup.Item>
 
                 <ListGroup.Item className="col-md-3">
-                    <b className="d-md-none">Nome referência: </b>{nome_referencia}
+                    <b className="d-md-none">Concentração: </b>{concentracao}
                 </ListGroup.Item>
 
                 <ListGroup.Item className="col-md-2">

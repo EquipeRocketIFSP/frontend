@@ -2,32 +2,40 @@ import React, {useState} from "react";
 import {Container} from "react-bootstrap";
 import {Navigate} from "react-router-dom";
 import axios from "axios";
-
-import Medication from "../../Medication";
-import Components from "../../../../components/Components";
-import Contracts from "../../../../contracts/Contracts";
-import Layouts from "../../../../layouts/Layouts";
-import Memory from "../../../../Memory";
+import Layouts from "../../../../../layouts/Layouts";
+import Components from "../../../../../components/Components";
+import Storages from "../../../../../Storages";
+import Contracts from "../../../../../contracts/Contracts";
+import Memory from "../../../../../Memory";
+import DefaultForm from "./components/DefaultForm";
 
 export default function Create(): JSX.Element {
+    const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
     const [dataStatus, setDataStatus] = useState<Contracts.FormStatus>("idle");
-    const [navigateToListing, setNavigateToListing] = useState<boolean>(false);
+    const [isVeterinario, setVeterinario] = useState<boolean>(false);
+
+    const userData = Storages.userStorage.get();
 
     const onSubmit = async (formData: FormData) => {
-        await axios.post(`${process.env.REACT_APP_API_URL}/medicamento`, formData, {headers: Memory.headers});
+        if (!userData)
+            return;
+
+        const url = `${process.env.REACT_APP_API_URL}/${isVeterinario ? 'veterinario' : 'funcionario'}`;
+
+        await axios.post(url, formData, {headers: Memory.headers});
 
         setDataStatus("created");
         setTimeout(() => setNavigateToListing(true), 2000);
     }
 
     if (navigateToListing)
-        return <Navigate to="/painel/medicamentos"/>;
+        return <Navigate to={`/painel/funcionarios`}/>;
 
     return (
         <Layouts.RestrictedLayout>
-            <main className="pt-5">
-                <h1>Adicionar um novo medicamento</h1>
+            <main>
+                <h1>Cadastro de funcionário</h1>
 
                 <Container>
                     <Components.FormSubmit
@@ -37,7 +45,7 @@ export default function Create(): JSX.Element {
                         dataStatus={dataStatus}
                         validationErrors={validationErrors}
                     >
-                        <Medication.Form/>
+                        <DefaultForm setVeterinario={setVeterinario}/>
                     </Components.FormSubmit>
                 </Container>
             </main>

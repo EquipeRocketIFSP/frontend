@@ -3,6 +3,8 @@ namespace Contracts {
 
     export type FormStatus = "idle" | "created" | "updated";
 
+    export type Authority = "ADMIN" | "FUNCIONARIO" | "VETERINARIO" | "TUTOR";
+
     export interface ReactSelectOption {
         value: number,
         label: string,
@@ -31,7 +33,7 @@ namespace Contracts {
     }
 
     export interface PaginetedResponse<I> {
-        meta: MetaData,
+        meta: MetaData | null,
         data: I[]
     }
 
@@ -81,11 +83,14 @@ namespace Contracts {
         estado: string,
         celular: string,
         telefone?: string,
-        email: string
+        email: string,
+        authorities: Authority[],
+        deleted_at: string | null
     }
 
     export interface Funcionario extends PersonalData {
-        crmv?: string
+        crmv?: string,
+        is_techinical_responsible?: boolean
     }
 
     export interface Animal {
@@ -125,9 +130,23 @@ namespace Contracts {
         principio_ativo: string,
         via_uso: string,
         concentracao: string,
-        fabricante: string,
-        nome_referencia: string,
-        vencimento_registro: string
+        fabricante: string
+    }
+
+    export interface Estoque {
+        id: number,
+        lote: string,
+        medida: string,
+        quantidade: number,
+        validade: string
+    }
+
+    export interface EstoqueTransacao {
+        id: number,
+        data: string,
+        motivo: string,
+        quantidade: number,
+        status: string
     }
 
     export interface Prontuario {

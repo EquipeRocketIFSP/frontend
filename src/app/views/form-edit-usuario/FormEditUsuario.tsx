@@ -42,7 +42,7 @@ export default function FormEditUsuario(): JSX.Element {
             .setAuthorization(`${userData?.type} ${userData?.token}`);
 
         try {
-            const {data} = await axios.put<Contracts.Funcionario>(`${process.env.REACT_APP_API_URL}/${pathname}/${usuario?.id}`, formData, {headers});
+            const {data} = await axios.put<Contracts.Funcionario>(`${process.env.REACT_APP_API_URL}/usuario/${pathname}`, formData, {headers});
 
             setUsuario(data);
             setApiConnectionError(null);

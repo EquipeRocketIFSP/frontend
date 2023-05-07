@@ -4,7 +4,7 @@ import ListingPage from "./pages/listing/Listing";
 import CreatePage from "./pages/form/Create";
 import EditPage from "./pages/form/Edit";
 
-namespace Medication {
+namespace Stock {
     export const Form = DefaultForm;
 
     export const Details = DetailsPage;
@@ -17,4 +17,4 @@ namespace Medication {
 }
 
 
-export default Medication;
+export default Stock;

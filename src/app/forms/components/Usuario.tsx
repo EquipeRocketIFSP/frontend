@@ -6,9 +6,9 @@ import Contracts from "../../contracts/Contracts";
 import Components from "../../components/Components";
 
 interface Props {
-    data: Contracts.Funcionario | null,
+    data?: Contracts.Funcionario | null,
     validationErrors: Contracts.DynamicObject<string>,
-    apiConnectionError: string | null
+    apiConnectionError?: string | null
 }
 
 export default function Usuario(props: Props): JSX.Element {

@@ -34,7 +34,7 @@ export default function SinaisVitais(props: Contracts.CloseModal) {
                     <Row>
                         <Form.Group className="mb-3 col-10">
                             <Form.Label htmlFor="peso">Peso*</Form.Label>
-                            <Form.Control type="number" name="peso" id="peso" required/>
+                            <Form.Control type="number" name="peso" id="peso" step="0.01" required/>
                         </Form.Group>
 
                         <Form.Group className="mb-3 col-2 pt-4">

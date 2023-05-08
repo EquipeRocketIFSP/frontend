@@ -48,6 +48,7 @@ function FormComponent(): JSX.Element {
                     <option value="Tala / Imobilização">Tala / Imobilização</option>
                     <option value="Vacinação">Vacinação</option>
                     <option value="Vermifugação">Vermifugação</option>
+                    <option value="Emissão de Termos">Emissão de Termos</option>
                     <option value="Outros">Outros</option>
                 </Form.Select>
             </Form.Group>

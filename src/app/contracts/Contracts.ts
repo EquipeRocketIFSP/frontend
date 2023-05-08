@@ -130,7 +130,8 @@ namespace Contracts {
         principio_ativo: string,
         via_uso: string,
         concentracao: string,
-        fabricante: string
+        fabricante: string,
+        apresentacao: string
     }
 
     export interface Estoque {

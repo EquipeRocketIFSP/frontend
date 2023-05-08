@@ -147,7 +147,8 @@ namespace Contracts {
         data: string,
         motivo: string,
         quantidade: number,
-        status: string
+        status: string,
+        responsavel: string
     }
 
     export interface Prontuario {

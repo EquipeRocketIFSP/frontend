@@ -77,11 +77,11 @@ export default function SinaisVitais(props: Contracts.CloseModal) {
 
                         <Form.Group className="mb-3 col-lg-6">
                             <Form.Label>Escore Corporal*</Form.Label>
-                            <Form.Check type="radio" name="escore_corporal" value="< 2s" label="Muito Abaixo do Peso" required />
-                            <Form.Check type="radio" name="escore_corporal" value=">= 2s" label="Abaixo do Peso" />
-                            <Form.Check type="radio" name="escore_corporal" value=">= 2s" label="Normal" />
-                            <Form.Check type="radio" name="escore_corporal" value=">= 2s" label="Acima do Peso" />
-                            <Form.Check type="radio" name="escore_corporal" value=">= 2s" label="Muito Acima do Peso" />
+                            <Form.Check type="radio" name="escore_corporal" value="Muito Abaixo do Peso" label="Muito Abaixo do Peso" required />
+                            <Form.Check type="radio" name="escore_corporal" value="Abaixo do Peso" label="Abaixo do Peso" />
+                            <Form.Check type="radio" name="escore_corporal" value="Normal" label="Normal" />
+                            <Form.Check type="radio" name="escore_corporal" value="Acima do Peso" label="Acima do Peso" />
+                            <Form.Check type="radio" name="escore_corporal" value="Muito Acima do Peso" label="Muito Acima do Peso" />
                         </Form.Group>
                     </Row>
                 </Form>

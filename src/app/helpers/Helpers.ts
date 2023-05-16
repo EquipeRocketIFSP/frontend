@@ -4,6 +4,7 @@ import SessionStorageComponent from "./components/SessionStorage";
 import AddressComponent from "./components/Address";
 import SpecialValidationComponent from "./components/SpecialValidation";
 import ReactSelectOptionFactoryComponent from "./components/ReactSelectOptionFactory";
+import JWTDataComponent from "./components/JWTData";
 
 namespace Helpers {
     export const Masks = MasksComponent;
@@ -12,6 +13,7 @@ namespace Helpers {
     export const Address = AddressComponent;
     export const SpecialValidation = SpecialValidationComponent;
     export const ReactSelectOptionFactory = ReactSelectOptionFactoryComponent;
+    export const JWTData = JWTDataComponent;
 }
 
 export default Helpers;

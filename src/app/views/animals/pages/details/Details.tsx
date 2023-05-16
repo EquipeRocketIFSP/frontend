@@ -67,7 +67,10 @@ export default function Details(): JSX.Element {
                         </div>
                     </Row>
 
-                    <Components.SearchBar btnAdd={{label: "Novo Atendimento", href: "/painel/prontuario/cadastrar"}}/>
+                    <Components.SearchBar btnAdd={{
+                        label: "Novo Atendimento",
+                        href: `/painel/tutores/${urlParams.tutorId}/animais/${urlParams.id}/prontuario/cadastrar`
+                    }}/>
 
                     <h5 style={{textAlign: "center"}}>Prontuários</h5>
 

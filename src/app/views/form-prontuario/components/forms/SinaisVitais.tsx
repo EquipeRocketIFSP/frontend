@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {Button, Form, Modal, Row, Spinner} from "react-bootstrap";
 import Contracts from "../../../../contracts/Contracts";
 import Components from "../../../../components/Components";
@@ -7,6 +7,7 @@ import Memory from "../../../../Memory";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Helpers from "../../../../helpers/Helpers";
 import {ProntuarioPathVariables} from "./types/ProntuarioPathVariables";
+import {FormProntuarioContext} from "../../FormProntuario";
 
 interface Props extends Contracts.CloseModal {
     data?: Contracts.Prontuario
@@ -14,6 +15,7 @@ interface Props extends Contracts.CloseModal {
 
 export default function SinaisVitais(props: Props) {
     const {closeModal, data} = props;
+    const {updateProntuarioData} = useContext(FormProntuarioContext);
     const params = useParams<ProntuarioPathVariables>();
     const navigate = useNavigate();
     const location = useLocation();
@@ -31,24 +33,37 @@ export default function SinaisVitais(props: Props) {
     const estadoConciencia = ["Conciente", "Inconciente"];
     const escoreCorporal = ["Muito Abaixo do Peso", "Abaixo do Peso", "Normal", "Acima do Peso", "Muito Acima do Peso"];
 
-    //Todo: incluir dados do animal na resposta da api
-
     const onSubmit = async (formData: FormData) => {
         const weight = `${formData.get("peso")} ${formData.get("unidade_medida_peso")}`;
         formData.set("peso", weight);
 
-        const {data: response} = await axios.post<Contracts.Prontuario>(`${process.env.REACT_APP_API_URL}/prontuario`, formData, {headers: Memory.headers});
-        const pathnames = location.pathname.split("/");
+        const {data: response} = data ?
+            await axios.put<Contracts.Prontuario>(`${process.env.REACT_APP_API_URL}/prontuario/${data.id}/sinais-vitais`, formData, {headers: Memory.headers}) :
+            await axios.post<Contracts.Prontuario>(`${process.env.REACT_APP_API_URL}/prontuario`, formData, {headers: Memory.headers});
 
-        pathnames.pop();
-        pathnames.push(response.codigo);
+        if (data) {
+            if (!updateProntuarioData)
+                throw new Error("updateProntuarioData is undefined");
 
-        navigate(pathnames.join("/"));
+            updateProntuarioData(response);
+        } else {
+            const pathnames = location.pathname.split("/");
+
+            pathnames.pop();
+            pathnames.push(response.codigo);
+
+            navigate(pathnames.join("/"));
+        }
+
         closeModal();
     }
 
     return (
         <Modal show={true} onHide={() => closeModal()} size="lg" centered>
+            <Modal.Header closeButton>
+                <Modal.Title>Sinais Vitais</Modal.Title>
+            </Modal.Header>
+
             <Components.FormSubmit
                 onSubmit={onSubmit}
                 setDataStatus={setDataStatus}
@@ -59,10 +74,6 @@ export default function SinaisVitais(props: Props) {
                 <Components.FormSubmitContext.Consumer>
                     {({sendingForm}) => (
                         <>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Sinais Vitais</Modal.Title>
-                            </Modal.Header>
-
                             <Modal.Body>
 
                                 <Row>
@@ -154,9 +165,10 @@ export default function SinaisVitais(props: Props) {
                                 </Row>
 
 
-                                <input type="hidden" name="animal" value={params.animalId}/>
-                                <input type="hidden" name="tutor" value={params.tutorId}/>
-                                <input type="hidden" name="veterinario" value={Helpers.JWTData.getUserId()}/>
+                                <input type="hidden" name="animal" value={data?.animal.id ?? params.animalId}/>
+                                <input type="hidden" name="tutor" value={data?.tutor.id ?? params.tutorId}/>
+                                <input type="hidden" name="veterinario"
+                                       value={data?.veterinario.id ?? Helpers.JWTData.getUserId()}/>
 
                             </Modal.Body>
 

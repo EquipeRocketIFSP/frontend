@@ -182,6 +182,9 @@ namespace Contracts {
         temperatura: number | undefined,
         tpc: string | undefined,
         vomito: boolean,
+        animal: Animal,
+        tutor: PersonalData,
+        veterinario: PersonalData
     }
 
     export interface ListingData {

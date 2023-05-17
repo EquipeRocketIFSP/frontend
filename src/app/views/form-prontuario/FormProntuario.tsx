@@ -12,7 +12,6 @@ import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
 import MedicacoesUtilizadas from "./components/forms/MedicacoesUtilizadas";
 import Exames from "./components/forms/Exames";
 import Procedimentos from "./components/forms/Procedimentos";
-import Storages from "../../Storages";
 import Contracts from "../../contracts/Contracts";
 import axios from "axios";
 import {ProntuarioPathVariables} from "./components/forms/types/ProntuarioPathVariables";
@@ -21,6 +20,7 @@ import Memory from "../../Memory";
 type Status = "required" | "warning" | "ok";
 
 interface Context {
+    updateProntuarioData?: (data: Contracts.Prontuario) => void,
     setVitalSignsStatus?: (status: Status) => void,
 }
 
@@ -43,7 +43,7 @@ export default function FormProntuario() {
                 setVitalSignsStatus("ok");
             })
             .catch(console.error);
-    }, []);
+    }, [params.id]);
 
     const closeModal = () => setModal(<></>);
 
@@ -104,19 +104,19 @@ export default function FormProntuario() {
             <main id="form-prontuario">
                 <h1>Prontuário</h1>
 
-                <Container>
-                    {
-                        data ?
-                            <Row className="summary mb-5 p-2">
-                                <span><b>Tutor: </b>Joe Doe</span>
-                                <span><b>Animal: </b>Lil Cat</span>
-                                <span><b>Data do Atendimento: </b>{new Date().toLocaleDateString()}</span>
-                                <span><b>Veterinário: </b>{Storages.userStorage.get()?.nome}</span>
-                            </Row> : <></>
-                    }
+                <FormProntuarioContext.Provider value={{updateProntuarioData: setData, setVitalSignsStatus}}>
+                    <Container>
+                        {
+                            data ?
+                                <Row className="summary mb-5 p-2">
+                                    <span><b>Tutor: </b>{data.tutor.nome}</span>
+                                    <span><b>Animal: </b>{data.animal.nome}</span>
+                                    <span><b>Data do Atendimento: </b>{new Date().toLocaleDateString()}</span>
+                                    <span><b>Veterinário: </b>{data.veterinario.nome}</span>
+                                </Row> : <></>
+                        }
 
-                    <Row className="justify-content-between">
-                        <FormProntuarioContext.Provider value={{setVitalSignsStatus}}>
+                        <Row className="justify-content-between">
 
                             {
                                 forms.map(({title, modal, link, status}, index) => {
@@ -152,11 +152,12 @@ export default function FormProntuario() {
                                 })
                             }
 
-                        </FormProntuarioContext.Provider>
-                    </Row>
-                </Container>
 
-                <div>{modal}</div>
+                        </Row>
+                    </Container>
+
+                    <div>{modal}</div>
+                </FormProntuarioContext.Provider>
             </main>
         </Layouts.RestrictedLayout>
     );

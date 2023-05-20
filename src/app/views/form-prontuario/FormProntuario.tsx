@@ -7,7 +7,7 @@ import SinaisVitais from "./components/forms/SinaisVitais";
 import "./form-prontuario.scss";
 import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import {Link, useParams} from "react-router-dom";
-import Observations from "./components/forms/Observations";
+import SuspeitaDiagnostica from "./components/forms/SuspeitaDiagnostica";
 import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
 import MedicacoesUtilizadas from "./components/forms/MedicacoesUtilizadas";
 import Exames from "./components/forms/Exames";
@@ -22,6 +22,7 @@ type Status = "required" | "warning" | "ok";
 interface Context {
     updateProntuarioData?: (data: Contracts.Prontuario) => void,
     setVitalSignsStatus?: (status: Status) => void,
+    setDiagnosticSuspicionStatus?: (status: Status) => void
 }
 
 export const FormProntuarioContext = createContext<Context>({});
@@ -30,6 +31,7 @@ export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
     const [data, setData] = useState<Contracts.Prontuario>();
     const [vitalSignsStatus, setVitalSignsStatus] = useState<Status>("required");
+    const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
 
     const params = useParams<ProntuarioPathVariables>();
 
@@ -37,10 +39,12 @@ export default function FormProntuario() {
         if (!params.id)
             return;
 
-        axios.get(`${process.env.REACT_APP_API_URL}/prontuario/${params.id}`, {headers: Memory.headers})
+        axios.get<Contracts.Prontuario>(`${process.env.REACT_APP_API_URL}/prontuario/${params.id}`, {headers: Memory.headers})
             .then(({data}) => {
                 setData(data);
+
                 setVitalSignsStatus("ok");
+                setDiagnosticSuspicionStatus(data.supeita_diagnostica!=null ? "ok" : "warning");
             })
             .catch(console.error);
     }, [params.id]);
@@ -76,9 +80,8 @@ export default function FormProntuario() {
         },
         {
             title: "Suspeita Diagnóstica",
-            modal: <Observations title="Suspeita Diagnóstica" name="supeita_diagnostica" maxLength={20000}
-                                 closeModal={closeModal}/>,
-            status: vitalSignsStatus,
+            modal: data ? <SuspeitaDiagnostica closeModal={closeModal} data={data}/> : <></>,
+            status: diagnosticSuspicionStatus,
         },
         {
             title: "Medicações Prescritas",
@@ -104,7 +107,8 @@ export default function FormProntuario() {
             <main id="form-prontuario">
                 <h1>Prontuário</h1>
 
-                <FormProntuarioContext.Provider value={{updateProntuarioData: setData, setVitalSignsStatus}}>
+                <FormProntuarioContext.Provider
+                    value={{updateProntuarioData: setData, setVitalSignsStatus, setDiagnosticSuspicionStatus}}>
                     <Container>
                         {
                             data ?

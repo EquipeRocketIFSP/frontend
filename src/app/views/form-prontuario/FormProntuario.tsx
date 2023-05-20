@@ -22,7 +22,8 @@ type Status = "required" | "warning" | "ok";
 interface Context {
     updateProntuarioData?: (data: Contracts.Prontuario) => void,
     setVitalSignsStatus?: (status: Status) => void,
-    setDiagnosticSuspicionStatus?: (status: Status) => void
+    setDiagnosticSuspicionStatus?: (status: Status) => void,
+    setClinicalManifestationsStatus?: (status: Status) => void
 }
 
 export const FormProntuarioContext = createContext<Context>({});
@@ -31,6 +32,7 @@ export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
     const [data, setData] = useState<Contracts.Prontuario>();
     const [vitalSignsStatus, setVitalSignsStatus] = useState<Status>("required");
+    const [clinicalManifestationsStatus, setClinicalManifestationsStatus] = useState<Status>("warning");
     const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
 
     const params = useParams<ProntuarioPathVariables>();
@@ -44,7 +46,7 @@ export default function FormProntuario() {
                 setData(data);
 
                 setVitalSignsStatus("ok");
-                setDiagnosticSuspicionStatus(data.supeita_diagnostica!=null ? "ok" : "warning");
+                setDiagnosticSuspicionStatus(data.supeita_diagnostica != null ? "ok" : "warning");
             })
             .catch(console.error);
     }, [params.id]);
@@ -64,9 +66,14 @@ export default function FormProntuario() {
             status: vitalSignsStatus,
         },
         {
-            title: "Manifestações Clínicas",
-            modal: <ManifestacoesClinicas closeModal={closeModal}/>,
+            title: "Procedimentos",
+            modal: <Procedimentos closeModal={closeModal}/>,
             status: vitalSignsStatus,
+        },
+        {
+            title: "Manifestações Clínicas",
+            modal: data ? <ManifestacoesClinicas closeModal={closeModal} data={data}/> : <></>,
+            status: clinicalManifestationsStatus,
         },
         {
             title: "Histórico Clínico",
@@ -93,11 +100,6 @@ export default function FormProntuario() {
             modal: <Exames closeModal={closeModal}/>,
             status: vitalSignsStatus,
         },
-        {
-            title: "Procedimentos",
-            modal: <Procedimentos closeModal={closeModal}/>,
-            status: vitalSignsStatus,
-        },
     ];
 
     console.log(forms);
@@ -108,7 +110,12 @@ export default function FormProntuario() {
                 <h1>Prontuário</h1>
 
                 <FormProntuarioContext.Provider
-                    value={{updateProntuarioData: setData, setVitalSignsStatus, setDiagnosticSuspicionStatus}}>
+                    value={{
+                        updateProntuarioData: setData,
+                        setVitalSignsStatus,
+                        setDiagnosticSuspicionStatus,
+                        setClinicalManifestationsStatus
+                    }}>
                     <Container>
                         {
                             data ?
@@ -155,8 +162,6 @@ export default function FormProntuario() {
                                     );
                                 })
                             }
-
-
                         </Row>
                     </Container>
 

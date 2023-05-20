@@ -5,12 +5,9 @@ import Contracts from "../../../../contracts/Contracts";
 import Components from "../../../../components/Components";
 import Memory from "../../../../Memory";
 import {FormProntuarioContext} from "../../FormProntuario";
+import ProntuarioModalProps from "./types/ProntuarioModalProps";
 
-interface Props extends Contracts.CloseModal {
-    data: Contracts.Prontuario
-}
-
-export default function SuspeitaDiagnostica(props: Props) {
+export default function SuspeitaDiagnostica(props: ProntuarioModalProps) {
     const {closeModal, data} = props;
     const {updateProntuarioData, setDiagnosticSuspicionStatus} = useContext(FormProntuarioContext);
     const [validationErrors, setValidationErrors] = useState<Contracts.DynamicObject<string>>({});
@@ -25,6 +22,8 @@ export default function SuspeitaDiagnostica(props: Props) {
 
         updateProntuarioData(response);
         setDiagnosticSuspicionStatus("ok");
+
+        closeModal();
     }
 
     return (

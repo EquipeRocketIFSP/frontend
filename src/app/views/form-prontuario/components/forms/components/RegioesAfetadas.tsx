@@ -4,7 +4,7 @@ import Contracts from "../../../../../contracts/Contracts";
 
 interface Props {
     title: string,
-    data: Contracts.Prontuario
+    data: Contracts.AffectedRegions
 }
 
 export default function RegioesAfetadas(props: Props) {

@@ -23,7 +23,8 @@ interface Context {
     updateProntuarioData?: (data: Contracts.Prontuario) => void,
     setVitalSignsStatus?: (status: Status) => void,
     setDiagnosticSuspicionStatus?: (status: Status) => void,
-    setClinicalManifestationsStatus?: (status: Status) => void
+    setClinicalManifestationsStatus?: (status: Status) => void,
+    setExamsStatus?: (status: Status) => void
 }
 
 export const FormProntuarioContext = createContext<Context>({});
@@ -34,6 +35,7 @@ export default function FormProntuario() {
     const [vitalSignsStatus, setVitalSignsStatus] = useState<Status>("required");
     const [clinicalManifestationsStatus, setClinicalManifestationsStatus] = useState<Status>("warning");
     const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
+    const [examsStatus, setExamsStatus] = useState<Status>("warning");
 
     const params = useParams<ProntuarioPathVariables>();
 
@@ -47,6 +49,7 @@ export default function FormProntuario() {
 
                 setVitalSignsStatus("ok");
                 setDiagnosticSuspicionStatus(data.supeita_diagnostica != null ? "ok" : "warning");
+                setExamsStatus(data.exames.length ? "ok" : "warning");
             })
             .catch(console.error);
     }, [params.id]);
@@ -97,8 +100,8 @@ export default function FormProntuario() {
         },
         {
             title: "Exames",
-            modal: <Exames closeModal={closeModal}/>,
-            status: vitalSignsStatus,
+            modal: data ? <Exames closeModal={closeModal} data={data}/> : <></>,
+            status: examsStatus,
         },
     ];
 
@@ -114,7 +117,8 @@ export default function FormProntuario() {
                         updateProntuarioData: setData,
                         setVitalSignsStatus,
                         setDiagnosticSuspicionStatus,
-                        setClinicalManifestationsStatus
+                        setClinicalManifestationsStatus,
+                        setExamsStatus
                     }}>
                     <Container>
                         {

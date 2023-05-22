@@ -151,7 +151,17 @@ namespace Contracts {
         responsavel: string
     }
 
-    export interface Prontuario {
+    export interface AffectedRegions {
+        abdomen: string[] | undefined,
+        cabeca: boolean,
+        coluna: string[] | undefined,
+        m_pelvicos: string[] | undefined,
+        m_toracicos: string[] | undefined,
+        regioes_obs: string | undefined,
+        torax: boolean,
+    }
+
+    export interface Prontuario extends AffectedRegions {
         id: number,
         codigo: string,
         apetite: string | undefined,
@@ -171,13 +181,6 @@ namespace Contracts {
         mucosa: string | undefined,
         peso: string | undefined,
         prostracao: boolean,
-        abdomen: string[] | undefined,
-        cabeca: boolean,
-        coluna: string[] | undefined,
-        m_pelvicos: string[] | undefined,
-        m_toracicos: string[] | undefined,
-        regioes_obs: string | undefined,
-        torax: boolean,
         sensibilidade_dor: boolean,
         supeita_diagnostica: string | undefined,
         temperatura: number | undefined,
@@ -185,7 +188,25 @@ namespace Contracts {
         vomito: boolean,
         animal: Animal,
         tutor: PersonalData,
-        veterinario: PersonalData
+        veterinario: PersonalData,
+        exames: Exame[]
+    }
+
+    export interface Exame extends AffectedRegions{
+        id: number,
+        tipo_exame: string,
+        bioquimico: string | null,
+        citologia: string | null,
+        hematologia: string | null,
+        imagem: string | null,
+        imagemRegiaoAbdomen: string | null,
+        imagemRegiaoCabeca: boolean | null,
+        imagemRegiaoCervical: string | null,
+        imagemRegiaoMPelvicos: string | null,
+        imagemRegiaoMToracicos: string | null,
+        imagemRegiaoTorax: boolean | null,
+        outros_citologia: string | null,
+        outros_exames: string | null
     }
 
     export interface ListingData {

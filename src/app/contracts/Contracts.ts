@@ -189,10 +189,11 @@ namespace Contracts {
         animal: Animal,
         tutor: PersonalData,
         veterinario: PersonalData,
-        exames: Exame[]
+        exames: Exame[],
+        procedimentos: Procedimento[]
     }
 
-    export interface Exame extends AffectedRegions{
+    export interface Exame extends AffectedRegions {
         id: number,
         tipo_exame: string,
         bioquimico: string | null,
@@ -207,6 +208,11 @@ namespace Contracts {
         imagemRegiaoTorax: boolean | null,
         outros_citologia: string | null,
         outros_exames: string | null
+    }
+
+    export interface Procedimento {
+        procedimento: string,
+        procedimento_outros: string | null
     }
 
     export interface ListingData {

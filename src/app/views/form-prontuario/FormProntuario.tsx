@@ -22,6 +22,7 @@ type Status = "required" | "warning" | "ok";
 interface Context {
     updateProntuarioData?: (data: Contracts.Prontuario) => void,
     setVitalSignsStatus?: (status: Status) => void,
+    setProcedimentsStatus?: (status: Status) => void,
     setDiagnosticSuspicionStatus?: (status: Status) => void,
     setClinicalManifestationsStatus?: (status: Status) => void,
     setExamsStatus?: (status: Status) => void
@@ -33,6 +34,7 @@ export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
     const [data, setData] = useState<Contracts.Prontuario>();
     const [vitalSignsStatus, setVitalSignsStatus] = useState<Status>("required");
+    const [procedimentsStatus, setProcedimentsStatus] = useState<Status>("required");
     const [clinicalManifestationsStatus, setClinicalManifestationsStatus] = useState<Status>("warning");
     const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
     const [examsStatus, setExamsStatus] = useState<Status>("warning");
@@ -48,6 +50,7 @@ export default function FormProntuario() {
                 setData(data);
 
                 setVitalSignsStatus("ok");
+                setProcedimentsStatus(data.procedimentos.length ? "ok" : "required");
                 setDiagnosticSuspicionStatus(data.supeita_diagnostica != null ? "ok" : "warning");
                 setExamsStatus(data.exames.length ? "ok" : "warning");
             })
@@ -70,8 +73,8 @@ export default function FormProntuario() {
         },
         {
             title: "Procedimentos",
-            modal: <Procedimentos closeModal={closeModal}/>,
-            status: vitalSignsStatus,
+            modal: data ? <Procedimentos closeModal={closeModal} data={data}/> : <></>,
+            status: procedimentsStatus,
         },
         {
             title: "Manifestações Clínicas",
@@ -116,6 +119,7 @@ export default function FormProntuario() {
                     value={{
                         updateProntuarioData: setData,
                         setVitalSignsStatus,
+                        setProcedimentsStatus,
                         setDiagnosticSuspicionStatus,
                         setClinicalManifestationsStatus,
                         setExamsStatus

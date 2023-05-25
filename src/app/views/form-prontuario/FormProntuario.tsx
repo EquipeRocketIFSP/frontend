@@ -9,7 +9,6 @@ import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import {Link, useParams} from "react-router-dom";
 import SuspeitaDiagnostica from "./components/forms/SuspeitaDiagnostica";
 import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
-import MedicacoesUtilizadas from "./components/forms/MedicacoesUtilizadas";
 import Exames from "./components/forms/Exames";
 import Procedimentos from "./components/forms/Procedimentos";
 import Contracts from "../../contracts/Contracts";
@@ -84,11 +83,6 @@ export default function FormProntuario() {
         {
             title: "Histórico Clínico",
             link: "/painel/prontuario/historico-clinico/cadastrar",
-            status: vitalSignsStatus,
-        },
-        {
-            title: "Medicações Utilizadas",
-            modal: <MedicacoesUtilizadas closeModal={closeModal}/>,
             status: vitalSignsStatus,
         },
         {

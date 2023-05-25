@@ -212,7 +212,10 @@ namespace Contracts {
 
     export interface Procedimento {
         procedimento: string,
-        procedimento_outros: string | null
+        procedimento_outros: string | null,
+        dose: number | null,
+        lote: Estoque | null,
+        medicamento: Medicamento | null
     }
 
     export interface ListingData {

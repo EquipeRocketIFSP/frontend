@@ -5,8 +5,9 @@ import MultiGroups from "../../../../components/multi-groups/MultiGroups";
 import ProntuarioModalProps from "./types/ProntuarioModalProps";
 import {FormProntuarioContext} from "../../FormProntuario";
 import Components from "../../../../components/Components";
-import axios from "axios";
+import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
 import Memory from "../../../../Memory";
+import Medications from "./components/medications/Medications";
 
 export default function Procedimentos(props: ProntuarioModalProps) {
     const {closeModal, data} = props;
@@ -19,11 +20,38 @@ export default function Procedimentos(props: ProntuarioModalProps) {
         throw new Error("updateProntuarioData or setProcedimentsStatus undefined");
 
     const onSubmit = async (formData: FormData) => {
+        const errors: Record<string, string> = {};
         const submitData: Record<string, any> = Object.fromEntries(formData);
 
         submitData["procedimentos"] = Array
             .from(document.querySelectorAll(`[data-form]`))
             .map((form) => Object.fromEntries(new FormData(form as HTMLFormElement)));
+
+        (submitData["procedimentos"] as any[]).forEach((procedimento) => {
+            if (procedimento["procedimento"] === "Medicação") {
+                if (!procedimento["medicamento"]?.length)
+                    errors["medicamento"] = "Selecione um medicamento";
+
+                if (!procedimento["lote"]?.length)
+                    errors["lote"] = "Selecione o lote do medicamento";
+
+                if (!procedimento["dose"]?.length)
+                    errors["dose"] = "Insira a dose aplicada";
+            }
+        });
+
+        setValidationErrors(errors);
+
+        if (Object.keys(errors).length) {
+            throw new AxiosError(undefined, undefined, undefined, undefined, {
+                data: errors,
+                status: HttpStatusCode.BadRequest,
+                headers: {},
+                statusText: "BAD_REQUEST",
+                request: undefined,
+                config: {headers: new AxiosHeaders()}
+            });
+        }
 
         const url = `${process.env.REACT_APP_API_URL}/prontuario/${data.id}/procedimentos`;
         const {data: response} = await axios.put<Contracts.Prontuario>(url, submitData, {headers: Memory.headers});
@@ -125,6 +153,8 @@ function FormComponent(props: Contracts.Procedimento): JSX.Element {
                         }
                     </Form.Select>
                 </Form.Group>
+
+                {selectedProcedimento === "Medicação" ? <Medications {...props}/> : <></>}
 
                 {
                     selectedProcedimento === "Outros" ?

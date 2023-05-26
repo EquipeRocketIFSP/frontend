@@ -65,7 +65,7 @@ describe("Contacts", () => {
             expect(telefone).toBeInTheDocument();
         });
 
-        test("Deve ter tamanho máximo de 15 caracteres", () => {
+        test("Deve ter tamanho máximo de 14 caracteres", () => {
             expect(telefone).toHaveProperty("maxLength", 14);
         });
 

@@ -1,7 +1,7 @@
 import "@testing-library/react/dont-cleanup-after-each";
 import { render, screen, cleanup } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom';
-import Login from "./Login";
+import Login from "../app/views/auth/pages/login/Login";
 
 describe("Login", () => {
 

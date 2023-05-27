@@ -3,7 +3,6 @@ import {Card, Container, Row} from "react-bootstrap";
 import React, {useState} from "react";
 
 import Vacinas from "./components/forms/Vacinas";
-import Cirurgias from "./components/forms/Cirurgias";
 import UltimasDoencas from "./components/forms/UltimasDoencas";
 import Medicacoes from "./components/forms/Medicacoes";
 
@@ -19,10 +18,6 @@ export default function FormHistoricoClinico() {
         {
             title: "Últimas Doenças",
             modal: <UltimasDoencas closeModal={closeModal}/>
-        },
-        {
-            title: "Histórico de Cirurgias",
-            modal: <Cirurgias closeModal={closeModal}/>
         },
         {
             title: "Histórico de Medicações",

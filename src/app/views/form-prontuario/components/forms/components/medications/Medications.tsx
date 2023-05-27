@@ -6,7 +6,13 @@ import Contracts from "../../../../../../contracts/Contracts";
 import MedicationStockSelect from "./MedicationStockSelect";
 import MedicationSelect from "./MedicationSelect";
 
-export default function Medications(props: Contracts.Procedimento) {
+interface Props {
+    dose: number | null,
+    lote: Contracts.Estoque | null,
+    medicamento: Contracts.Medicamento | null
+}
+
+export default function Medications(props: Props) {
     const [selectedMedication, setSelectedMedication] = useState<Contracts.ReactSelectOption>();
     const [selectedMeasure, setSelectedMeasure] = useState<string>(props.lote?.medida ?? "");
 

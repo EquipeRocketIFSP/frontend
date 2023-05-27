@@ -15,6 +15,7 @@ import Contracts from "../../contracts/Contracts";
 import axios from "axios";
 import {ProntuarioPathVariables} from "./components/forms/types/ProntuarioPathVariables";
 import Memory from "../../Memory";
+import Cirurgias from "./components/forms/Cirurgias";
 
 type Status = "required" | "warning" | "ok";
 
@@ -22,6 +23,7 @@ interface Context {
     updateProntuarioData?: (data: Contracts.Prontuario) => void,
     setVitalSignsStatus?: (status: Status) => void,
     setProcedimentsStatus?: (status: Status) => void,
+    setSurgeriesStatus?: (status: Status) => void,
     setDiagnosticSuspicionStatus?: (status: Status) => void,
     setClinicalManifestationsStatus?: (status: Status) => void,
     setExamsStatus?: (status: Status) => void
@@ -34,6 +36,7 @@ export default function FormProntuario() {
     const [data, setData] = useState<Contracts.Prontuario>();
     const [vitalSignsStatus, setVitalSignsStatus] = useState<Status>("required");
     const [procedimentsStatus, setProcedimentsStatus] = useState<Status>("required");
+    const [surgeriesStatus, setSurgeriesStatus] = useState<Status>("warning");
     const [clinicalManifestationsStatus, setClinicalManifestationsStatus] = useState<Status>("warning");
     const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
     const [examsStatus, setExamsStatus] = useState<Status>("warning");
@@ -50,6 +53,7 @@ export default function FormProntuario() {
 
                 setVitalSignsStatus("ok");
                 setProcedimentsStatus(data.procedimentos.length ? "ok" : "required");
+                setSurgeriesStatus(data.cirurgia ? "ok" : "warning");
                 setDiagnosticSuspicionStatus(data.supeita_diagnostica != null ? "ok" : "warning");
                 setExamsStatus(data.exames.length ? "ok" : "warning");
             })
@@ -74,6 +78,11 @@ export default function FormProntuario() {
             title: "Procedimentos",
             modal: data ? <Procedimentos closeModal={closeModal} data={data}/> : <></>,
             status: procedimentsStatus,
+        },
+        {
+            title: "Cirurgias",
+            modal: data ? <Cirurgias closeModal={closeModal} data={data}/> : <></>,
+            status: surgeriesStatus,
         },
         {
             title: "Manifestações Clínicas",
@@ -114,6 +123,7 @@ export default function FormProntuario() {
                         updateProntuarioData: setData,
                         setVitalSignsStatus,
                         setProcedimentsStatus,
+                        setSurgeriesStatus,
                         setDiagnosticSuspicionStatus,
                         setClinicalManifestationsStatus,
                         setExamsStatus

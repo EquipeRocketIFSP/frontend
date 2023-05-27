@@ -190,7 +190,8 @@ namespace Contracts {
         tutor: PersonalData,
         veterinario: PersonalData,
         exames: Exame[],
-        procedimentos: Procedimento[]
+        procedimentos: Procedimento[],
+        cirurgia: Cirurgia | null
     }
 
     export interface Exame extends AffectedRegions {
@@ -216,6 +217,16 @@ namespace Contracts {
         dose: number | null,
         lote: Estoque | null,
         medicamento: Medicamento | null
+    }
+
+    export interface Cirurgia {
+        descricao: string,
+        data: string,
+        medicamentos: {
+            medicamento: Contracts.Medicamento,
+            lote: Contracts.Estoque,
+            dose: number
+        }[]
     }
 
     export interface ListingData {

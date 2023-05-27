@@ -154,7 +154,8 @@ function FormComponent(props: Contracts.Procedimento): JSX.Element {
                     </Form.Select>
                 </Form.Group>
 
-                {selectedProcedimento === "Medicação" ? <Medications {...props}/> : <></>}
+                {selectedProcedimento === "Medicação" ?
+                    <Medications dose={props.dose} lote={props.lote} medicamento={props.medicamento}/> : <></>}
 
                 {
                     selectedProcedimento === "Outros" ?

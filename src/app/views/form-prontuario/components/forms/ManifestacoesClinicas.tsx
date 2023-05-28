@@ -7,7 +7,7 @@ import RegioesAfetadas from "./components/RegioesAfetadas";
 import {FormProntuarioContext} from "../../FormProntuario";
 import axios from "axios";
 import Memory from "../../../../Memory";
-import ProntuarioModalProps from "./types/ProntuarioModalProps";
+import ProntuarioModalProps from "../types/ProntuarioModalProps";
 
 export default function ManifestacoesClinicas(props: ProntuarioModalProps) {
     const {closeModal, data} = props;

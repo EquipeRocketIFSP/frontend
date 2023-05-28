@@ -5,7 +5,7 @@ import Contracts from "../../../../contracts/Contracts";
 import Components from "../../../../components/Components";
 import Memory from "../../../../Memory";
 import {FormProntuarioContext} from "../../FormProntuario";
-import ProntuarioModalProps from "./types/ProntuarioModalProps";
+import ProntuarioModalProps from "../types/ProntuarioModalProps";
 
 export default function SuspeitaDiagnostica(props: ProntuarioModalProps) {
     const {closeModal, data} = props;

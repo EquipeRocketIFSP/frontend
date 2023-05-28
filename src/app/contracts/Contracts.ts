@@ -186,6 +186,8 @@ namespace Contracts {
         temperatura: number | undefined,
         tpc: string | undefined,
         vomito: boolean,
+        status: "PENDING" | "COMPLETED",
+        versao: number,
         animal: Animal,
         tutor: PersonalData,
         veterinario: PersonalData,

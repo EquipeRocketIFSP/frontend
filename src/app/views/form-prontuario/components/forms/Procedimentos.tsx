@@ -2,7 +2,7 @@ import {Button, Form, Modal, Row, Spinner} from "react-bootstrap";
 import React, {useContext, useState} from "react";
 import Contracts from "../../../../contracts/Contracts";
 import MultiGroups from "../../../../components/multi-groups/MultiGroups";
-import ProntuarioModalProps from "./types/ProntuarioModalProps";
+import ProntuarioModalProps from "../types/ProntuarioModalProps";
 import {FormProntuarioContext} from "../../FormProntuario";
 import Components from "../../../../components/Components";
 import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";

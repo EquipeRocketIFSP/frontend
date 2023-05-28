@@ -4,7 +4,7 @@ import Contracts from "../../../../contracts/Contracts";
 import {Button, Form, Modal, Row, Spinner} from "react-bootstrap";
 import MultiGroups from "../../../../components/multi-groups/MultiGroups";
 import Medications from "./components/medications/Medications";
-import ProntuarioModalProps from "./types/ProntuarioModalProps";
+import ProntuarioModalProps from "../types/ProntuarioModalProps";
 import Components from "../../../../components/Components";
 import {FormProntuarioContext} from "../../FormProntuario";
 import axios from "axios";

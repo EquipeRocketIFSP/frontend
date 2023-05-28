@@ -3,7 +3,7 @@ import Contracts from "../../../../contracts/Contracts";
 import React, {useContext, useState} from "react";
 import MultiGroups from "../../../../components/multi-groups/MultiGroups";
 import RegioesAfetadas from "./components/RegioesAfetadas";
-import ProntuarioModalProps from "./types/ProntuarioModalProps";
+import ProntuarioModalProps from "../types/ProntuarioModalProps";
 import Components from "../../../../components/Components";
 import {FormProntuarioContext} from "../../FormProntuario";
 import axios from "axios";

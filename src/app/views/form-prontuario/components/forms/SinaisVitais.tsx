@@ -6,7 +6,7 @@ import axios from "axios";
 import Memory from "../../../../Memory";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import Helpers from "../../../../helpers/Helpers";
-import {ProntuarioPathVariables} from "./types/ProntuarioPathVariables";
+import {ProntuarioPathVariables} from "../types/ProntuarioPathVariables";
 import {FormProntuarioContext} from "../../FormProntuario";
 
 interface Props extends Contracts.CloseModal {

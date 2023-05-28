@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Memory from "../../../../Memory";
 import Contracts from "../../../../contracts/Contracts";
+import Helpers from "../../../../helpers/Helpers";
 
 interface Props {
     selectedDate?: Date,
@@ -28,8 +29,13 @@ export default function Calendar(props: Props): JSX.Element {
 
     useEffect(() => {
         selectedMonth.setDate(1);
+        selectedMonth.setHours(0);
+        selectedMonth.setMinutes(0);
+        selectedMonth.setSeconds(0);
 
-        const queryDate = selectedMonth.toLocaleDateString().split("/").reverse().join("-");
+        console.log(selectedMonth);
+
+        const queryDate = Helpers.DateFormat.formatToUS(selectedMonth);
 
         if (queriedDates.find((date) => date === queryDate))
             return;

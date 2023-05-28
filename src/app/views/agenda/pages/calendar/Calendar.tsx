@@ -12,6 +12,7 @@ import Memory from "../../../../Memory";
 import Components from "../../../../components/Components";
 import ScheduleModal from "./components/ScheduleModal";
 import DeleteConfirmationModal from "./components/DeleteConfirmationModal";
+import Helpers from "../../../../helpers/Helpers";
 
 export interface ICalendarContext {
     agendamento: Contracts.AgendamentoComplete | null,
@@ -36,9 +37,32 @@ export default function Calendar(): JSX.Element {
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
+        const months: Record<string, number> = {
+            "January": 0,
+            "February": 1,
+            "March": 2,
+            "April": 3,
+            "May": 4,
+            "June": 5,
+            "July": 6,
+            "August": 7,
+            "September": 8,
+            "October": 9,
+            "November": 10,
+            "December": 11
+        }
+        const targetMonth = (document.querySelector(".fc-toolbar-title") as HTMLElement)?.textContent?.replace(/\d/gmi, "").trim();
+
         selectedMonth.setDate(1);
 
-        const queryDate = selectedMonth.toLocaleDateString().split("/").reverse().join("-");
+        if (targetMonth)
+            selectedMonth.setMonth(months[targetMonth]);
+
+        selectedMonth.setHours(0);
+        selectedMonth.setMinutes(0);
+        selectedMonth.setSeconds(0);
+
+        const queryDate = Helpers.DateFormat.formatToUS(selectedMonth);
 
         if (queriedDates.find((date) => date === queryDate))
             return;
@@ -96,24 +120,6 @@ export default function Calendar(): JSX.Element {
                                     eventClick={eventClick}
                                 />
                             </div>
-
-                            {/*<div className="col-12 col-md-3 p-2">
-                            <Card className="d-flex justify-content-center h-100">
-                                <Card.Title>Eventos</Card.Title>
-
-                                <Card.Body>
-                                    <ul>
-                                        {
-                                            events.map((event, i) => {
-                                                return (
-                                                    <li key={i}>{event.title}</li>
-                                                )
-                                            })
-                                        }
-                                    </ul>
-                                </Card.Body>
-                            </Card>
-                        </div>*/}
                         </Row>
                     </main>
                 </Container>

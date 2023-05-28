@@ -5,6 +5,7 @@ import AddressComponent from "./components/Address";
 import SpecialValidationComponent from "./components/SpecialValidation";
 import ReactSelectOptionFactoryComponent from "./components/ReactSelectOptionFactory";
 import JWTDataComponent from "./components/JWTData";
+import DateFormatComponent from "./components/DateFormat";
 
 namespace Helpers {
     export const Masks = MasksComponent;
@@ -14,6 +15,7 @@ namespace Helpers {
     export const SpecialValidation = SpecialValidationComponent;
     export const ReactSelectOptionFactory = ReactSelectOptionFactoryComponent;
     export const JWTData = JWTDataComponent;
+    export const DateFormat = DateFormatComponent;
 }
 
 export default Helpers;

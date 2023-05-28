@@ -8,7 +8,6 @@ import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
 import "@fortawesome/fontawesome-free/css/solid.min.css";
 
 import FormProntuario from "./views/form-prontuario/FormProntuario";
-import FormHistoricoClinico from "./views/form-historico-clinico/FormHistoricoClinico";
 import Agenda from "./views/agenda/Agenda";
 import Painel from "./views/painel/Painel";
 import RedefinePassword from "./views/redefine-password/RedefinePassword";
@@ -59,7 +58,11 @@ export default function Certvet() {
                 <Route path="painel">
                     <Route path="" element={<Painel/>}/>
 
-                    <Route path="clinica/editar" element={<FormEditClinica/>}/>
+                    {
+                        Memory.authorites.find((value) => value === "ADMIN") ?
+                            <Route path="clinica/editar" element={<FormEditClinica/>}/> : <></>
+                    }
+
                     <Route path="usuario/editar" element={<FormEditUsuario/>}/>
 
                     <Route path="tutores">
@@ -73,31 +76,40 @@ export default function Certvet() {
                             <Route path="adicionar" element={<Animals.Form/>}/>
                             <Route path=":id/editar" element={<Animals.Form/>}/>
 
-                            <Route path=":animalId/prontuario">
-                                <Route path=":id" element={<FormProntuario/>}/>
-                                <Route path="cadastrar" element={<FormProntuario/>}/>
-                                <Route path="historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
-                            </Route>
+                            {
+                                Memory.authorites.find((value) => value === "VETERINARIO") ?
+                                    <Route path=":animalId/prontuario">
+                                        <Route path=":id" element={<FormProntuario/>}/>
+                                        <Route path="cadastrar" element={<FormProntuario/>}/>
+                                    </Route> : <></>
+                            }
                         </Route>
                     </Route>
 
-                    <Route path="medicamentos">
-                        <Route path="" element={<Medication.Listing/>}/>
-                        <Route path=":id" element={<Medication.Details/>}/>
-                        <Route path="adicionar" element={<Medication.Create/>}/>
-                        <Route path=":id/editar" element={<Medication.Edit/>}/>
+                    {
+                        Memory.authorites.find((value) => value === "VETERINARIO") ?
+                            <Route path="medicamentos">
+                                <Route path="" element={<Medication.Listing/>}/>
+                                <Route path=":id" element={<Medication.Details/>}/>
+                                <Route path="adicionar" element={<Medication.Create/>}/>
+                                <Route path=":id/editar" element={<Medication.Edit/>}/>
 
-                        <Route path=":medicationId/estoques/:id" element={<Stock.Details/>}/>
-                        <Route path=":medicationId/estoques/adicionar" element={<Stock.Create/>}/>
-                        <Route path=":medicationId/estoques/:id/editar" element={<Stock.Edit/>}/>
-                    </Route>
+                                <Route path=":medicationId/estoques/:id" element={<Stock.Details/>}/>
+                                <Route path=":medicationId/estoques/adicionar" element={<Stock.Create/>}/>
+                                <Route path=":medicationId/estoques/:id/editar" element={<Stock.Edit/>}/>
+                            </Route> :
+                            <></>
+                    }
 
-                    <Route path="funcionarios">
-                        <Route path="" element={<Users.Employees.Listing/>}/>
-                        <Route path=":id" element={<Users.Employees.Details/>}/>
-                        <Route path="adicionar" element={<Users.Employees.Create/>}/>
-                        <Route path=":id/editar" element={<Users.Employees.Edit/>}/>
-                    </Route>
+                    {
+                        Memory.authorites.find((value) => value === "ADMIN") ?
+                            <Route path="funcionarios">
+                                <Route path="" element={<Users.Employees.Listing/>}/>
+                                <Route path=":id" element={<Users.Employees.Details/>}/>
+                                <Route path="adicionar" element={<Users.Employees.Create/>}/>
+                                <Route path=":id/editar" element={<Users.Employees.Edit/>}/>
+                            </Route> : <></>
+                    }
 
                     <Route path="agenda">
                         <Route path="" element={<Agenda.Calendar/>}/>

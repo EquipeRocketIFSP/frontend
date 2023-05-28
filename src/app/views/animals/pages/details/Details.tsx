@@ -8,6 +8,7 @@ import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
 import Components from "../../../../components/Components";
 import MedicalRecord from "../../../medical-record/MedicalRecord";
+import Memory from "../../../../Memory";
 
 interface PathVariables extends Contracts.PathVariables {
     tutorId?: string
@@ -49,8 +50,9 @@ export default function Details(): JSX.Element {
                     <Components.Breadcrumbs>
                         <li className="breadcrumb-item"><Link to="/painel">Painel</Link></li>
                         <li className="breadcrumb-item"><Link to="/painel/tutores">Tutores</Link></li>
-                        <li className="breadcrumb-item"><Link to={"/painel/tutores/" + urlParams.tutorId}>Animais do
-                            tutor</Link></li>
+                        <li className="breadcrumb-item">
+                            <Link to={"/painel/tutores/" + urlParams.tutorId}>Animais do tutor</Link>
+                        </li>
                         <li className="breadcrumb-item active">Detalhes do Animal</li>
                     </Components.Breadcrumbs>
 
@@ -68,12 +70,17 @@ export default function Details(): JSX.Element {
                         </div>
                     </Row>
 
-                    <Components.SearchBar btnAdd={{
-                        label: "Novo Atendimento",
-                        href: `/painel/tutores/${urlParams.tutorId}/animais/${urlParams.id}/prontuario/cadastrar`
-                    }}/>
+                    {
+                        Memory.authorites.find((value) => value === "VETERINARIO") ?
+                            <>
+                                <Components.SearchBar btnAdd={{
+                                    label: "Novo Atendimento",
+                                    href: `/painel/tutores/${urlParams.tutorId}/animais/${urlParams.id}/prontuario/cadastrar`
+                                }}/>
 
-                    <MedicalRecord.Listing/>
+                                <MedicalRecord.Listing/>
+                            </> : <></>
+                    }
                 </Container>
             </main>
         </Layouts.RestrictedLayout>

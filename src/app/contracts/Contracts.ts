@@ -41,10 +41,6 @@ namespace Contracts {
         id?: string
     }
 
-    export interface Redirect {
-        redirect: null | string
-    }
-
     export interface Breadcrumbs {
         name: string,
         pathname: string,
@@ -223,23 +219,6 @@ namespace Contracts {
             lote: Contracts.Estoque,
             dose: number
         }[]
-    }
-
-    export interface ListingData {
-        id: number,
-        nome: string,
-    }
-
-    export interface ListingDataAgendamento {
-        id: number,
-        tipoConsulta: string,
-        dataConsulta: string,
-    }
-
-    export interface ListingDataProntuario {
-        id: number,
-        veterinario: string,
-        animal: string
     }
 
     export interface CloseModal {

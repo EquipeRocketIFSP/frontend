@@ -1,21 +1,31 @@
 import React, {createContext, useEffect, useState} from "react";
-import {Card, Container, Row} from "react-bootstrap";
-
-import Layouts from "../../layouts/Layouts";
-import SinaisVitais from "./components/forms/SinaisVitais";
-
-import "./form-prontuario.scss";
-import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
+import {Alert, Button, Card, Container, Form, Row} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
+import axios, {AxiosError, HttpStatusCode} from "axios";
+
+import SinaisVitais from "./components/forms/SinaisVitais";
 import SuspeitaDiagnostica from "./components/forms/SuspeitaDiagnostica";
 import MedicacoesPrescritas from "./components/forms/MedicacoesPrescritas";
 import Exames from "./components/forms/Exames";
 import Procedimentos from "./components/forms/Procedimentos";
-import Contracts from "../../contracts/Contracts";
-import axios from "axios";
-import {ProntuarioPathVariables} from "./components/forms/types/ProntuarioPathVariables";
-import Memory from "../../Memory";
+import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import Cirurgias from "./components/forms/Cirurgias";
+
+import SinaisVitaisView from "./components/views/SinaisVitaisView";
+import SuspeitaDiagnosticaView from "./components/views/SuspeitaDiagnosticaView";
+import ProcedimentosView from "./components/views/ProcedimentosView";
+import ManifestacoesClinicasView from "./components/views/ManifestacoesClinicasView";
+import ExamesView from "./components/views/ExamesView";
+import CirurgiasView from "./components/views/CirurgiasView";
+
+
+import {ProntuarioPathVariables} from "./components/types/ProntuarioPathVariables";
+
+import Layouts from "../../layouts/Layouts";
+import Contracts from "../../contracts/Contracts";
+import Memory from "../../Memory";
+
+import "./form-prontuario.scss";
 
 type Status = "required" | "warning" | "ok";
 
@@ -34,10 +44,13 @@ export const FormProntuarioContext = createContext<Context>({});
 export default function FormProntuario() {
     const [modal, setModal] = useState<JSX.Element>(<></>);
     const [data, setData] = useState<Contracts.Prontuario>();
+    const [formStatus, setFormStatus] = useState<"idle" | "loading" | "sent">("idle");
+    const [apiConnectionError, setApiConnectionError] = useState<string>();
+
     const [vitalSignsStatus, setVitalSignsStatus] = useState<Status>("required");
     const [procedimentsStatus, setProcedimentsStatus] = useState<Status>("required");
+    const [clinicalManifestationsStatus, setClinicalManifestationsStatus] = useState<Status>("required");
     const [surgeriesStatus, setSurgeriesStatus] = useState<Status>("warning");
-    const [clinicalManifestationsStatus, setClinicalManifestationsStatus] = useState<Status>("warning");
     const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
     const [examsStatus, setExamsStatus] = useState<Status>("warning");
 
@@ -62,6 +75,35 @@ export default function FormProntuario() {
 
     const closeModal = () => setModal(<></>);
 
+    const onSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault();
+
+        try {
+            setFormStatus("loading");
+
+            const {data: response} = await axios.put<Contracts.Prontuario>(`${process.env.REACT_APP_API_URL}/prontuario/${data?.id}/finalizar`, new FormData(evt.currentTarget), {headers: Memory.headers});
+
+            setFormStatus("sent");
+            setData(response);
+        } catch (e) {
+            const response = (e as AxiosError).response;
+
+            switch (response?.status) {
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
+                case HttpStatusCode.Conflict:
+                    setApiConnectionError(response.data as string);
+                    break;
+
+                default:
+                    setApiConnectionError("Não foi possivel concluir essa operação");
+                    break;
+            }
+
+            setFormStatus("idle");
+        }
+    }
+
     const badges: Record<Status, JSX.Element> = {
         "required": <i className="fa-regular fa-circle-exclamation text-danger p-1 mx-1"></i>,
         "warning": <i className="fa-regular fa-triangle-exclamation text-warning p-1 mx-1"></i>,
@@ -72,46 +114,47 @@ export default function FormProntuario() {
         {
             title: "Sinais Vitais",
             modal: <SinaisVitais closeModal={closeModal} data={data}/>,
+            view: data ? <SinaisVitaisView closeModal={closeModal} data={data}/> : <></>,
             status: vitalSignsStatus,
         },
         {
             title: "Procedimentos",
             modal: data ? <Procedimentos closeModal={closeModal} data={data}/> : <></>,
+            view: data ? <ProcedimentosView closeModal={closeModal} data={data}/> : <></>,
             status: procedimentsStatus,
-        },
-        {
-            title: "Cirurgias",
-            modal: data ? <Cirurgias closeModal={closeModal} data={data}/> : <></>,
-            status: surgeriesStatus,
         },
         {
             title: "Manifestações Clínicas",
             modal: data ? <ManifestacoesClinicas closeModal={closeModal} data={data}/> : <></>,
+            view: data ? <ManifestacoesClinicasView closeModal={closeModal} data={data}/> : <></>,
             status: clinicalManifestationsStatus,
-        },
-        {
-            title: "Histórico Clínico",
-            link: "/painel/prontuario/historico-clinico/cadastrar",
-            status: vitalSignsStatus,
         },
         {
             title: "Suspeita Diagnóstica",
             modal: data ? <SuspeitaDiagnostica closeModal={closeModal} data={data}/> : <></>,
+            view: data?.supeita_diagnostica?.length ?
+                <SuspeitaDiagnosticaView closeModal={closeModal} data={data}/> : null,
             status: diagnosticSuspicionStatus,
         },
         {
-            title: "Medicações Prescritas",
-            modal: <MedicacoesPrescritas closeModal={closeModal}/>,
-            status: vitalSignsStatus,
+            title: "Cirurgias",
+            modal: data ? <Cirurgias closeModal={closeModal} data={data}/> : <></>,
+            view: data?.cirurgia ? <CirurgiasView closeModal={closeModal} data={data}/> : null,
+            status: surgeriesStatus,
         },
         {
             title: "Exames",
             modal: data ? <Exames closeModal={closeModal} data={data}/> : <></>,
+            view: data?.exames.length ? <ExamesView closeModal={closeModal} data={data}/> : null,
             status: examsStatus,
         },
+        {
+            title: "Medicações Prescritas",
+            modal: <MedicacoesPrescritas closeModal={closeModal}/>,
+            view: <MedicacoesPrescritas closeModal={closeModal}/>,
+            status: vitalSignsStatus,
+        },
     ];
-
-    console.log(forms);
 
     return (
         <Layouts.RestrictedLayout>
@@ -134,47 +177,64 @@ export default function FormProntuario() {
                                 <Row className="summary mb-5 p-2">
                                     <span><b>Tutor: </b>{data.tutor.nome}</span>
                                     <span><b>Animal: </b>{data.animal.nome}</span>
-                                    <span><b>Data do Atendimento: </b>{new Date().toLocaleDateString()}</span>
                                     <span><b>Veterinário: </b>{data.veterinario.nome}</span>
+
+                                    {
+                                        data.data_atendimento ?
+                                            <span><b>Data do Atendimento: </b>{new Date(data.data_atendimento).toLocaleDateString('pt-BR')}</span> : <></>
+                                    }
                                 </Row> : <></>
                         }
+
+                        {formStatus === "sent" ? <Alert variant="success">Prontuário concluído</Alert> : <></>}
+                        {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}
 
                         <Row className="justify-content-between">
 
                             {
-                                forms.map(({title, modal, link, status}, index) => {
+                                forms.map(({title, modal, view, status}, index) => {
                                     let className = "col-xs-12 col-md-6 p-2";
 
                                     if (index !== 0 && !data)
                                         className += " disabled";
 
-                                    if (link?.length) {
-                                        return (
-                                            <div className={className} key={title}>
-                                                <Link to={link} style={{textDecoration: "none", color: "black"}}>
-                                                    <Card className="d-flex justify-content-center">
-                                                        <Card.Title>
-                                                            {title}
-                                                            {status && badges[status]}
-                                                        </Card.Title>
-                                                    </Card>
-                                                </Link>
-                                            </div>
-                                        );
-                                    }
+                                    const element = data?.status === "COMPLETED" ? view : modal;
+
+                                    if (!element)
+                                        return <></>;
 
                                     return (
                                         <div className={className} key={title}>
                                             <Card className="d-flex justify-content-center"
-                                                  onClick={() => setModal(modal ?? <></>)}>
+                                                  onClick={() => setModal(element ?? <></>)}>
 
-                                                <Card.Title>{title} {status && badges[status]}</Card.Title>
+                                                <Card.Title>{title} {status && data?.status !== "COMPLETED" && badges[status]}</Card.Title>
                                             </Card>
                                         </div>
                                     );
                                 })
                             }
                         </Row>
+
+                        {
+                            vitalSignsStatus === "ok" && procedimentsStatus === "ok" && clinicalManifestationsStatus === "ok" && data?.status === "PENDING" ?
+                                <Form className="d-flex justify-content-between" onSubmit={onSubmit}>
+                                    {
+                                        formStatus === "idle" ?
+                                            <>
+                                                <Link className="btn btn-outline-secondary"
+                                                      to={`/painel/tutores/${params.tutorId}/animais/${params.animalId}`}>
+                                                    Voltar
+                                                </Link>
+                                                <Button variant="outline-success" type="submit">Concluir</Button>
+                                            </> : <></>
+                                    }
+
+                                    <input type="hidden" name="animal" value={data?.animal.id}/>
+                                    <input type="hidden" name="tutor" value={data?.tutor.id}/>
+                                    <input type="hidden" name="veterinario" value={data?.veterinario.id}/>
+                                </Form> : <></>
+                        }
                     </Container>
 
                     <div>{modal}</div>

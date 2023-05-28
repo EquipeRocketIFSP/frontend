@@ -203,12 +203,6 @@ namespace Contracts {
         citologia: string | null,
         hematologia: string | null,
         imagem: string | null,
-        imagemRegiaoAbdomen: string | null,
-        imagemRegiaoCabeca: boolean | null,
-        imagemRegiaoCervical: string | null,
-        imagemRegiaoMPelvicos: string | null,
-        imagemRegiaoMToracicos: string | null,
-        imagemRegiaoTorax: boolean | null,
         outros_citologia: string | null,
         outros_exames: string | null
     }

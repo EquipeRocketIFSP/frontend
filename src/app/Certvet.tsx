@@ -80,26 +80,31 @@ export default function Certvet() {
                             </Route>
                         </Route>
                     </Route>
+
+                    <Route path="medicamentos">
+                        <Route path="" element={<Medication.Listing/>}/>
+                        <Route path=":id" element={<Medication.Details/>}/>
+                        <Route path="adicionar" element={<Medication.Create/>}/>
+                        <Route path=":id/editar" element={<Medication.Edit/>}/>
+
+                        <Route path=":medicationId/estoques/:id" element={<Stock.Details/>}/>
+                        <Route path=":medicationId/estoques/adicionar" element={<Stock.Create/>}/>
+                        <Route path=":medicationId/estoques/:id/editar" element={<Stock.Edit/>}/>
+                    </Route>
+
+                    <Route path="funcionarios">
+                        <Route path="" element={<Users.Employees.Listing/>}/>
+                        <Route path=":id" element={<Users.Employees.Details/>}/>
+                        <Route path="adicionar" element={<Users.Employees.Create/>}/>
+                        <Route path=":id/editar" element={<Users.Employees.Edit/>}/>
+                    </Route>
+
+                    <Route path="agenda">
+                        <Route path="" element={<Agenda.Calendar/>}/>
+                        <Route path="adicionar" element={<Agenda.Create/>}/>
+                        <Route path=":id/editar" element={<Agenda.Edit/>}/>
+                    </Route>
                 </Route>
-
-
-                <Route path="/painel/medicamentos" element={<Medication.Listing/>}/>
-                <Route path="/painel/medicamentos/:id" element={<Medication.Details/>}/>
-                <Route path="/painel/medicamentos/adicionar" element={<Medication.Create/>}/>
-                <Route path="/painel/medicamentos/:id/editar" element={<Medication.Edit/>}/>
-
-                <Route path="/painel/medicamentos/:medicationId/estoques/:id" element={<Stock.Details/>}/>
-                <Route path="/painel/medicamentos/:medicationId/estoques/adicionar" element={<Stock.Create/>}/>
-                <Route path="/painel/medicamentos/:medicationId/estoques/:id/editar" element={<Stock.Edit/>}/>
-
-                <Route path="/painel/funcionarios" element={<Users.Employees.Listing/>}/>
-                <Route path="/painel/funcionarios/:id" element={<Users.Employees.Details/>}/>
-                <Route path="/painel/funcionarios/adicionar" element={<Users.Employees.Create/>}/>
-                <Route path="/painel/funcionarios/:id/editar" element={<Users.Employees.Edit/>}/>
-
-                <Route path="/painel/agenda" element={<Agenda.Calendar/>}/>
-                <Route path="/painel/agenda/adicionar" element={<Agenda.Create/>}/>
-                <Route path="/painel/agenda/:id/editar" element={<Agenda.Edit/>}/>
 
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

@@ -229,7 +229,7 @@ export default function DefaultForm(): JSX.Element {
                             </Form.Group>
 
                             <Form.Group className="mb-3 col-lg-4">
-                                <Form.Label>Idade*</Form.Label>
+                                <Form.Label>Ano de nascimento*</Form.Label>
 
                                 <Form.Select name="ano_nascimento" required>
                                     <option value="">- Selecione</option>
@@ -248,7 +248,7 @@ export default function DefaultForm(): JSX.Element {
 
                             <Form.Group className="mb-3 col-lg-4">
                                 <Form.Label>Peso (kg)*</Form.Label>
-                                <Form.Control name="peso" min={1} type="number" defaultValue={animal?.peso} required/>
+                                <Form.Control name="peso" min={1} type="number" step="0.01" defaultValue={animal?.peso} required/>
                                 <Form.Text>{validationErrors["peso"] ?? ""}</Form.Text>
                             </Form.Group>
 

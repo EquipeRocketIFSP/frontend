@@ -1,16 +1,13 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Badge, Button} from "react-bootstrap";
 
 interface Props extends React.PropsWithChildren {
-    componentType?: any
+    componentType?: any,
+    componentPropsList?: any[]
 }
 
 export default function MultiGroups(props: Props) {
-    const [childrens, setChildrens] = useState<React.ReactNode[]>([
-        props.componentType ?
-            factoryComponentType(props.componentType) :
-            props.children
-    ]);
+    const [childrens, setChildrens] = useState<React.ReactNode[]>([]);
 
     const addChild = () => setChildrens([
         ...childrens,
@@ -25,6 +22,13 @@ export default function MultiGroups(props: Props) {
 
         setChildrens(copyChildrens);
     }
+
+    useEffect(() => {
+        if (!props.componentPropsList?.length)
+            addChild();
+        else
+            setChildrens(props.componentPropsList.map((componentProps) => factoryComponentType(props.componentType, componentProps)));
+    }, []);
 
     return (
         <>
@@ -58,8 +62,8 @@ export default function MultiGroups(props: Props) {
     );
 }
 
-function factoryComponentType(componentType: React.FunctionComponent) {
+function factoryComponentType(componentType: React.FunctionComponent, componentProps?: any) {
     const key = crypto.randomUUID();
 
-    return React.createElement(componentType, {key});
+    return React.createElement(componentType, {...componentProps, key});
 }

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import {Link, Navigate, useParams} from "react-router-dom";
 import axios, {AxiosHeaders} from "axios";
-import {Container, ListGroup, Pagination, Row} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 
 import Layouts from "../../../../layouts/Layouts";
 import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
 import Components from "../../../../components/Components";
+import MedicalRecord from "../../../medical-record/MedicalRecord";
 
 interface PathVariables extends Contracts.PathVariables {
     tutorId?: string
@@ -67,42 +68,12 @@ export default function Details(): JSX.Element {
                         </div>
                     </Row>
 
-                    <Components.SearchBar btnAdd={{label: "Novo Atendimento", href: "/painel/prontuario/cadastrar"}}/>
+                    <Components.SearchBar btnAdd={{
+                        label: "Novo Atendimento",
+                        href: `/painel/tutores/${urlParams.tutorId}/animais/${urlParams.id}/prontuario/cadastrar`
+                    }}/>
 
-                    <h5 style={{textAlign: "center"}}>Prontuários</h5>
-
-                    <div style={{height: "60vh"}}>
-                        <Link to={""} style={{textDecoration: "none"}}>
-                            <ListGroup horizontal="md" className="my-2 col-12">
-                                <ListGroup.Item className="col-md-12">26/08/2023</ListGroup.Item>
-                            </ListGroup>
-                        </Link>
-
-                        <Link to={""} style={{textDecoration: "none"}}>
-                            <ListGroup horizontal="md" className="my-2 col-12">
-                                <ListGroup.Item className="col-md-12">26/08/2023</ListGroup.Item>
-                            </ListGroup>
-                        </Link>
-                    </div>
-
-                    <Pagination className="justify-content-center">
-                        <Pagination.First/>
-                        <Pagination.Prev/>
-
-                        <Pagination.Item>{1}</Pagination.Item>
-                        <Pagination.Item>{2}</Pagination.Item>
-                        <Pagination.Item active>{3}</Pagination.Item>
-
-                        <Pagination.Ellipsis/>
-
-                        <Pagination.Item>{10}</Pagination.Item>
-                        <Pagination.Item>{11}</Pagination.Item>
-
-                        <Pagination.Next/>
-                        <Pagination.Last/>
-                    </Pagination>
-
-
+                    <MedicalRecord.Listing/>
                 </Container>
             </main>
         </Layouts.RestrictedLayout>

@@ -56,9 +56,32 @@ export default function Certvet() {
                 <Route path="/cadastro" element={<SignIn.Clinica/>}/>
                 <Route path="/cadastro/dono" element={<SignIn.Owner/>}/>
 
-                <Route path="/painel" element={<Painel/>}/>
-                <Route path="/painel/clinica/editar" element={<FormEditClinica/>}/>
-                <Route path="/painel/usuario/editar" element={<FormEditUsuario/>}/>
+                <Route path="painel">
+                    <Route path="" element={<Painel/>}/>
+
+                    <Route path="clinica/editar" element={<FormEditClinica/>}/>
+                    <Route path="usuario/editar" element={<FormEditUsuario/>}/>
+
+                    <Route path="tutores">
+                        <Route path="" element={<Users.Tutores.Listing/>}/>
+                        <Route path=":id" element={<Users.Tutores.Details/>}/>
+                        <Route path="adicionar" element={<Users.Tutores.Form/>}/>
+                        <Route path=":id/editar" element={<Users.Tutores.Form/>}/>
+
+                        <Route path=":tutorId/animais">
+                            <Route path=":id" element={<Animals.Details/>}/>
+                            <Route path="adicionar" element={<Animals.Form/>}/>
+                            <Route path=":id/editar" element={<Animals.Form/>}/>
+
+                            <Route path=":animalId/prontuario">
+                                <Route path=":id" element={<FormProntuario/>}/>
+                                <Route path="cadastrar" element={<FormProntuario/>}/>
+                                <Route path="historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
+                            </Route>
+                        </Route>
+                    </Route>
+                </Route>
+
 
                 <Route path="/painel/medicamentos" element={<Medication.Listing/>}/>
                 <Route path="/painel/medicamentos/:id" element={<Medication.Details/>}/>
@@ -74,21 +97,9 @@ export default function Certvet() {
                 <Route path="/painel/funcionarios/adicionar" element={<Users.Employees.Create/>}/>
                 <Route path="/painel/funcionarios/:id/editar" element={<Users.Employees.Edit/>}/>
 
-                <Route path="/painel/tutores" element={<Users.Tutores.Listing/>}/>
-                <Route path="/painel/tutores/:id" element={<Users.Tutores.Details/>}/>
-                <Route path="/painel/tutores/adicionar" element={<Users.Tutores.Form/>}/>
-                <Route path="/painel/tutores/:id/editar" element={<Users.Tutores.Form/>}/>
-
-                <Route path="/painel/tutores/:tutorId/animais/:id" element={<Animals.Details/>}/>
-                <Route path="/painel/tutores/:tutorId/animais/adicionar" element={<Animals.Form/>}/>
-                <Route path="/painel/tutores/:tutorId/animais/:id/editar" element={<Animals.Form/>}/>
-
                 <Route path="/painel/agenda" element={<Agenda.Calendar/>}/>
                 <Route path="/painel/agenda/adicionar" element={<Agenda.Create/>}/>
                 <Route path="/painel/agenda/:id/editar" element={<Agenda.Edit/>}/>
-
-                <Route path="/painel/prontuario/cadastrar" element={<FormProntuario/>}/>
-                <Route path="/painel/prontuario/historico-clinico/cadastrar" element={<FormHistoricoClinico/>}/>
 
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

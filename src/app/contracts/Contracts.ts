@@ -151,18 +151,78 @@ namespace Contracts {
         responsavel: string
     }
 
-    export interface Prontuario {
+    export interface AffectedRegions {
+        abdomen: string[] | undefined,
+        cabeca: boolean,
+        coluna: string[] | undefined,
+        m_pelvicos: string[] | undefined,
+        m_toracicos: string[] | undefined,
+        regioes_obs: string | undefined,
+        torax: boolean,
+    }
+
+    export interface Prontuario extends AffectedRegions {
         id: number,
-        veterinario: string,
-        diagnostico: string,
-        observacoes: string,
-        medicamento: string,
-        medida: string,
-        exames: null,
-        procedimento: null,
-        prescricoes: string,
-        quantidade: number,
-        animal: Animal
+        codigo: string,
+        apetite: string | undefined,
+        conciencia: string | undefined,
+        data_atendimento: string | undefined,
+        deambulacao: boolean,
+        diarreia: boolean,
+        escore_corporal: string | undefined,
+        espasmos_convulsao: boolean,
+        febre: boolean,
+        frequencia_cardiaca: number | undefined,
+        frequencia_respiratoria: number | undefined,
+        hidratacao: string | undefined,
+        lesoes_nodulos: boolean,
+        linfonodos: string | null,
+        linfonodos_obs: string | undefined,
+        mucosa: string | undefined,
+        peso: string | undefined,
+        prostracao: boolean,
+        sensibilidade_dor: boolean,
+        supeita_diagnostica: string | undefined,
+        temperatura: number | undefined,
+        tpc: string | undefined,
+        vomito: boolean,
+        status: "PENDING" | "COMPLETED",
+        versao: number,
+        animal: Animal,
+        tutor: PersonalData,
+        veterinario: PersonalData,
+        exames: Exame[],
+        procedimentos: Procedimento[],
+        cirurgia: Cirurgia | null
+    }
+
+    export interface Exame extends AffectedRegions {
+        id: number,
+        tipo_exame: string,
+        bioquimico: string | null,
+        citologia: string | null,
+        hematologia: string | null,
+        imagem: string | null,
+        outros_citologia: string | null,
+        outros_exames: string | null
+    }
+
+    export interface Procedimento {
+        procedimento: string,
+        procedimento_outros: string | null,
+        dose: number | null,
+        lote: Estoque | null,
+        medicamento: Medicamento | null
+    }
+
+    export interface Cirurgia {
+        descricao: string,
+        data: string,
+        medicamentos: {
+            medicamento: Contracts.Medicamento,
+            lote: Contracts.Estoque,
+            dose: number
+        }[]
     }
 
     export interface ListingData {

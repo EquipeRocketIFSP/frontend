@@ -55,6 +55,7 @@ export default function FormSubmit(props: Props): JSX.Element {
                     break;
 
                 case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
                 case HttpStatusCode.Conflict:
                     setApiConnectionError(response.data as string);
                     break;

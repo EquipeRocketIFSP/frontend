@@ -11,13 +11,14 @@ import Procedimentos from "./components/forms/Procedimentos";
 import ManifestacoesClinicas from "./components/forms/ManifestacoesClinicas";
 import Cirurgias from "./components/forms/Cirurgias";
 
+import Documents from "./components/forms/Documents";
+
 import SinaisVitaisView from "./components/views/SinaisVitaisView";
 import SuspeitaDiagnosticaView from "./components/views/SuspeitaDiagnosticaView";
 import ProcedimentosView from "./components/views/ProcedimentosView";
 import ManifestacoesClinicasView from "./components/views/ManifestacoesClinicasView";
 import ExamesView from "./components/views/ExamesView";
 import CirurgiasView from "./components/views/CirurgiasView";
-
 
 import {ProntuarioPathVariables} from "./components/types/ProntuarioPathVariables";
 
@@ -185,6 +186,8 @@ export default function FormProntuario() {
                                     }
                                 </Row> : <></>
                         }
+
+                        <Documents/>
 
                         {formStatus === "sent" ? <Alert variant="success">Prontuário concluído</Alert> : <></>}
                         {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}

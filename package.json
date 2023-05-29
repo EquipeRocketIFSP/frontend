@@ -44,7 +44,8 @@
   "jest": {
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!axios)"
-    ]
+    ],
+    "coverageReporters": ["lcov"]
   },
   "browserslist": {
     "production": [

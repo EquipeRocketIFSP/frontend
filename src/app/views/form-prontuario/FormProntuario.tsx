@@ -13,13 +13,6 @@ import Cirurgias from "./components/forms/Cirurgias";
 
 import Documents from "./components/forms/Documents";
 
-import SinaisVitaisView from "./components/views/SinaisVitaisView";
-import SuspeitaDiagnosticaView from "./components/views/SuspeitaDiagnosticaView";
-import ProcedimentosView from "./components/views/ProcedimentosView";
-import ManifestacoesClinicasView from "./components/views/ManifestacoesClinicasView";
-import ExamesView from "./components/views/ExamesView";
-import CirurgiasView from "./components/views/CirurgiasView";
-
 import {ProntuarioPathVariables} from "./components/types/ProntuarioPathVariables";
 
 import Layouts from "../../layouts/Layouts";
@@ -68,6 +61,7 @@ export default function FormProntuario() {
                 setVitalSignsStatus("ok");
                 setProcedimentsStatus(data.procedimentos.length ? "ok" : "required");
                 setSurgeriesStatus(data.cirurgia ? "ok" : "warning");
+                setClinicalManifestationsStatus(data.apetite?.length ? "ok" : "required");
                 setDiagnosticSuspicionStatus(data.supeita_diagnostica != null ? "ok" : "warning");
                 setExamsStatus(data.exames.length ? "ok" : "warning");
             })
@@ -115,44 +109,36 @@ export default function FormProntuario() {
         {
             title: "Sinais Vitais",
             modal: <SinaisVitais closeModal={closeModal} data={data}/>,
-            view: data ? <SinaisVitaisView closeModal={closeModal} data={data}/> : <></>,
             status: vitalSignsStatus,
         },
         {
             title: "Procedimentos",
             modal: data ? <Procedimentos closeModal={closeModal} data={data}/> : <></>,
-            view: data ? <ProcedimentosView closeModal={closeModal} data={data}/> : <></>,
             status: procedimentsStatus,
         },
         {
             title: "Manifestações Clínicas",
             modal: data ? <ManifestacoesClinicas closeModal={closeModal} data={data}/> : <></>,
-            view: data ? <ManifestacoesClinicasView closeModal={closeModal} data={data}/> : <></>,
             status: clinicalManifestationsStatus,
         },
         {
             title: "Suspeita Diagnóstica",
             modal: data ? <SuspeitaDiagnostica closeModal={closeModal} data={data}/> : <></>,
-            view: data?.supeita_diagnostica?.length ?
-                <SuspeitaDiagnosticaView closeModal={closeModal} data={data}/> : null,
             status: diagnosticSuspicionStatus,
         },
         {
             title: "Cirurgias",
             modal: data ? <Cirurgias closeModal={closeModal} data={data}/> : <></>,
-            view: data?.cirurgia ? <CirurgiasView closeModal={closeModal} data={data}/> : null,
             status: surgeriesStatus,
         },
         {
             title: "Exames",
             modal: data ? <Exames closeModal={closeModal} data={data}/> : <></>,
-            view: data?.exames.length ? <ExamesView closeModal={closeModal} data={data}/> : null,
             status: examsStatus,
         },
         {
             title: "Medicações Prescritas",
             modal: <MedicacoesPrescritas closeModal={closeModal}/>,
-            view: <MedicacoesPrescritas closeModal={closeModal}/>,
             status: vitalSignsStatus,
         },
     ];
@@ -195,23 +181,18 @@ export default function FormProntuario() {
                         <Row className="justify-content-between">
 
                             {
-                                forms.map(({title, modal, view, status}, index) => {
+                                forms.map(({title, modal, status}, index) => {
                                     let className = "col-xs-12 col-md-6 p-2";
 
                                     if (index !== 0 && !data)
                                         className += " disabled";
 
-                                    const element = data?.status === "COMPLETED" ? view : modal;
-
-                                    if (!element)
-                                        return <></>;
-
                                     return (
                                         <div className={className} key={title}>
                                             <Card className="d-flex justify-content-center"
-                                                  onClick={() => setModal(element ?? <></>)}>
+                                                  onClick={() => setModal(modal)}>
 
-                                                <Card.Title>{title} {status && data?.status !== "COMPLETED" && badges[status]}</Card.Title>
+                                                <Card.Title>{title} {status && badges[status]}</Card.Title>
                                             </Card>
                                         </div>
                                     );

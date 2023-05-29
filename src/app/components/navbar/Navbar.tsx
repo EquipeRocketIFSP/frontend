@@ -21,7 +21,9 @@ export default function Navbar() {
 
     const logout = () => {
         Storages.userStorage.truncate();
-        Memory.authorites.slice(0, Memory.authorites.length - 1);
+
+        for (let i = 0; i < Memory.authorites.length; i++)
+            Memory.authorites = [];
 
         setNavigateToLogin(true);
     }

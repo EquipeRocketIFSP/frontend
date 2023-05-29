@@ -1,8 +1,13 @@
 import {AxiosHeaders} from "axios";
 
-namespace Memory {
-    export const authorites: string[] = [];
-    export const headers: AxiosHeaders = new AxiosHeaders().setContentType("application/json");
+interface IMemory {
+    authorites: string[],
+    headers: AxiosHeaders
+}
+
+const Memory: IMemory = {
+    authorites: [],
+    headers: new AxiosHeaders().setContentType("application/json")
 }
 
 export default Memory;

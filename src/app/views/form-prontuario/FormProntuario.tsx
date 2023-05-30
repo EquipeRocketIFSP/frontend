@@ -201,7 +201,7 @@ export default function FormProntuario() {
                         </Row>
 
                         {
-                            vitalSignsStatus === "ok" && procedimentsStatus === "ok" && clinicalManifestationsStatus === "ok" && data?.status === "PENDING" ?
+                            vitalSignsStatus === "ok" && procedimentsStatus === "ok" && clinicalManifestationsStatus === "ok" ?
                                 <Form className="d-flex justify-content-between" onSubmit={onSubmit}>
                                     {
                                         formStatus === "idle" ?

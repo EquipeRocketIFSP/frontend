@@ -31,6 +31,7 @@ export default function Web(): JSX.Element {
 
         if (!userData) {
             setAuthoritesLoaded(true);
+            setTecnicalResponsibleLoaded(true);
             return;
         }
 

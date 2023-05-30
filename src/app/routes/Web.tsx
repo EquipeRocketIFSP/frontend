@@ -22,6 +22,7 @@ import Storages from "../Storages";
 
 export default function Web(): JSX.Element {
     const [authoritesLoaded, setAuthoritesLoaded] = useState<boolean>(false);
+    const [tecnicalResponsibleLoaded, setTecnicalResponsibleLoaded] = useState<boolean>(false);
 
     useLocation(); //Força a atualização das rotas
 
@@ -38,9 +39,14 @@ export default function Web(): JSX.Element {
         axios.get<string[]>(`${process.env.REACT_APP_API_URL}/usuario/autoridades`, {headers: Memory.headers})
             .then(({data}) => Memory.authorites.push(...data))
             .finally(() => setAuthoritesLoaded(true));
+
+        axios.get(`${process.env.REACT_APP_API_URL}/clinica/responsavel-tecnico`, {headers: Memory.headers})
+            .then(() => Memory.hasTechnicalResponsible = true)
+            .catch(() => Memory.hasTechnicalResponsible = false)
+            .finally(() => setTecnicalResponsibleLoaded(true));
     }, []);
 
-    if (!authoritesLoaded)
+    if (!authoritesLoaded || !tecnicalResponsibleLoaded)
         return <></>;
 
     return (

@@ -26,7 +26,7 @@ export default function Create(): JSX.Element {
         await axios.post(url, formData, {headers: Memory.headers});
 
         setDataStatus("created");
-        setTimeout(() => setNavigateToListing(true), 2000);
+        setTimeout(() => window.location.assign("/painel/funcionarios"), 2000);
     }
 
     if (navigateToListing)

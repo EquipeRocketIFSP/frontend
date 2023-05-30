@@ -18,7 +18,13 @@ export default function Item(props: Contracts.Prontuario): JSX.Element {
                 <ListGroup.Item className="col-md-3"><b className="d-md-none">Tutor: </b>{tutor.nome}</ListGroup.Item>
 
                 <ListGroup.Item className="col-md-2">
-                    <b className="d-md-none">Data: </b>{data_atendimento}
+                    {
+                        data_atendimento ?
+                            <>
+                                <b className="d-md-none">Data: </b>{new Date(data_atendimento).toLocaleString('pt-BR')}
+                            </> :
+                            <></>
+                    }
                 </ListGroup.Item>
             </ListGroup>
         </Link>

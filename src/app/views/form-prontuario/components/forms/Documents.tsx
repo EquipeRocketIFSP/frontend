@@ -30,7 +30,7 @@ export default function Documents(): JSX.Element {
                         Atestado Sanitário
                     </Dropdown.Item>
 
-                    <Dropdown.Item onClick={() => download("obito", "Atestado de Óbito")}>
+                    {/*<Dropdown.Item onClick={() => download("obito", "Atestado de Óbito")}>
                         Atestado de Óbito
                     </Dropdown.Item>
 
@@ -75,7 +75,7 @@ export default function Documents(): JSX.Element {
                     <Dropdown.Item
                         onClick={() => download("doacaoPesquisa", "Autorização para Doação de Corpo do Animal")}>
                         Autorização para Doação de Corpo do Animal
-                    </Dropdown.Item>
+                    </Dropdown.Item>*/}
                 </DropdownButton>
             </Row>
         </div>

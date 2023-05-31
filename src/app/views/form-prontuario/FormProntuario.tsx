@@ -177,7 +177,7 @@ export default function FormProntuario() {
                                 </Row> : <></>
                         }
 
-                        {data?.status !== "PENDING" ? <Documents/> : <></>}
+                        {data && data?.status !== "PENDING" ? <Documents/> : <></>}
 
                         {formStatus === "sent" ? <Alert variant="success">Prontuário concluído</Alert> : <></>}
                         {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}

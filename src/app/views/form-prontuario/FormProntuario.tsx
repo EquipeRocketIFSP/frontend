@@ -30,7 +30,8 @@ interface Context {
     setSurgeriesStatus?: (status: Status) => void,
     setDiagnosticSuspicionStatus?: (status: Status) => void,
     setClinicalManifestationsStatus?: (status: Status) => void,
-    setExamsStatus?: (status: Status) => void
+    setExamsStatus?: (status: Status) => void,
+    setPrescriptionsStatus?: (status: Status) => void
 }
 
 export const FormProntuarioContext = createContext<Context>({});
@@ -47,6 +48,7 @@ export default function FormProntuario() {
     const [surgeriesStatus, setSurgeriesStatus] = useState<Status>("warning");
     const [diagnosticSuspicionStatus, setDiagnosticSuspicionStatus] = useState<Status>("warning");
     const [examsStatus, setExamsStatus] = useState<Status>("warning");
+    const [prescriptionsStatus, setPrescriptionsStatus] = useState<Status>("warning");
 
     const params = useParams<ProntuarioPathVariables>();
 
@@ -64,6 +66,7 @@ export default function FormProntuario() {
                 setClinicalManifestationsStatus(data.apetite?.length ? "ok" : "required");
                 setDiagnosticSuspicionStatus(data.supeita_diagnostica != null ? "ok" : "warning");
                 setExamsStatus(data.exames.length ? "ok" : "warning");
+                setPrescriptionsStatus(data.prescricoes.length ? "ok" : "warning");
             })
             .catch(console.error);
     }, [params.id]);
@@ -138,8 +141,8 @@ export default function FormProntuario() {
         },
         {
             title: "Medicações Prescritas",
-            modal: <MedicacoesPrescritas closeModal={closeModal}/>,
-            status: vitalSignsStatus,
+            modal: data ? <MedicacoesPrescritas closeModal={closeModal} data={data}/> : <></>,
+            status: prescriptionsStatus,
         },
     ];
 
@@ -156,7 +159,8 @@ export default function FormProntuario() {
                         setSurgeriesStatus,
                         setDiagnosticSuspicionStatus,
                         setClinicalManifestationsStatus,
-                        setExamsStatus
+                        setExamsStatus,
+                        setPrescriptionsStatus
                     }}>
                     <Container>
                         {
@@ -173,7 +177,7 @@ export default function FormProntuario() {
                                 </Row> : <></>
                         }
 
-                        <Documents/>
+                        {data?.status !== "PENDING" ? <Documents/> : <></>}
 
                         {formStatus === "sent" ? <Alert variant="success">Prontuário concluído</Alert> : <></>}
                         {apiConnectionError ? <Alert variant="danger">{apiConnectionError}</Alert> : <></>}

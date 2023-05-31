@@ -189,7 +189,8 @@ namespace Contracts {
         veterinario: PersonalData,
         exames: Exame[],
         procedimentos: Procedimento[],
-        cirurgia: Cirurgia | null
+        cirurgia: Cirurgia | null,
+        prescricoes: Prescricao[]
     }
 
     export interface Exame extends AffectedRegions {
@@ -219,6 +220,18 @@ namespace Contracts {
             lote: Contracts.Estoque,
             dose: number
         }[]
+    }
+
+    export interface Prescricao {
+        uso: string,
+        nome: string,
+        dose: string,
+        forma_farmaceutica: string,
+        concentracao: string,
+        frequencia: string,
+        duracao: string,
+        quando_aplicar: string,
+        observacoes: string | null
     }
 
     export interface CloseModal {

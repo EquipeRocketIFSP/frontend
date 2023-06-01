@@ -43,11 +43,6 @@ export default function MedicacoesPrescritasView(props: ProntuarioModalProps) {
                     })
                 }
             </Modal.Body>
-
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => closeModal()}>Fechar</Button>
-                <Button variant="primary">Salvar</Button>
-            </Modal.Footer>
         </Modal>
     );
 }

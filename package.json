@@ -33,6 +33,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:coverage": "npm run test -- --coverage .",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -40,6 +41,12 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!axios)"
+    ],
+    "coverageReporters": ["lcov"]
   },
   "browserslist": {
     "production": [

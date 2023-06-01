@@ -23,7 +23,7 @@ export default function Documents(): JSX.Element {
     }
 
     return (
-        <div className="bg-light search-bar my-5 px-3">
+        <div className="bg-light search-bar my-5 px-3 py-1">
             <Row>
                 <DropdownButton id="dropdown-basic-button" title="Documentos">
                     <Dropdown.Item onClick={() => download("sanitario", "Atestado Sanitário")}>

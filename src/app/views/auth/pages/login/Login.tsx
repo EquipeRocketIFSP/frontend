@@ -36,6 +36,14 @@ export default function Login(): JSX.Element {
             Storages.userStorage.set(userData);
             Memory.authorites.push(...authorites);
 
+            try {
+                await axios.get(`${process.env.REACT_APP_API_URL}/clinica/responsavel-tecnico`, {headers});
+
+                Memory.hasTechnicalResponsible = true;
+            } catch (e) {
+                Memory.hasTechnicalResponsible = false
+            }
+
             setNavigateToPainel(true);
         } catch (e) {
             const response = (e as AxiosError).response;
@@ -45,7 +53,7 @@ export default function Login(): JSX.Element {
                     setApiConnectionError("E-mail, senha e/ou código da clínica inválidos");
                     break;
                 default:
-                    setApiConnectionError("Não foi possivel efetuar o login no momento. Por favor tente mais tarde.");
+                    setApiConnectionError("E-mail, senha e/ou código da clínica inválidos");
                     break;
             }
         }

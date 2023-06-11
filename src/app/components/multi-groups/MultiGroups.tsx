@@ -63,7 +63,7 @@ export default function MultiGroups(props: Props) {
 }
 
 function factoryComponentType(componentType: React.FunctionComponent, componentProps?: any) {
-    const key = crypto.randomUUID();
+    const key = Math.random() * Math.random();
 
     return React.createElement(componentType, {...componentProps, key});
 }

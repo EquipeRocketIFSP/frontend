@@ -59,7 +59,7 @@ export default function Listing(props: Props): JSX.Element {
 }
 
 function factoryComponentType(componentType: React.FunctionComponent, props: Object) {
-    const key = crypto.randomUUID();
+    const key = Math.random() * Math.random();
 
     return React.createElement(componentType, {key, ...props});
 }

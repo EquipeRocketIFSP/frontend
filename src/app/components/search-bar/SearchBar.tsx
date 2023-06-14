@@ -68,28 +68,6 @@ export default function SearchBar(props: Props) {
 
                         {window.innerWidth > 767 ? (btnAdd?.label ?? "Adicionar") : ""}
                     </Link>
-
-                    {/*{
-                        this.state.listTrash ?
-                            (
-                                <button className="btn d-flex flex-column align-items-center"
-                                        onClick={this.onClickBtnTrash}>
-                                    <i className="fa-solid fa-arrow-left"> </i>
-                                    {
-                                        window.innerWidth > 767 ? "Voltar" : ""
-                                    }
-                                </button>
-                            ) :
-                            (
-                                <button className="btn d-flex flex-column align-items-center"
-                                        onClick={this.onClickBtnTrash}>
-                                    <i className="fa-solid fa-trash-can"> </i>
-                                    {
-                                        window.innerWidth > 767 ? "Lixeira" : ""
-                                    }
-                                </button>
-                            )
-                    }*/}
                 </div>
             </Row>
         </div>

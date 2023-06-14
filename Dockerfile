@@ -1,6 +1,6 @@
 # ==== CONFIGURE =====
 # Use a Node 16 base image
-FROM node:16-alpine as builder
+FROM node:16-alpine AS builder
 # Set the working directory to /app inside the container
 WORKDIR /app
 # Copy app files
@@ -12,7 +12,7 @@ RUN npm ci
 RUN npm run build
 
 # Bundle static assets with nginx
-FROM nginx:1.21.0-alpine as production
+FROM nginx:1.21.0-alpine AS production
 ENV NODE_ENV production
 # Copy built assets from `builder` image
 COPY --from=builder /app/build /usr/share/nginx/html

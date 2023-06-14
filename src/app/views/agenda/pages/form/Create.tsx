@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {Container} from "react-bootstrap";
 import {Navigate} from "react-router-dom";
-import axios from "axios";
-import {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
+import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
 import Layouts from "../../../../layouts/Layouts";
 import Components from "../../../../components/Components";
 import Agenda from "../../Agenda";

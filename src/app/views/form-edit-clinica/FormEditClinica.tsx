@@ -30,7 +30,7 @@ export default function FormEditClinica(): JSX.Element {
         const formData = new FormData(evt.currentTarget);
 
         if (Object.keys(validationErrors).length) {
-            setValidationErrors(validationErrors);
+            setValidationErrors({...validationErrors});
             return;
         }
 

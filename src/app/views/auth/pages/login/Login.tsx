@@ -6,7 +6,7 @@ import logoLogin from "../../../../resources/login-logo.png";
 
 import "./login.scss";
 import {Link, Navigate} from "react-router-dom";
-import axios, {AxiosError, AxiosHeaders, HttpStatusCode} from "axios";
+import axios, {AxiosHeaders} from "axios";
 import Contracts from "../../../../contracts/Contracts";
 import Storages from "../../../../Storages";
 import Memory from "../../../../Memory";

@@ -46,16 +46,7 @@ export default function Login(): JSX.Element {
 
             setNavigateToPainel(true);
         } catch (e) {
-            const response = (e as AxiosError).response;
-
-            switch (response?.status) {
-                case HttpStatusCode.Forbidden:
-                    setApiConnectionError("E-mail, senha e/ou código da clínica inválidos");
-                    break;
-                default:
-                    setApiConnectionError("E-mail, senha e/ou código da clínica inválidos");
-                    break;
-            }
+            setApiConnectionError("E-mail, senha e/ou código da clínica inválidos");
         }
 
         setLoading(false);

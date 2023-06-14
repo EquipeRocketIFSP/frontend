@@ -13,7 +13,7 @@ export default function UF(props: Props): JSX.Element {
     const [ufs, setUfs] = useState<Contracts.IBGEUF[]>([]);
 
     useEffect(() => {
-        Helpers.Address.loadUfs().then(setUfs);
+        Helpers.Address.loadUfs().then(setUfs).catch(console.error);
     }, []);
 
     return (

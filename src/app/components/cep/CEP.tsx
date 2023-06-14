@@ -19,7 +19,7 @@ export default function CEP(props: Props): JSX.Element {
         if (value.length < 9)
             return;
 
-        Helpers.Address.loadAddress(value).then(setAddressDetails);
+        Helpers.Address.loadAddress(value).then(setAddressDetails).catch(console.error);
     }, [cep]);
 
     return (

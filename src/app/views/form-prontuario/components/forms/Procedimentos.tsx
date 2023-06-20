@@ -147,18 +147,18 @@ function FormComponent(props: Contracts.Procedimento): JSX.Element {
                         <option value="">- Selecione</option>
 
                         {
-                            options.map((value) => {
-                                return <option value={value} selected={procedimento === value}>{value}</option>;
+                            options.map((value, index) => {
+                                return <option value={index + 1} selected={procedimento == (index + 1).toString()}>{value}</option>;
                             })
                         }
                     </Form.Select>
                 </Form.Group>
 
-                {selectedProcedimento === "Medicação" ?
+                {selectedProcedimento === "5" ?
                     <Medications dose={props.dose} lote={props.lote} medicamento={props.medicamento}/> : <></>}
 
                 {
-                    selectedProcedimento === "Outros" ?
+                    selectedProcedimento === "14" ?
                         <Form.Group className="mb-3 col-lg-12">
                             <Form.Label>Outros</Form.Label>
                             <Form.Control as="textarea" name="procedimento_outros"

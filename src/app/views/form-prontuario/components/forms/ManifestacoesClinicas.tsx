@@ -201,10 +201,10 @@ export default function ManifestacoesClinicas(props: ProntuarioModalProps) {
                                                                 <Form.Check
                                                                     type="radio"
                                                                     name="apetite"
-                                                                    value={value}
+                                                                    value={value.toLowerCase()}
                                                                     label={value}
                                                                     className="me-2"
-                                                                    defaultChecked={value === data.apetite}
+                                                                    defaultChecked={value.toLowerCase() === data.apetite}
                                                                     required/>
                                                             )
                                                         })

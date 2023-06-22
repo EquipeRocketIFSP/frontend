@@ -196,12 +196,9 @@ namespace Contracts {
     export interface Exame extends AffectedRegions {
         id: number,
         tipo_exame: string,
-        bioquimico: string | null,
-        citologia: string | null,
-        hematologia: string | null,
-        imagem: string | null,
+        subtipo_exame: string | null,
         outros_citologia: string | null,
-        outros_exames: string | null
+        exames_outros: string | null
     }
 
     export interface Procedimento {

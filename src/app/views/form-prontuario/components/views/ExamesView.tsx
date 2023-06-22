@@ -16,12 +16,9 @@ export default function ExamesView(props: ProntuarioModalProps): JSX.Element {
                     data.exames.map((exame) => {
                         const {
                             tipo_exame,
-                            citologia,
+                            subtipo_exame,
                             outros_citologia,
-                            hematologia,
-                            bioquimico,
-                            imagem,
-                            outros_exames,
+                            exames_outros,
                             cabeca,
                             torax,
                             coluna,
@@ -35,15 +32,15 @@ export default function ExamesView(props: ProntuarioModalProps): JSX.Element {
                             <Row className="summary mb-1">
                                 <legend>{tipo_exame}</legend>
 
-                                <span><b>Exame: </b> {citologia || hematologia || bioquimico || imagem}</span>
+                                <span><b>Exame: </b> {subtipo_exame}</span>
 
                                 {
-                                    outros_citologia || outros_exames ?
-                                        <span><b>Outros: </b>{outros_citologia || outros_exames}</span> : <></>
+                                    outros_citologia || exames_outros ?
+                                        <span><b>Outros: </b>{outros_citologia || exames_outros}</span> : <></>
                                 }
 
                                 {
-                                    imagem ?
+                                    tipo_exame === "Imagem" ?
                                         <>
                                             <legend>Regiões da imagem</legend>
 

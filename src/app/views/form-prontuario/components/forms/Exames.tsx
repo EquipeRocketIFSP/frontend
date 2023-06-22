@@ -162,7 +162,7 @@ function factorySelectComponent(value: ExameType | string, props: Contracts.Exam
             return <Imagem {...props}/>;
 
         case ExameType.OUTROS:
-            return <Outros name="exames_outros"/>
+            return <Outros name="exames_outros" value={props.exames_outros}/>
 
         default:
             return <></>;
@@ -197,11 +197,11 @@ function Bioquimico(props: Contracts.Exame): JSX.Element {
         <Form.Group className="mb-3 col-lg-12">
             <Form.Label>Bioquimico*</Form.Label>
 
-            <Form.Select name="bioquimico" required>
+            <Form.Select name="subtipo_exame" required>
                 <option value="">- Selecione</option>
 
                 {options.map((option) =>
-                    <option value={option} selected={option === props.bioquimico}>{option}</option>)}
+                    <option value={option} selected={option === props.subtipo_exame}>{option}</option>)}
             </Form.Select>
         </Form.Group>
     );
@@ -213,34 +213,34 @@ function Hematologia(props: Contracts.Exame): JSX.Element {
     return (
         <Form.Group className="mb-3 col-lg-12">
             <Form.Label>Hematologia*</Form.Label>
-            <Form.Select name="hematologia" required>
+            <Form.Select name="subtipo_exame" required>
                 <option value="">- Selecione</option>
 
                 {options.map((option) =>
-                    <option value={option} selected={option === props.hematologia}>{option}</option>)}
+                    <option value={option} selected={option === props.subtipo_exame}>{option}</option>)}
             </Form.Select>
         </Form.Group>
     );
 }
 
 function Citologia(props: Contracts.Exame): JSX.Element {
-    const [citologiaSelected, setCitologiaSelected] = useState<string>(props.citologia ?? "");
-    const options = ["CAAF", "Imprinting", "Histopatologico", "Biópsia", "Outros"];
+    const [citologiaSelected, setCitologiaSelected] = useState<string>(props.subtipo_exame ?? "");
+    const options = ["CAAF", "Imprinting", "Histopatologico", "Biópsia", "Outro"];
 
     return (
         <>
             <Form.Group className="mb-3 col-lg-12">
                 <Form.Label>Citologia*</Form.Label>
-                <Form.Select name="citologia" onInput={(evt) => setCitologiaSelected(evt.currentTarget.value)}
+                <Form.Select name="subtipo_exame" onInput={(evt) => setCitologiaSelected(evt.currentTarget.value)}
                              required>
                     <option value="">- Selecione</option>
 
                     {options.map((option) =>
-                        <option value={option} selected={option === props.citologia}>{option}</option>)}
+                        <option value={option} selected={option === props.subtipo_exame}>{option}</option>)}
                 </Form.Select>
             </Form.Group>
 
-            {citologiaSelected === "Outros" ? <Outros name="outros_citologia" value={props.outros_citologia}/> : <></>}
+            {citologiaSelected === "Outro" ? <Outros name="outros_citologia" value={props.outros_citologia}/> : <></>}
         </>
     );
 }
@@ -252,11 +252,11 @@ function Imagem(props: Contracts.Exame): JSX.Element {
         <>
             <Form.Group className="mb-3 col-lg-12">
                 <Form.Label>Imagem*</Form.Label>
-                <Form.Select name="imagem" required>
+                <Form.Select name="subtipo_exame" required>
                     <option value="">- Selecione</option>
 
                     {options.map((option) =>
-                        <option value={option} selected={option === props.imagem}>{option}</option>)}
+                        <option value={option} selected={option === props.subtipo_exame}>{option}</option>)}
                 </Form.Select>
             </Form.Group>
 

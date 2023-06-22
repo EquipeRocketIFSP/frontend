@@ -57,7 +57,7 @@ export default function Procedimentos(props: ProntuarioModalProps) {
         const {data: response} = await axios.put<Contracts.Prontuario>(url, submitData, {headers: Memory.headers});
 
         updateProntuarioData(response);
-        setProcedimentsStatus("ok");
+        setProcedimentsStatus(response.procedimentos.length ? "ok" : "required");
 
         closeModal();
     }

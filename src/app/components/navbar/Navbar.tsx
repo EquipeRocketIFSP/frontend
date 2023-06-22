@@ -36,7 +36,7 @@ export default function Navbar() {
             <Container>
 
                 <Link className="navbar-brand" to={logged ? "/painel" : "/"}>
-                    <img src={Logo} title="Logo" alt="Logo" style={{maxWidth: "150px"}}/>
+                    <img src={Logo} title="Logo" alt="Logo" style={{maxWidth: "80px"}}/>
                 </Link>
 
                 <BootstrapNavbar.Toggle aria-controls="responsive-navbar-nav"/>

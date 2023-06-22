@@ -16,9 +16,9 @@ export default function MultiGroups(props: Props) {
             props.children
     ]);
 
-    const popChild = () => {
+    const popChild = (index: number) => {
         const copyChildrens = [...childrens];
-        copyChildrens.pop();
+        copyChildrens.splice(index, 1);
 
         setChildrens(copyChildrens);
     }
@@ -36,8 +36,15 @@ export default function MultiGroups(props: Props) {
                 childrens.map((child, i) => {
                     return (
                         <div key={i}>
-                            <Badge bg="primary">{i + 1}</Badge>
+                            <span className="badge badge-primary">{i + 1}</span>
                             <div>{child}</div>
+
+                            <div className="d-flex justify-content-lg-center">
+                                <button onClick={() => popChild(i)} type="button"
+                                        className="btn btn-outline-danger mx-2">
+                                    <i className="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </div>
                     );
                 })
@@ -47,16 +54,6 @@ export default function MultiGroups(props: Props) {
                 <Button onClick={addChild} variant="outline-primary">
                     <i className="fa-solid fa-plus"></i>
                 </Button>
-
-                {
-                    childrens.length > 1 ?
-                        (
-                            <Button onClick={popChild} variant="outline-danger" className="mx-2">
-                                <i className="fa-solid fa-trash"></i>
-                            </Button>
-                        ) :
-                        <></>
-                }
             </div>
         </>
     );

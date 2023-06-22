@@ -1,9 +1,10 @@
 import {Dropdown, DropdownButton, Row} from "react-bootstrap";
-import axios from "axios";
+import axios, {AxiosHeaders} from "axios";
 import Memory from "../../../../Memory";
 import React from "react";
 import {useParams} from "react-router-dom";
 import {ProntuarioPathVariables} from "../types/ProntuarioPathVariables";
+import Storages from "../../../../Storages";
 
 export default function Documents(): JSX.Element {
     const params = useParams<ProntuarioPathVariables>();
@@ -22,12 +23,41 @@ export default function Documents(): JSX.Element {
         link.click();
     }
 
+    const downloadPrescricao = async (fileName: string) => {
+        const userData = Storages.userStorage.get();
+
+        if (!userData)
+            return;
+
+        const data = await (await fetch(`${process.env.REACT_APP_API_URL}/prontuario/prescricao/${params.id}`, {
+            headers: {
+                'Authorization': `${userData.type} ${userData.token}`,
+                'Content-Type': 'application/pdf',
+                'Accept': 'application/pdf'
+            }
+        })).blob();
+
+        const href = window.URL.createObjectURL(new Blob([data]));
+        const link = document.createElement("a");
+
+        link.href = href;
+        link.setAttribute("download", fileName + ".pdf");
+
+        document.body.appendChild(link);
+
+        link.click();
+    }
+
     return (
         <div className="bg-light search-bar my-5 px-3 py-1">
             <Row>
                 <DropdownButton id="dropdown-basic-button" title="Documentos">
                     <Dropdown.Item onClick={() => download("sanitario", "Atestado Sanitário")}>
                         Atestado Sanitário
+                    </Dropdown.Item>
+
+                    <Dropdown.Item onClick={() => downloadPrescricao("Prescrição")}>
+                        Prescrição
                     </Dropdown.Item>
 
                     {/*<Dropdown.Item onClick={() => download("obito", "Atestado de Óbito")}>
